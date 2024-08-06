@@ -86,6 +86,10 @@ public class Repo {
         mealsRemoteDataSource.makeNetworkCallForMealsByCategory(category, callBack);
     }
 
+    public void getMealsByCountry(String country, NetworkCallBack callBack){
+        mealsRemoteDataSource.makeNetworkCallToGetMealsByCountry(country,callBack);
+    }
+
 
 
 }

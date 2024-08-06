@@ -28,4 +28,7 @@ public interface NetworkCallBack {
 
     void onMealsByCategorySuccess(ResponseMealInfoDto responseMealInfoDto);
     void onMealsByCategoryFailure(String errMessage);
+
+    void onMealsByCountrySuccess(ResponseMealInfoDto responseMealInfoDto);
+    void onMealsByCountryFailure(String errMessage);
 }

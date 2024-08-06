@@ -90,4 +90,14 @@ public class HomePresenter implements NetworkCallBack {
     public void onMealsByCategoryFailure(String errMessage) {
 
     }
+
+    @Override
+    public void onMealsByCountrySuccess(ResponseMealInfoDto responseMealInfoDto) {
+
+    }
+
+    @Override
+    public void onMealsByCountryFailure(String errMessage) {
+
+    }
 }

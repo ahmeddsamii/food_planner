@@ -1,8 +1,8 @@
-package com.example.food_planner.homePageScreen.presenter;
+package com.example.food_planner.detailsMealsByCountryScreen.presenter;
 
 import com.example.food_planner.Repo.NetworkCallBack;
 import com.example.food_planner.Repo.Repo;
-import com.example.food_planner.detailsMealScreen.view.AllIngredientsView;
+import com.example.food_planner.detailsMealsByCountryScreen.view.onMealsByCountryView;
 import com.example.food_planner.model.dto_repos.ResponseCategory;
 import com.example.food_planner.model.dto_repos.ResponseCountry;
 import com.example.food_planner.model.dto_repos.ResponseIngredient;
@@ -10,18 +10,18 @@ import com.example.food_planner.model.dto_repos.ResponseMealInfoDto;
 import com.example.food_planner.model.dto_repos.ResponseRandomMeal;
 import com.example.food_planner.model.dtos.MealDto;
 
-public class IngredientPresenter implements NetworkCallBack {
-    AllIngredientsView view;
-    Repo repo;
+public class MealsByCountryPresenter implements NetworkCallBack {
 
-    public IngredientPresenter(AllIngredientsView view,Repo repo){
+    Repo repo;
+    onMealsByCountryView view;
+
+    public MealsByCountryPresenter(Repo repo, onMealsByCountryView view){
         this.repo = repo;
         this.view = view;
     }
 
-
-    public void getAllIngredients(){
-        repo.getAllIngredients(this);
+    public void getMealsByCountry(String country){
+        repo.getMealsByCountry(country, this);
     }
 
     @Override
@@ -46,12 +46,12 @@ public class IngredientPresenter implements NetworkCallBack {
 
     @Override
     public void onAllIngredientsSuccess(ResponseIngredient ingredients) {
-        view.onAllIngredientsSuccess(ingredients);
+
     }
 
     @Override
     public void onAllIngredientFailure(String errMessage) {
-        view.onAllIngredientsFailure(errMessage);
+
     }
 
     @Override
@@ -86,11 +86,11 @@ public class IngredientPresenter implements NetworkCallBack {
 
     @Override
     public void onMealsByCountrySuccess(ResponseMealInfoDto responseMealInfoDto) {
-
+        view.onSuccess(responseMealInfoDto);
     }
 
     @Override
     public void onMealsByCountryFailure(String errMessage) {
-
+        view.onFailure(errMessage);
     }
 }

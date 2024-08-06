@@ -14,7 +14,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,7 +57,7 @@ public class HomeFragment extends Fragment implements RandomMealView , AllCatego
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-         cardView= view.findViewById(R.id.cardview);
+         cardView= view.findViewById(R.id.country_search_screen_cardview);
          imageView= view.findViewById(R.id.image_meal);
          title= view.findViewById(R.id.tv_meal_title);
          recyclerView = view.findViewById(R.id.category_recyclerview);

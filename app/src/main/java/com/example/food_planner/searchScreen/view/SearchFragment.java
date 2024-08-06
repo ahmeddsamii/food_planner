@@ -15,13 +15,9 @@ import android.widget.CompoundButton;
 import com.example.food_planner.R;
 import com.example.food_planner.Repo.Repo;
 import com.example.food_planner.searchScreen.presenter.SearchPresenter;
-import com.example.food_planner.homePageScreen.view.adapters.CategoriesSearchAdapter;
-import com.example.food_planner.homePageScreen.view.adapters.CountryAdapter;
 import com.example.food_planner.model.dto_repos.ResponseCountry;
 import com.example.food_planner.model.dtos.CategoryDto;
 import com.example.food_planner.model.dtos.CountryDto;
-import com.example.food_planner.searchScreen.view.CategorySearchView;
-import com.example.food_planner.searchScreen.view.CountrySearchView;
 import com.google.android.material.chip.Chip;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +35,7 @@ public class SearchFragment extends Fragment implements CategorySearchView, Coun
     private static final String TAG = "SearchFragment";
     private CategoriesSearchAdapter categoriesAdapter;
     private SearchPresenter presenter;
-    private CountryAdapter countryAdapter;
+    private CountrySearchAdapter countrySearchAdapter;
     List<CategoryDto> categories;
     List<CountryDto> countries;
 
@@ -90,11 +86,11 @@ public class SearchFragment extends Fragment implements CategorySearchView, Coun
                 if (isChecked) {
                     // Show countries
                     mainRecyclerView.setVisibility(View.VISIBLE);
-                    if (countryAdapter == null) {
-                        countryAdapter = new CountryAdapter(new ArrayList<>(), getContext());
+                    if (countrySearchAdapter == null) {
+                        countrySearchAdapter = new CountrySearchAdapter(new ArrayList<>(), getContext());
                         presenter.getAllCountriesSearchItems();
                     }
-                    mainRecyclerView.setAdapter(countryAdapter);
+                    mainRecyclerView.setAdapter(countrySearchAdapter);
                     mainRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 }
             }
@@ -135,11 +131,11 @@ public class SearchFragment extends Fragment implements CategorySearchView, Coun
                             .subscribe(filteredlist -> categoriesAdapter.setData(filteredlist),
                                     error -> Log.e(TAG, "Error filtering categories: " + error.getMessage()));
                 }
-                if (countryAdapter != null) {
+                if (countrySearchAdapter != null) {
                     Observable.fromIterable(countries)
                             .filter(countryDto -> countryDto.getStrArea().toLowerCase().contains(newText))
                             .toList()
-                            .subscribe(filteredlist -> countryAdapter.setData(filteredlist),
+                            .subscribe(filteredlist -> countrySearchAdapter.setData(filteredlist),
                                     error-> Log.e(TAG, "onQueryTextChange: "+error.getMessage() ));
                 }
                 return true;
@@ -163,12 +159,12 @@ public class SearchFragment extends Fragment implements CategorySearchView, Coun
     @Override
     public void onCountrySearchViewSuccess(ResponseCountry responseCountry) {
         Log.i(TAG, "onCountrySearchViewSuccess: ");
-        if (countryAdapter != null) {
+        if (countrySearchAdapter != null) {
             this.countries = responseCountry.getCountries();
-            countryAdapter.setData(responseCountry.getCountries());
+            countrySearchAdapter.setData(responseCountry.getCountries());
         } else {
-            countryAdapter = new CountryAdapter(responseCountry.getCountries(), getContext());
-            mainRecyclerView.setAdapter(countryAdapter);
+            countrySearchAdapter = new CountrySearchAdapter(responseCountry.getCountries(), getContext());
+            mainRecyclerView.setAdapter(countrySearchAdapter);
         }
     }
 

@@ -30,4 +30,7 @@ public interface MealService {
 
     @GET("filter.php")
     Call<ResponseMealInfoDto> getMealsByCategory(@Query("c") String category);
+
+    @GET("filter.php")
+    Call<ResponseMealInfoDto> getMealsByCountry(@Query("a") String country);
 }

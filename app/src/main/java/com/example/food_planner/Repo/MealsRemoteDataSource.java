@@ -122,5 +122,20 @@ public class MealsRemoteDataSource {
     }
 
 
+    public void makeNetworkCallToGetMealsByCountry(String country, NetworkCallBack callBack){
+        mealService.getMealsByCountry(country).enqueue(new Callback<ResponseMealInfoDto>() {
+            @Override
+            public void onResponse(Call<ResponseMealInfoDto> call, Response<ResponseMealInfoDto> response) {
+                callBack.onMealsByCountrySuccess(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ResponseMealInfoDto> call, Throwable throwable) {
+                callBack.onMealsByCountryFailure(throwable.getMessage());
+            }
+        });
+    }
+
+
 
 }

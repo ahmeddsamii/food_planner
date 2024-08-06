@@ -29,7 +29,11 @@
         android:id="@+id/searchFragment"
         android:name="com.example.food_planner.searchScreen.view.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_mealsByCountryScreenFragment"
+            app:destination="@id/mealsByCountryScreenFragment" />
+    </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.example.food_planner.settingsScreen.SettingsFragment"
@@ -46,12 +50,21 @@
     </fragment>
     <fragment
         android:id="@+id/categoryDetailsFragment"
-        android:name="com.example.food_planner.detailsCategoryScreen.view.CategoryDetailsFragment"
+        android:name="com.example.food_planner.detailsMealsByCategoryScreen.view.CategoryDetailsFragment"
         android:label="fragment_category_details"
         tools:layout="@layout/fragment_category_details" >
         <argument
             android:name="categoryDto"
             app:argType="com.example.food_planner.model.dtos.CategoryDto" />
+    </fragment>
+    <fragment
+        android:id="@+id/mealsByCountryScreenFragment"
+        android:name="com.example.food_planner.detailsMealsByCountryScreen.view.MealsByCountryScreenFragment"
+        android:label="fragment_meals_by_country_screen"
+        tools:layout="@layout/fragment_meals_by_country_screen" >
+        <argument
+            android:name="countryDto"
+            app:argType="com.example.food_planner.model.dtos.CountryDto" />
     </fragment>
 
 
