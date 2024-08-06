@@ -1,6 +1,8 @@
 package com.example.food_planner.model.dtos;
 
-public class CountryDto {
+import java.io.Serializable;
+
+public class CountryDto implements Serializable {
     public String strArea;
     public CountryDto(){
 

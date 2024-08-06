@@ -1,4 +1,4 @@
-package com.example.food_planner.detailsCategoryScreen.view;
+package com.example.food_planner.detailsMealsByCategoryScreen.view;
 
 import android.os.Bundle;
 
@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 
 import com.example.food_planner.R;
 import com.example.food_planner.Repo.Repo;
-import com.example.food_planner.detailsCategoryScreen.presenter.CategoryDetailsFragmentPresenter;
+import com.example.food_planner.detailsMealsByCategoryScreen.presenter.CategoryDetailsFragmentPresenter;
 import com.example.food_planner.model.dto_repos.ResponseMealInfoDto;
 
 import java.util.ArrayList;

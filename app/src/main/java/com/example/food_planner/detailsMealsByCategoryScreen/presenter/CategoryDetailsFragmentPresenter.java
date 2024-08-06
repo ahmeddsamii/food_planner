@@ -1,8 +1,8 @@
-package com.example.food_planner.detailsCategoryScreen.presenter;
+package com.example.food_planner.detailsMealsByCategoryScreen.presenter;
 
 import com.example.food_planner.Repo.NetworkCallBack;
 import com.example.food_planner.Repo.Repo;
-import com.example.food_planner.detailsCategoryScreen.view.CategoryDetailsView;
+import com.example.food_planner.detailsMealsByCategoryScreen.view.CategoryDetailsView;
 import com.example.food_planner.model.dto_repos.ResponseCategory;
 import com.example.food_planner.model.dto_repos.ResponseCountry;
 import com.example.food_planner.model.dto_repos.ResponseIngredient;
@@ -88,5 +88,15 @@ public class CategoryDetailsFragmentPresenter implements NetworkCallBack {
     @Override
     public void onMealsByCategoryFailure(String errMessage) {
         view.onFailure(errMessage);
+    }
+
+    @Override
+    public void onMealsByCountrySuccess(ResponseMealInfoDto responseMealInfoDto) {
+
+    }
+
+    @Override
+    public void onMealsByCountryFailure(String errMessage) {
+
     }
 }

@@ -1,11 +1,9 @@
-package com.example.food_planner.homePageScreen.view.adapters;
+package com.example.food_planner.searchScreen.view;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
