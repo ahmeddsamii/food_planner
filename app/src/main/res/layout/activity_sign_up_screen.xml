@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?android:attr/colorPrimary"
+    android:backgroundTint="?android:attr/colorPrimary"
+    android:fitsSystemWindows="true"
+
+    tools:context=".signupScreen.view.SignUpScreen"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="11dp">
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animationView_signup"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="68dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/login_animationjson" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/et_signup_username"
+        android:layout_width="340dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="500dp"
+        android:background="@drawable/rounded_edittext_background"
+        android:drawableStart="@drawable/person"
+        android:drawablePadding="6dp"
+        android:hint="enter your username"
+        android:padding="12dp"
+        app:circularflow_radiusInDP="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.521"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/et_signUp_email"
+        android:layout_width="340dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="440dp"
+        android:background="@drawable/rounded_edittext_background"
+        android:drawableStart="@drawable/mail"
+        android:drawablePadding="6dp"
+        android:hint="@string/enter_your_email"
+        android:padding="12dp"
+        app:circularflow_radiusInDP="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.535"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/et_signup_password"
+        android:layout_width="342dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="380dp"
+        android:background="@drawable/rounded_edittext_background"
+        android:drawableStart="@drawable/password"
+        android:drawableEnd="@drawable/eye_password_show"
+        android:drawablePadding="6dp"
+        android:filterTouchesWhenObscured="true"
+        android:hint="@string/enter_your_password"
+        android:inputType="textPassword"
+
+        android:padding="12dp"
+        app:circularflow_radiusInDP="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/et_signup_username"
+        app:layout_constraintStart_toStartOf="@+id/et_signup_username" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:fontFamily="@font/boldddd"
+        android:text="@string/food_planner"
+        android:textColor="#FFFFFF"
+        android:textSize="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.524"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_signup"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/rounded_edittext_background"
+        android:fontFamily="@font/bolditalicc"
+        android:text="@string/signup"
+        android:textColor="@color/primaryColor"
+        app:layout_constraintEnd_toEndOf="@+id/et_signup_password"
+        app:layout_constraintStart_toStartOf="@+id/et_signup_password"
+        app:layout_constraintTop_toBottomOf="@+id/et_signup_password" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/already_have_an_account"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/btn_signup"
+        app:layout_constraintHorizontal_bias="0.185"
+        app:layout_constraintStart_toStartOf="@+id/btn_signup"
+        app:layout_constraintTop_toBottomOf="@+id/btn_signup" />
+
+    <TextView
+        android:id="@+id/tv_signIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/login"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/btn_signup"
+        app:layout_constraintHorizontal_bias="0.219"
+        app:layout_constraintStart_toEndOf="@+id/textView4"
+        app:layout_constraintTop_toBottomOf="@+id/btn_signup" />
+
+    <ImageView
+        android:id="@+id/iv_singUp_google"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        app:srcCompat="@drawable/google_icon_logo" />
+
+    <ImageView
+        android:id="@+id/iv_login_x"
+        android:layout_width="102dp"
+        android:layout_height="112dp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_singUp_google"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.656"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/iv_singUp_google"
+        app:layout_constraintVertical_bias="0.615"
+        app:srcCompat="@drawable/twitter_x_icon" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
