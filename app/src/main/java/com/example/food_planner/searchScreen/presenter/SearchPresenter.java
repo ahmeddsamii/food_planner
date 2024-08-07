@@ -8,18 +8,21 @@ import com.example.food_planner.searchScreen.view.CountrySearchView;
 import com.example.food_planner.model.dto_repos.ResponseCategory;
 import com.example.food_planner.model.dto_repos.ResponseCountry;
 import com.example.food_planner.model.dto_repos.ResponseIngredient;
-import com.example.food_planner.model.dto_repos.ResponseRandomMeal;
+import com.example.food_planner.model.dto_repos.ResponseMeals;
 import com.example.food_planner.model.dtos.MealDto;
+import com.example.food_planner.searchScreen.view.MealsSearchByNameView;
 
 public class SearchPresenter implements NetworkCallBack {
     Repo repo;
     CategorySearchView searchView;
     CountrySearchView countrySearchView;
+    MealsSearchByNameView mealsSearchByNameView;
 
-    public SearchPresenter(Repo repo, CategorySearchView searchView, CountrySearchView countrySearchView){
+    public SearchPresenter(Repo repo, CategorySearchView searchView, CountrySearchView countrySearchView, MealsSearchByNameView mealsSearchByNameView){
         this.repo = repo;
         this.searchView = searchView;
         this.countrySearchView = countrySearchView;
+        this.mealsSearchByNameView = mealsSearchByNameView;
     }
 
 
@@ -31,8 +34,12 @@ public class SearchPresenter implements NetworkCallBack {
         repo.getAllCountries(this);
     }
 
+    public void getMealSearchByName(String name){
+        repo.getSearchMealsByName(name,this);
+    }
+
     @Override
-    public void onRandomMealSuccess(ResponseRandomMeal randomMeal) {
+    public void onRandomMealSuccess(ResponseMeals randomMeal) {
 
     }
 
@@ -99,5 +106,15 @@ public class SearchPresenter implements NetworkCallBack {
     @Override
     public void onMealsByCountryFailure(String errMessage) {
 
+    }
+
+    @Override
+    public void onSearchMealsByNameSuccess(ResponseMeals responseMeals) {
+        mealsSearchByNameView.onMealSearchByNameSuccess(responseMeals.getMeals());
+    }
+
+    @Override
+    public void onSearchMealsByNameFailure(String errMessage) {
+        mealsSearchByNameView.onMealSearchByNameFailure(errMessage);
     }
 }

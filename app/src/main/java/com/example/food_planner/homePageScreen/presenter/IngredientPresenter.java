@@ -7,7 +7,7 @@ import com.example.food_planner.model.dto_repos.ResponseCategory;
 import com.example.food_planner.model.dto_repos.ResponseCountry;
 import com.example.food_planner.model.dto_repos.ResponseIngredient;
 import com.example.food_planner.model.dto_repos.ResponseMealInfoDto;
-import com.example.food_planner.model.dto_repos.ResponseRandomMeal;
+import com.example.food_planner.model.dto_repos.ResponseMeals;
 import com.example.food_planner.model.dtos.MealDto;
 
 public class IngredientPresenter implements NetworkCallBack {
@@ -25,7 +25,7 @@ public class IngredientPresenter implements NetworkCallBack {
     }
 
     @Override
-    public void onRandomMealSuccess(ResponseRandomMeal randomMeal) {
+    public void onRandomMealSuccess(ResponseMeals randomMeal) {
 
     }
 
@@ -91,6 +91,16 @@ public class IngredientPresenter implements NetworkCallBack {
 
     @Override
     public void onMealsByCountryFailure(String errMessage) {
+
+    }
+
+    @Override
+    public void onSearchMealsByNameSuccess(ResponseMeals responseMeals) {
+
+    }
+
+    @Override
+    public void onSearchMealsByNameFailure(String errMessage) {
 
     }
 }

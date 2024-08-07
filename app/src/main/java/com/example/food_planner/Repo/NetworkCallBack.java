@@ -4,13 +4,11 @@ import com.example.food_planner.model.dto_repos.ResponseCategory;
 import com.example.food_planner.model.dto_repos.ResponseCountry;
 import com.example.food_planner.model.dto_repos.ResponseIngredient;
 import com.example.food_planner.model.dto_repos.ResponseMealInfoDto;
-import com.example.food_planner.model.dto_repos.ResponseRandomMeal;
+import com.example.food_planner.model.dto_repos.ResponseMeals;
 import com.example.food_planner.model.dtos.MealDto;
 
-import java.util.List;
-
 public interface NetworkCallBack {
-    void onRandomMealSuccess(ResponseRandomMeal randomMeal);
+    void onRandomMealSuccess(ResponseMeals randomMeal);
     void onRandomMealFailure(String errMessage);
 
     void onAllCategoriesSuccess(ResponseCategory responseCategory);
@@ -31,4 +29,8 @@ public interface NetworkCallBack {
 
     void onMealsByCountrySuccess(ResponseMealInfoDto responseMealInfoDto);
     void onMealsByCountryFailure(String errMessage);
+
+
+    void onSearchMealsByNameSuccess(ResponseMeals responseMeals);
+    void onSearchMealsByNameFailure(String errMessage);
 }

@@ -4,7 +4,7 @@ import com.example.food_planner.model.dto_repos.ResponseCategory;
 import com.example.food_planner.model.dto_repos.ResponseCountry;
 import com.example.food_planner.model.dto_repos.ResponseIngredient;
 import com.example.food_planner.model.dto_repos.ResponseMealInfoDto;
-import com.example.food_planner.model.dto_repos.ResponseRandomMeal;
+import com.example.food_planner.model.dto_repos.ResponseMeals;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,14 +30,14 @@ public class MealsRemoteDataSource {
     }
 
     public void makeNetworkCallForRandomMeal(NetworkCallBack callBack){
-        mealService.getRandomMeal().enqueue(new Callback<ResponseRandomMeal>() {
+        mealService.getRandomMeal().enqueue(new Callback<ResponseMeals>() {
             @Override
-            public void onResponse(Call<ResponseRandomMeal> call, Response<ResponseRandomMeal> response) {
+            public void onResponse(Call<ResponseMeals> call, Response<ResponseMeals> response) {
                 callBack.onRandomMealSuccess(response.body());
             }
 
             @Override
-            public void onFailure(Call<ResponseRandomMeal> call, Throwable throwable) {
+            public void onFailure(Call<ResponseMeals> call, Throwable throwable) {
                 callBack.onRandomMealFailure(throwable.getMessage());
             }
         });
@@ -75,9 +75,9 @@ public class MealsRemoteDataSource {
     }
 
     public void makeNetworkCallToGetItemByName(NetworkCallBack callBack, String name) {
-        mealService.getByName(name).enqueue(new Callback<ResponseRandomMeal>() {
+        mealService.getByName(name).enqueue(new Callback<ResponseMeals>() {
             @Override
-            public void onResponse(Call<ResponseRandomMeal> call, Response<ResponseRandomMeal> response) {
+            public void onResponse(Call<ResponseMeals> call, Response<ResponseMeals> response) {
                 if (response.isSuccessful() && response.body() != null && response.body().getMeals() != null && !response.body().getMeals().isEmpty()) {
                     callBack.onItemByNameSuccess(response.body().getMeals().get(0));
                 } else {
@@ -86,7 +86,7 @@ public class MealsRemoteDataSource {
             }
 
             @Override
-            public void onFailure(Call<ResponseRandomMeal> call, Throwable throwable) {
+            public void onFailure(Call<ResponseMeals> call, Throwable throwable) {
                 callBack.onItemByNameFailure(throwable.getMessage());
             }
         });
@@ -132,6 +132,20 @@ public class MealsRemoteDataSource {
             @Override
             public void onFailure(Call<ResponseMealInfoDto> call, Throwable throwable) {
                 callBack.onMealsByCountryFailure(throwable.getMessage());
+            }
+        });
+    }
+
+    public void makeNetworkCallForMealsByName(String name, NetworkCallBack networkCallBack){
+        mealService.searchMealsByName(name).enqueue(new Callback<ResponseMeals>() {
+            @Override
+            public void onResponse(Call<ResponseMeals> call, Response<ResponseMeals> response) {
+                networkCallBack.onSearchMealsByNameSuccess(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ResponseMeals> call, Throwable throwable) {
+                networkCallBack.onSearchMealsByNameFailure(throwable.getMessage());
             }
         });
     }

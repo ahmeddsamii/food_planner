@@ -4,13 +4,13 @@ import com.example.food_planner.model.dtos.MealDto;
 
 import java.util.List;
 
-public class ResponseRandomMeal {
+public class ResponseMeals {
     List<MealDto> meals;
 
-    public ResponseRandomMeal() {
+    public ResponseMeals() {
     }
 
-    public ResponseRandomMeal(List<MealDto> meals) {
+    public ResponseMeals(List<MealDto> meals) {
         this.meals = meals;
     }
 

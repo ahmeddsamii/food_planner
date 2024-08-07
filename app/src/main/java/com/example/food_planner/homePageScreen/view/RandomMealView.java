@@ -1,8 +1,8 @@
 package com.example.food_planner.homePageScreen.view;
 
-import com.example.food_planner.model.dto_repos.ResponseRandomMeal;
+import com.example.food_planner.model.dto_repos.ResponseMeals;
 
 public interface RandomMealView {
-    void onRandomMealSuccess(ResponseRandomMeal randomMeal);
+    void onRandomMealSuccess(ResponseMeals randomMeal);
     void onRandomMealFailure(String errMessage);
 }

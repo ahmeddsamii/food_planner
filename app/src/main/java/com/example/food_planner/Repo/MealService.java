@@ -4,17 +4,15 @@ import com.example.food_planner.model.dto_repos.ResponseCategory;
 import com.example.food_planner.model.dto_repos.ResponseCountry;
 import com.example.food_planner.model.dto_repos.ResponseIngredient;
 import com.example.food_planner.model.dto_repos.ResponseMealInfoDto;
-import com.example.food_planner.model.dto_repos.ResponseRandomMeal;
-import com.example.food_planner.model.dtos.MealDto;
+import com.example.food_planner.model.dto_repos.ResponseMeals;
 
-import io.reactivex.rxjava3.core.Single;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface MealService {
     @GET("random.php")
-    Call<ResponseRandomMeal> getRandomMeal();
+    Call<ResponseMeals> getRandomMeal();
 
     @GET("categories.php")
     Call<ResponseCategory> getAllCategories();
@@ -22,7 +20,7 @@ public interface MealService {
     @GET("random.php")
     Call<ResponseIngredient> getAllIngredients();
     @GET("search.php")
-    Call<ResponseRandomMeal> getByName(@Query("s") String name);
+    Call<ResponseMeals> getByName(@Query("s") String name);
 
 
     @GET("list.php?a=list")
@@ -33,4 +31,9 @@ public interface MealService {
 
     @GET("filter.php")
     Call<ResponseMealInfoDto> getMealsByCountry(@Query("a") String country);
+
+    @GET("search.php")
+    Call<ResponseMeals> searchMealsByName(@Query("s") String name);
+
+
 }

@@ -24,7 +24,7 @@ import com.example.food_planner.Repo.Repo;
 import com.example.food_planner.homePageScreen.presenter.HomePresenter;
 import com.example.food_planner.homePageScreen.view.adapters.CategoriesAdapter;
 import com.example.food_planner.model.dto_repos.ResponseCategory;
-import com.example.food_planner.model.dto_repos.ResponseRandomMeal;
+import com.example.food_planner.model.dto_repos.ResponseMeals;
 
 
 public class HomeFragment extends Fragment implements RandomMealView , AllCategoriesView{
@@ -69,7 +69,7 @@ public class HomeFragment extends Fragment implements RandomMealView , AllCatego
     }
 
     @Override
-    public void onRandomMealSuccess(ResponseRandomMeal randomMeal) {
+    public void onRandomMealSuccess(ResponseMeals randomMeal) {
         Glide.with(this).load(randomMeal.getMeals().get(0).getStrMealThumb()).into(imageView);
         title.setText(randomMeal.getMeals().get(0).getStrMeal());
         Log.i(TAG, "onSuccess: "+randomMeal.getMeals().get(0).getStrMeal());

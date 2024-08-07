@@ -1,6 +1,5 @@
 package com.example.food_planner.searchScreen.view;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,8 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.Toast;
 import com.example.food_planner.R;
 import com.example.food_planner.Repo.Repo;
+import com.example.food_planner.model.dtos.MealDto;
 import com.example.food_planner.searchScreen.presenter.SearchPresenter;
 import com.example.food_planner.model.dto_repos.ResponseCountry;
 import com.example.food_planner.model.dtos.CategoryDto;
@@ -24,7 +25,7 @@ import java.util.List;
 
 import io.reactivex.rxjava3.core.Observable;
 
-public class SearchFragment extends Fragment implements CategorySearchView, CountrySearchView {
+public class SearchFragment extends Fragment implements CategorySearchView, CountrySearchView, MealsSearchByNameView {
 
     RecyclerView mainRecyclerView;
     androidx.appcompat.widget.SearchView searchView;
@@ -36,9 +37,10 @@ public class SearchFragment extends Fragment implements CategorySearchView, Coun
     private CategoriesSearchAdapter categoriesAdapter;
     private SearchPresenter presenter;
     private CountrySearchAdapter countrySearchAdapter;
+    MealsSearchAdapter mealsSearchAdapter;
     List<CategoryDto> categories;
     List<CountryDto> countries;
-
+    List<MealDto> meals;
 
     public SearchFragment() {
     }
@@ -46,7 +48,7 @@ public class SearchFragment extends Fragment implements CategorySearchView, Coun
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = new SearchPresenter(Repo.getInstance(getContext()), this, this);
+        presenter = new SearchPresenter(Repo.getInstance(getContext()), this, this, this);
     }
 
     @Override
@@ -68,7 +70,6 @@ public class SearchFragment extends Fragment implements CategorySearchView, Coun
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    // Show categories
                     mainRecyclerView.setVisibility(View.VISIBLE);
                     if (categoriesAdapter == null) {
                         categoriesAdapter = new CategoriesSearchAdapter(new ArrayList<>(), getContext());
@@ -84,7 +85,6 @@ public class SearchFragment extends Fragment implements CategorySearchView, Coun
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    // Show countries
                     mainRecyclerView.setVisibility(View.VISIBLE);
                     if (countrySearchAdapter == null) {
                         countrySearchAdapter = new CountrySearchAdapter(new ArrayList<>(), getContext());
@@ -100,7 +100,17 @@ public class SearchFragment extends Fragment implements CategorySearchView, Coun
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    mainRecyclerView.setVisibility(View.GONE);
+                    if (mealsSearchAdapter == null) {
+                        mealsSearchAdapter = new MealsSearchAdapter(new ArrayList<>(), getContext());
+                    }
+                    mainRecyclerView.setAdapter(mealsSearchAdapter);
+                    mainRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                    // Clear the adapter data when the chip is checked
+                    mealsSearchAdapter.setData(new ArrayList<>());
+                    // Only perform search if there's text in the SearchView
+                    if (!searchView.getQuery().toString().isEmpty()) {
+                        presenter.getMealSearchByName(searchView.getQuery().toString());
+                    }
                 }
             }
         });
@@ -120,27 +130,53 @@ public class SearchFragment extends Fragment implements CategorySearchView, Coun
                 return false;
             }
 
-            @SuppressLint("CheckResult")
             @Override
             public boolean onQueryTextChange(String newText) {
-                if (categoriesAdapter != null) {
-                    //categoriesAdapter.getFilter().filter(newText);
-                    Observable.fromIterable(categories).
-                            filter(categoryDto -> categoryDto.getStrCategory().toLowerCase().contains(newText.toString()))
-                            .toList()
-                            .subscribe(filteredlist -> categoriesAdapter.setData(filteredlist),
-                                    error -> Log.e(TAG, "Error filtering categories: " + error.getMessage()));
+                if (categoriesAdapter != null && categoryChip.isChecked()) {
+                    filterCategories(newText);
                 }
-                if (countrySearchAdapter != null) {
-                    Observable.fromIterable(countries)
-                            .filter(countryDto -> countryDto.getStrArea().toLowerCase().contains(newText))
-                            .toList()
-                            .subscribe(filteredlist -> countrySearchAdapter.setData(filteredlist),
-                                    error-> Log.e(TAG, "onQueryTextChange: "+error.getMessage() ));
+                if (countrySearchAdapter != null && countriesChip.isChecked()) {
+                    filterCountries(newText);
+                }
+                if (mealsChip.isChecked()) {
+                    if (!newText.isEmpty()) {
+                        presenter.getMealSearchByName(newText);
+
+
+                    } else {
+                        // Clear the adapter data when the search text is empty
+                        if (mealsSearchAdapter != null) {
+                            mealsSearchAdapter.setData(new ArrayList<>());
+                        }
+                    }
                 }
                 return true;
             }
         });
+    }
+
+    private void filterCategories(String newText) {
+        Observable.fromIterable(categories)
+                .filter(categoryDto -> categoryDto.getStrCategory().toLowerCase().contains(newText.toLowerCase()))
+                .toList()
+                .subscribe(filteredlist -> categoriesAdapter.setData(filteredlist),
+                        error -> Log.e(TAG, "Error filtering categories: " + error.getMessage()));
+    }
+
+    private void filterCountries(String newText) {
+        Observable.fromIterable(countries)
+                .filter(countryDto -> countryDto.getStrArea().toLowerCase().contains(newText.toLowerCase()))
+                .toList()
+                .subscribe(filteredlist -> countrySearchAdapter.setData(filteredlist),
+                        error-> Log.e(TAG, "Error filtering countries: " + error.getMessage()));
+    }
+
+    private void filterMeals(String newText){
+        Observable.fromIterable(meals)
+                .filter(mealDto -> mealDto.getStrMeal().toLowerCase().contains(newText.toLowerCase()))
+                .toList()
+                .subscribe(filteredList -> mealsSearchAdapter.setData(filteredList),
+                        error -> Log.e(TAG, "Error filtering meals: "+error.getMessage() ));
     }
 
     @Override
@@ -153,23 +189,35 @@ public class SearchFragment extends Fragment implements CategorySearchView, Coun
 
     @Override
     public void onCategorySearchViewFailure(String errMessage) {
-        Log.i(TAG, "onCategorySearchViewFailure: " + errMessage);
+        Log.e(TAG, "Category search failed: " + errMessage);
+        Toast.makeText(getContext(), "Failed to load categories: " + errMessage, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onCountrySearchViewSuccess(ResponseCountry responseCountry) {
-        Log.i(TAG, "onCountrySearchViewSuccess: ");
         if (countrySearchAdapter != null) {
             this.countries = responseCountry.getCountries();
             countrySearchAdapter.setData(responseCountry.getCountries());
-        } else {
-            countrySearchAdapter = new CountrySearchAdapter(responseCountry.getCountries(), getContext());
-            mainRecyclerView.setAdapter(countrySearchAdapter);
         }
     }
 
     @Override
     public void onCountrySearchViewFailure(String errMessage) {
-        Log.i(TAG, "onCountrySearchViewFailure: " + errMessage);
+        Log.e(TAG, "Country search failed: " + errMessage);
+        Toast.makeText(getContext(), "Failed to load countries: " + errMessage, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onMealSearchByNameSuccess(List<MealDto> meals) {
+        if (mealsSearchAdapter != null) {
+            this.meals = meals;
+            mealsSearchAdapter.setData(meals);
+        }
+    }
+
+    @Override
+    public void onMealSearchByNameFailure(String message) {
+        Log.e(TAG, "Meal search failed: " + message);
+        Toast.makeText(getContext(), "Failed to search meals: " + message, Toast.LENGTH_SHORT).show();
     }
 }

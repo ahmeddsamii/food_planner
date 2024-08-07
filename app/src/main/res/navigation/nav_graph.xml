@@ -56,6 +56,9 @@
         <argument
             android:name="categoryDto"
             app:argType="com.example.food_planner.model.dtos.CategoryDto" />
+        <action
+            android:id="@+id/action_categoryDetailsFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/mealsByCountryScreenFragment"

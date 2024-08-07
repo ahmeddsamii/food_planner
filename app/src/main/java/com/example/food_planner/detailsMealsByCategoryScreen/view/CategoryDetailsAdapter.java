@@ -21,9 +21,12 @@ public class CategoryDetailsAdapter extends RecyclerView.Adapter<CategoryDetails
     private List<MealInfoDto> mealInfoDtos;
     private List<MealInfoDto> filteredList;
     private Context context;
+    onMealsCategoryHomeClickListener listener;
 
-    public CategoryDetailsAdapter(List<MealInfoDto> mealInfoDtos, Context context) {
+
+    public CategoryDetailsAdapter(List<MealInfoDto> mealInfoDtos, Context context, onMealsCategoryHomeClickListener listener) {
         this.context = context;
+        this.listener = listener;
         this.mealInfoDtos = new ArrayList<>(mealInfoDtos);
         this.filteredList = new ArrayList<>(mealInfoDtos);
     }
@@ -49,7 +52,7 @@ public class CategoryDetailsAdapter extends RecyclerView.Adapter<CategoryDetails
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                listener.getMessage("You have to search to get this meal details");
             }
         });
     }
