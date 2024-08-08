@@ -8,8 +8,6 @@ import com.example.food_planner.model.dtos.MealDto;
 
 import java.util.List;
 
-import retrofit2.Call;
-
 public class Repo {
     FirebaseDataSource firebaseDataSource;
     MealsRemoteDataSource mealsRemoteDataSource;
@@ -44,7 +42,7 @@ public class Repo {
         mealsRemoteDataSource.makeNetworkCallForCategories(callBack);
     }
 
-    public void getAllIngredients(NetworkCallBack networkCallBack){
+    public void getIngredient(NetworkCallBack networkCallBack){
         mealsRemoteDataSource.makeNetworkCallForIngredients(networkCallBack);
     }
 
@@ -92,6 +90,10 @@ public class Repo {
 
     public void getSearchMealsByName(String name , NetworkCallBack networkCallBack){
         mealsRemoteDataSource.makeNetworkCallForMealsByName(name,networkCallBack);
+    }
+
+    public void getAllIngredients(NetworkCallBack callBack){
+        mealsRemoteDataSource.makeCallForAllIngredients(callBack);
     }
 
 

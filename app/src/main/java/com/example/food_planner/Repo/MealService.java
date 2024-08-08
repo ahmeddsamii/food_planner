@@ -1,5 +1,6 @@
 package com.example.food_planner.Repo;
 
+import com.example.food_planner.model.dto_repos.ResponseAllIngredients;
 import com.example.food_planner.model.dto_repos.ResponseCategory;
 import com.example.food_planner.model.dto_repos.ResponseCountry;
 import com.example.food_planner.model.dto_repos.ResponseIngredient;
@@ -18,7 +19,7 @@ public interface MealService {
     Call<ResponseCategory> getAllCategories();
 
     @GET("random.php")
-    Call<ResponseIngredient> getAllIngredients();
+    Call<ResponseIngredient> getIngredients();
     @GET("search.php")
     Call<ResponseMeals> getByName(@Query("s") String name);
 
@@ -34,6 +35,9 @@ public interface MealService {
 
     @GET("search.php")
     Call<ResponseMeals> searchMealsByName(@Query("s") String name);
+
+    @GET("list.php?i=list")
+    Call<ResponseAllIngredients> getAllIngredient();
 
 
 }

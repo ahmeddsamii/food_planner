@@ -4,6 +4,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
@@ -15,6 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.example.food_planner.R;
 import com.example.food_planner.Repo.Repo;
+import com.example.food_planner.model.dto_repos.ResponseAllIngredients;
+import com.example.food_planner.model.dtos.AllIngredientDto;
 import com.example.food_planner.model.dtos.MealDto;
 import com.example.food_planner.searchScreen.presenter.SearchPresenter;
 import com.example.food_planner.model.dto_repos.ResponseCountry;
@@ -26,7 +29,7 @@ import java.util.List;
 
 import io.reactivex.rxjava3.core.Observable;
 
-public class SearchFragment extends Fragment implements CategorySearchView, CountrySearchView, MealsSearchByNameView {
+public class SearchFragment extends Fragment implements CategorySearchView, CountrySearchView, MealsSearchByNameView , AllIngredientsSearchView{
 
     RecyclerView mainRecyclerView;
     androidx.appcompat.widget.SearchView searchView;
@@ -43,6 +46,8 @@ public class SearchFragment extends Fragment implements CategorySearchView, Coun
     List<CountryDto> countries;
     List<MealDto> meals;
     TextView visibleText;
+    AllIngredientsAdapter allIngredientsAdapter;
+    List<AllIngredientDto> allIngredients;
 
     public SearchFragment() {
     }
@@ -50,7 +55,7 @@ public class SearchFragment extends Fragment implements CategorySearchView, Coun
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = new SearchPresenter(Repo.getInstance(getContext()), this, this, this);
+        presenter = new SearchPresenter(Repo.getInstance(getContext()), this, this, this , this);
     }
 
     @Override
@@ -123,7 +128,13 @@ public class SearchFragment extends Fragment implements CategorySearchView, Coun
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    mainRecyclerView.setVisibility(View.GONE);
+                    mainRecyclerView.setVisibility(View.VISIBLE);
+                    if (allIngredientsAdapter == null) {
+                        allIngredientsAdapter = new AllIngredientsAdapter(new ArrayList<>(), getContext());
+                        presenter.getAllIngredients();
+                    }
+                    mainRecyclerView.setAdapter(allIngredientsAdapter);
+                    mainRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
                 }
             }
         });
@@ -142,7 +153,8 @@ public class SearchFragment extends Fragment implements CategorySearchView, Coun
                 if (countrySearchAdapter != null && countriesChip.isChecked()) {
                     filterCountries(newText);
                 }
-                if (mealsChip.isChecked()) {
+                if (mealsChip.isChecked())
+                {
                     if (!newText.isEmpty()) {
                         presenter.getMealSearchByName(newText);
 
@@ -153,6 +165,10 @@ public class SearchFragment extends Fragment implements CategorySearchView, Coun
                             mealsSearchAdapter.setData(new ArrayList<>());
                         }
                     }
+                }
+
+                if(allIngredientsAdapter != null && ingredientsChip.isChecked()){
+                    filterIngredients(newText);
                 }
                 return true;
             }
@@ -172,6 +188,14 @@ public class SearchFragment extends Fragment implements CategorySearchView, Coun
                 .filter(countryDto -> countryDto.getStrArea().toLowerCase().contains(newText.toLowerCase()))
                 .toList()
                 .subscribe(filteredlist -> countrySearchAdapter.setData(filteredlist),
+                        error-> Log.e(TAG, "Error filtering countries: " + error.getMessage()));
+    }
+
+    private void filterIngredients(String newText) {
+        Observable.fromIterable(allIngredients)
+                .filter(allIngredientDto -> allIngredientDto.getStrIngredient().toLowerCase().contains(newText.toLowerCase()))
+                .toList()
+                .subscribe(filteredlist -> allIngredientsAdapter.setData(filteredlist),
                         error-> Log.e(TAG, "Error filtering countries: " + error.getMessage()));
     }
 
@@ -217,5 +241,18 @@ public class SearchFragment extends Fragment implements CategorySearchView, Coun
         Log.e(TAG, "Meal search failed: " + message);
         mealsSearchAdapter.setData(new ArrayList<>());
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onAllIngredientsSuccess(ResponseAllIngredients allIngredients) {
+        if(allIngredientsAdapter != null){
+            this.allIngredients = allIngredients.getAllIngredients();
+            allIngredientsAdapter.setData(allIngredients.getAllIngredients());
+        }
+    }
+
+    @Override
+    public void onAllIngredientsFailure(String errMessage) {
+        Toast.makeText(getContext(), errMessage, Toast.LENGTH_SHORT).show();
     }
 }

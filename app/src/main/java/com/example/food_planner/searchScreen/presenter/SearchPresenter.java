@@ -2,7 +2,9 @@ package com.example.food_planner.searchScreen.presenter;
 
 import com.example.food_planner.Repo.NetworkCallBack;
 import com.example.food_planner.Repo.Repo;
+import com.example.food_planner.model.dto_repos.ResponseAllIngredients;
 import com.example.food_planner.model.dto_repos.ResponseMealInfoDto;
+import com.example.food_planner.searchScreen.view.AllIngredientsSearchView;
 import com.example.food_planner.searchScreen.view.CategorySearchView;
 import com.example.food_planner.searchScreen.view.CountrySearchView;
 import com.example.food_planner.model.dto_repos.ResponseCategory;
@@ -14,15 +16,17 @@ import com.example.food_planner.searchScreen.view.MealsSearchByNameView;
 
 public class SearchPresenter implements NetworkCallBack {
     Repo repo;
-    CategorySearchView searchView;
+    CategorySearchView categorySearchView;
     CountrySearchView countrySearchView;
     MealsSearchByNameView mealsSearchByNameView;
+    AllIngredientsSearchView allIngredientsSearchView;
 
-    public SearchPresenter(Repo repo, CategorySearchView searchView, CountrySearchView countrySearchView, MealsSearchByNameView mealsSearchByNameView){
+    public SearchPresenter(Repo repo, CategorySearchView categorySearchView, CountrySearchView countrySearchView, MealsSearchByNameView mealsSearchByNameView , AllIngredientsSearchView allIngredientsSearchView){
         this.repo = repo;
-        this.searchView = searchView;
+        this.categorySearchView = categorySearchView;
         this.countrySearchView = countrySearchView;
         this.mealsSearchByNameView = mealsSearchByNameView;
+        this.allIngredientsSearchView = allIngredientsSearchView;
     }
 
 
@@ -50,21 +54,21 @@ public class SearchPresenter implements NetworkCallBack {
 
     @Override
     public void onAllCategoriesSuccess(ResponseCategory responseCategory) {
-        searchView.onCategorySearchViewSuccess(responseCategory.getCategories());
+        categorySearchView.onCategorySearchViewSuccess(responseCategory.getCategories());
     }
 
     @Override
     public void onAllCategoriesFailure(String errMessage) {
-        searchView.onCategorySearchViewFailure(errMessage);
+        categorySearchView.onCategorySearchViewFailure(errMessage);
     }
 
     @Override
-    public void onAllIngredientsSuccess(ResponseIngredient ingredients) {
+    public void onIngredientSuccess(ResponseIngredient ingredients) {
 
     }
 
     @Override
-    public void onAllIngredientFailure(String errMessage) {
+    public void onIngredientFailure(String errMessage) {
 
     }
 
@@ -117,8 +121,22 @@ public class SearchPresenter implements NetworkCallBack {
         }
     }
 
+    public void getAllIngredients(){
+        repo.getAllIngredients(this);
+    }
+
     @Override
     public void onSearchMealsByNameFailure(String errMessage) {
         mealsSearchByNameView.onMealSearchByNameFailure(errMessage != null ? errMessage : "Unknown error occurred");
+    }
+
+    @Override
+    public void onAllIngredientSuccess(ResponseAllIngredients allIngredients) {
+        allIngredientsSearchView.onAllIngredientsSuccess(allIngredients);
+    }
+
+    @Override
+    public void onAllIngredientsFailure(String errMessage) {
+        allIngredientsSearchView.onAllIngredientsFailure(errMessage);
     }
 }

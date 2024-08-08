@@ -1,5 +1,6 @@
 package com.example.food_planner.Repo;
 
+import com.example.food_planner.model.dto_repos.ResponseAllIngredients;
 import com.example.food_planner.model.dto_repos.ResponseCategory;
 import com.example.food_planner.model.dto_repos.ResponseCountry;
 import com.example.food_planner.model.dto_repos.ResponseIngredient;
@@ -14,8 +15,8 @@ public interface NetworkCallBack {
     void onAllCategoriesSuccess(ResponseCategory responseCategory);
     void onAllCategoriesFailure(String errMessage);
 
-    void onAllIngredientsSuccess(ResponseIngredient ingredients);
-    void onAllIngredientFailure(String errMessage);
+    void onIngredientSuccess(ResponseIngredient ingredients);
+    void onIngredientFailure(String errMessage);
 
     void onItemByNameSuccess(MealDto mealDto);
     void onItemByNameFailure(String errMessage);
@@ -33,4 +34,7 @@ public interface NetworkCallBack {
 
     void onSearchMealsByNameSuccess(ResponseMeals responseMeals);
     void onSearchMealsByNameFailure(String errMessage);
+
+    void onAllIngredientSuccess(ResponseAllIngredients allIngredients);
+    void onAllIngredientsFailure(String errMessage);
 }

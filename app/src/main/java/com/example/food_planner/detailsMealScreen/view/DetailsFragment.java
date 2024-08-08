@@ -32,7 +32,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 import java.util.List;
 
 
-public class DetailsFragment extends Fragment implements AllIngredientsView, FavoriteView {
+public class DetailsFragment extends Fragment implements IngredientsView, FavoriteView {
     private static final String TAG = "DetailsFragment";
 
     // UI Components
@@ -79,7 +79,7 @@ public class DetailsFragment extends Fragment implements AllIngredientsView, Fav
 
     private void loadData() {
         currentMeal = DetailsFragmentArgs.fromBundle(getArguments()).getMealDto();
-        ingredientPresenter.getAllIngredients();
+        ingredientPresenter.getIngredients();
     }
 
     private void setupListeners() {

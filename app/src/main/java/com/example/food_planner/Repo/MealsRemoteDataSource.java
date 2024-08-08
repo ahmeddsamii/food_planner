@@ -1,5 +1,6 @@
 package com.example.food_planner.Repo;
 
+import com.example.food_planner.model.dto_repos.ResponseAllIngredients;
 import com.example.food_planner.model.dto_repos.ResponseCategory;
 import com.example.food_planner.model.dto_repos.ResponseCountry;
 import com.example.food_planner.model.dto_repos.ResponseIngredient;
@@ -61,15 +62,15 @@ public class MealsRemoteDataSource {
 
 
     public void makeNetworkCallForIngredients(NetworkCallBack networkCallBack){
-        mealService.getAllIngredients().enqueue(new Callback<ResponseIngredient>() {
+        mealService.getIngredients().enqueue(new Callback<ResponseIngredient>() {
             @Override
             public void onResponse(Call<ResponseIngredient> call, Response<ResponseIngredient> response) {
-                networkCallBack.onAllIngredientsSuccess(response.body());
+                networkCallBack.onIngredientSuccess(response.body());
             }
 
             @Override
             public void onFailure(Call<ResponseIngredient> call, Throwable throwable) {
-                networkCallBack.onAllIngredientFailure(throwable.getMessage());
+                networkCallBack.onIngredientFailure(throwable.getMessage());
             }
         });
     }
@@ -146,6 +147,20 @@ public class MealsRemoteDataSource {
             @Override
             public void onFailure(Call<ResponseMeals> call, Throwable throwable) {
                 networkCallBack.onSearchMealsByNameFailure(throwable.getMessage());
+            }
+        });
+    }
+
+    public void makeCallForAllIngredients(NetworkCallBack callBack){
+        mealService.getAllIngredient().enqueue(new Callback<ResponseAllIngredients>() {
+            @Override
+            public void onResponse(Call<ResponseAllIngredients> call, Response<ResponseAllIngredients> response) {
+                callBack.onAllIngredientSuccess(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ResponseAllIngredients> call, Throwable throwable) {
+                callBack.onAllIngredientsFailure(throwable.getMessage());
             }
         });
     }

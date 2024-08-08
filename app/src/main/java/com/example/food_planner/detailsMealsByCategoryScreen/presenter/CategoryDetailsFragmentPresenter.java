@@ -3,6 +3,7 @@ package com.example.food_planner.detailsMealsByCategoryScreen.presenter;
 import com.example.food_planner.Repo.NetworkCallBack;
 import com.example.food_planner.Repo.Repo;
 import com.example.food_planner.detailsMealsByCategoryScreen.view.CategoryDetailsView;
+import com.example.food_planner.model.dto_repos.ResponseAllIngredients;
 import com.example.food_planner.model.dto_repos.ResponseCategory;
 import com.example.food_planner.model.dto_repos.ResponseCountry;
 import com.example.food_planner.model.dto_repos.ResponseIngredient;
@@ -51,12 +52,12 @@ public class CategoryDetailsFragmentPresenter implements NetworkCallBack {
     }
 
     @Override
-    public void onAllIngredientsSuccess(ResponseIngredient ingredients) {
+    public void onIngredientSuccess(ResponseIngredient ingredients) {
 
     }
 
     @Override
-    public void onAllIngredientFailure(String errMessage) {
+    public void onIngredientFailure(String errMessage) {
 
     }
 
@@ -107,6 +108,16 @@ public class CategoryDetailsFragmentPresenter implements NetworkCallBack {
 
     @Override
     public void onSearchMealsByNameFailure(String errMessage) {
+
+    }
+
+    @Override
+    public void onAllIngredientSuccess(ResponseAllIngredients allIngredients) {
+
+    }
+
+    @Override
+    public void onAllIngredientsFailure(String errMessage) {
 
     }
 }

@@ -2,7 +2,8 @@ package com.example.food_planner.homePageScreen.presenter;
 
 import com.example.food_planner.Repo.NetworkCallBack;
 import com.example.food_planner.Repo.Repo;
-import com.example.food_planner.detailsMealScreen.view.AllIngredientsView;
+import com.example.food_planner.detailsMealScreen.view.IngredientsView;
+import com.example.food_planner.model.dto_repos.ResponseAllIngredients;
 import com.example.food_planner.model.dto_repos.ResponseCategory;
 import com.example.food_planner.model.dto_repos.ResponseCountry;
 import com.example.food_planner.model.dto_repos.ResponseIngredient;
@@ -11,17 +12,16 @@ import com.example.food_planner.model.dto_repos.ResponseMeals;
 import com.example.food_planner.model.dtos.MealDto;
 
 public class IngredientPresenter implements NetworkCallBack {
-    AllIngredientsView view;
+    IngredientsView view;
     Repo repo;
 
-    public IngredientPresenter(AllIngredientsView view,Repo repo){
+    public IngredientPresenter(IngredientsView view, Repo repo) {
         this.repo = repo;
         this.view = view;
     }
 
-
-    public void getAllIngredients(){
-        repo.getAllIngredients(this);
+    public void getIngredients() {
+        repo.getIngredient(this);
     }
 
     @Override
@@ -45,12 +45,12 @@ public class IngredientPresenter implements NetworkCallBack {
     }
 
     @Override
-    public void onAllIngredientsSuccess(ResponseIngredient ingredients) {
+    public void onIngredientSuccess(ResponseIngredient ingredients) {
         view.onAllIngredientsSuccess(ingredients);
     }
 
     @Override
-    public void onAllIngredientFailure(String errMessage) {
+    public void onIngredientFailure(String errMessage) {
         view.onAllIngredientsFailure(errMessage);
     }
 
@@ -101,6 +101,16 @@ public class IngredientPresenter implements NetworkCallBack {
 
     @Override
     public void onSearchMealsByNameFailure(String errMessage) {
+
+    }
+
+    @Override
+    public void onAllIngredientSuccess(ResponseAllIngredients allIngredients) {
+
+    }
+
+    @Override
+    public void onAllIngredientsFailure(String errMessage) {
 
     }
 }
