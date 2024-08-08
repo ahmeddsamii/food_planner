@@ -14,17 +14,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.food_planner.R;
-import com.example.food_planner.model.dtos.IngredientDto;
 import com.example.food_planner.model.dtos.MealDto;
 
 import java.util.List;
 
 public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.IngredientHolder> {
-    //List<IngredientWithMeasure> ingredientWithMeasureList;
     List<MealDto> responseIngredient;
     private static final String TAG = "IngredientsAdapter";
     Context context;
-    public IngredientsAdapter(List<MealDto> responseIngredient, Context context){
+
+    public IngredientsAdapter(List<MealDto> responseIngredient, Context context) {
         this.responseIngredient = responseIngredient;
         this.context = context;
     }
@@ -33,116 +32,179 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
     @Override
     public IngredientHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View v = layoutInflater.inflate(R.layout.ingredient_item,parent,false);
+        View v = layoutInflater.inflate(R.layout.ingredient_item, parent, false);
         IngredientHolder holder = new IngredientHolder(v);
         return holder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull IngredientHolder holder, int position) {
+        MealDto currentMeal = responseIngredient.get(position);
 
-
-
-        holder.ingredient_details.setText(responseIngredient.get(position).getStrIngredient1());
-        Glide.with(context).load("https://www.themealdb.com/images/ingredients/" + responseIngredient.get(position).getStrIngredient1() + "-Small.png")
+        // Ingredient 1
+        if (!currentMeal.getStrIngredient1().isEmpty()) {
+            holder.ingredient_details.setText(currentMeal.getStrIngredient1());
+            Glide.with(context)
+                    .load("https://www.themealdb.com/images/ingredients/" + currentMeal.getStrIngredient1() + "-Small.png")
                     .into(holder.imageView1);
+            holder.cardView_1.setVisibility(View.VISIBLE);
+        } else {
+            holder.cardView_1.setVisibility(View.GONE);
+        }
 
-        Log.i(TAG, "Ingredient1: " + responseIngredient.get(position).getStrIngredient1());
-
-        if(!responseIngredient.get(position).getStrIngredient2().isEmpty()){
-            holder.ingredient_details2.setText(responseIngredient.get(position).getStrIngredient2());
-            Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+responseIngredient.get(position).getStrIngredient2()+"-Small.png")
+        // Ingredient 2
+        if (!currentMeal.getStrIngredient2().isEmpty()) {
+            holder.ingredient_details2.setText(currentMeal.getStrIngredient2());
+            Glide.with(context)
+                    .load("https://www.themealdb.com/images/ingredients/" + currentMeal.getStrIngredient2() + "-Small.png")
                     .into(holder.imageView2);
+            holder.cardView_2.setVisibility(View.VISIBLE);
+        } else {
+            holder.cardView_2.setVisibility(View.GONE);
         }
 
-
-        if(!responseIngredient.get(position).getStrIngredient3().isEmpty()){
-            holder.ingredient_details3.setText(responseIngredient.get(position).getStrIngredient3());
-            Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+responseIngredient.get(position).getStrIngredient3()+"-Small.png")
+        // Ingredient 3
+        if (!currentMeal.getStrIngredient3().isEmpty()) {
+            holder.ingredient_details3.setText(currentMeal.getStrIngredient3());
+            Glide.with(context)
+                    .load("https://www.themealdb.com/images/ingredients/" + currentMeal.getStrIngredient3() + "-Small.png")
                     .into(holder.imageView3);
+            holder.cardView_3.setVisibility(View.VISIBLE);
+        } else {
+            holder.cardView_3.setVisibility(View.GONE);
         }
 
-        if(!responseIngredient.get(position).getStrIngredient4().isEmpty()){
-            holder.ingredient_details4.setText(responseIngredient.get(position).getStrIngredient4());
-            Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+responseIngredient.get(position).getStrIngredient4()+"-Small.png")
+        // Ingredient 4
+        if (!currentMeal.getStrIngredient4().isEmpty()) {
+            holder.ingredient_details4.setText(currentMeal.getStrIngredient4());
+            Glide.with(context)
+                    .load("https://www.themealdb.com/images/ingredients/" + currentMeal.getStrIngredient4() + "-Small.png")
                     .into(holder.imageView4);
+            holder.cardView_4.setVisibility(View.VISIBLE);
+        } else {
+            holder.cardView_4.setVisibility(View.GONE);
         }
 
-        if(!responseIngredient.get(position).getStrIngredient5().isEmpty()){
-            holder.ingredient_details5.setText(responseIngredient.get(position).getStrIngredient5());
-            Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+responseIngredient.get(position).getStrIngredient5()+"-Small.png")
+        // Ingredient 5
+        if (!currentMeal.getStrIngredient5().isEmpty()) {
+            holder.ingredient_details5.setText(currentMeal.getStrIngredient5());
+            Glide.with(context)
+                    .load("https://www.themealdb.com/images/ingredients/" + currentMeal.getStrIngredient5() + "-Small.png")
                     .into(holder.imageView5);
+            holder.cardView_5.setVisibility(View.VISIBLE);
+        } else {
+            holder.cardView_5.setVisibility(View.GONE);
         }
 
-        if(!responseIngredient.get(position).getStrIngredient6().isEmpty()){
-            holder.ingredient_details6.setText(responseIngredient.get(position).getStrIngredient6());
-            Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+responseIngredient.get(position).getStrIngredient6()+"-Small.png")
+        // Ingredient 6
+        if (!currentMeal.getStrIngredient6().isEmpty()) {
+            holder.ingredient_details6.setText(currentMeal.getStrIngredient6());
+            Glide.with(context)
+                    .load("https://www.themealdb.com/images/ingredients/" + currentMeal.getStrIngredient6() + "-Small.png")
                     .into(holder.imageView6);
+            holder.cardView_6.setVisibility(View.VISIBLE);
+        } else {
+            holder.cardView_6.setVisibility(View.GONE);
         }
 
-        if(!responseIngredient.get(position).getStrIngredient7().isEmpty()){
-            holder.ingredient_details7.setText(responseIngredient.get(position).getStrIngredient7());
-            Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+responseIngredient.get(position).getStrIngredient7()+"-Small.png")
+        // Ingredient 7
+        if (!currentMeal.getStrIngredient7().isEmpty()) {
+            holder.ingredient_details7.setText(currentMeal.getStrIngredient7());
+            Glide.with(context)
+                    .load("https://www.themealdb.com/images/ingredients/" + currentMeal.getStrIngredient7() + "-Small.png")
                     .into(holder.imageView7);
+            holder.cardView_7.setVisibility(View.VISIBLE);
+        } else {
+            holder.cardView_7.setVisibility(View.GONE);
         }
 
-
-        if(!responseIngredient.get(position).getStrIngredient8().isEmpty()){
-            holder.ingredient_details8.setText(responseIngredient.get(position).getStrIngredient8());
-            Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+responseIngredient.get(position).getStrIngredient8()+"-Small.png")
+        // Ingredient 8
+        if (!currentMeal.getStrIngredient8().isEmpty()) {
+            holder.ingredient_details8.setText(currentMeal.getStrIngredient8());
+            Glide.with(context)
+                    .load("https://www.themealdb.com/images/ingredients/" + currentMeal.getStrIngredient8() + "-Small.png")
                     .into(holder.imageView8);
+            holder.cardView_8.setVisibility(View.VISIBLE);
+        } else {
+            holder.cardView_8.setVisibility(View.GONE);
         }
 
-        if(!responseIngredient.get(position).getStrIngredient9().isEmpty()){
-            holder.ingredient_details9.setText(responseIngredient.get(position).getStrIngredient9());
-            Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+responseIngredient.get(position).getStrIngredient9()+"-Small.png")
+        // Ingredient 9
+        if (!currentMeal.getStrIngredient9().isEmpty()) {
+            holder.ingredient_details9.setText(currentMeal.getStrIngredient9());
+            Glide.with(context)
+                    .load("https://www.themealdb.com/images/ingredients/" + currentMeal.getStrIngredient9() + "-Small.png")
                     .into(holder.imageView9);
+            holder.cardView_9.setVisibility(View.VISIBLE);
+        } else {
+            holder.cardView_9.setVisibility(View.GONE);
         }
 
-
-        if(!responseIngredient.get(position).getStrIngredient10().isEmpty()){
-            holder.ingredient_details10.setText(responseIngredient.get(position).getStrIngredient10());
-            Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+responseIngredient.get(position).getStrIngredient10()+"-Small.png")
+        // Ingredient 10
+        if (!currentMeal.getStrIngredient10().isEmpty()) {
+            holder.ingredient_details10.setText(currentMeal.getStrIngredient10());
+            Glide.with(context)
+                    .load("https://www.themealdb.com/images/ingredients/" + currentMeal.getStrIngredient10() + "-Small.png")
                     .into(holder.imageView10);
+            holder.cardView_10.setVisibility(View.VISIBLE);
+        } else {
+            holder.cardView_10.setVisibility(View.GONE);
         }
 
-
-        if(!responseIngredient.get(position).getStrIngredient11().isEmpty()){
-            holder.ingredient_details11.setText(responseIngredient.get(position).getStrIngredient11());
-            Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+responseIngredient.get(position).getStrIngredient11()+"-Small.png")
+        // Ingredient 11
+        if (!currentMeal.getStrIngredient11().isEmpty()) {
+            holder.ingredient_details11.setText(currentMeal.getStrIngredient11());
+            Glide.with(context)
+                    .load("https://www.themealdb.com/images/ingredients/" + currentMeal.getStrIngredient11() + "-Small.png")
                     .into(holder.imageView11);
+            holder.cardView_11.setVisibility(View.VISIBLE);
+        } else {
+            holder.cardView_11.setVisibility(View.GONE);
         }
 
-        if(!responseIngredient.get(position).getStrIngredient12().isEmpty()){
-            holder.ingredient_details12.setText(responseIngredient.get(position).getStrIngredient12());
-            Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+responseIngredient.get(position).getStrIngredient12()+"-Small.png")
+        // Ingredient 12
+        if (!currentMeal.getStrIngredient12().isEmpty()) {
+            holder.ingredient_details12.setText(currentMeal.getStrIngredient12());
+            Glide.with(context)
+                    .load("https://www.themealdb.com/images/ingredients/" + currentMeal.getStrIngredient12() + "-Small.png")
                     .into(holder.imageView12);
+            holder.cardView_12.setVisibility(View.VISIBLE);
+        } else {
+            holder.cardView_12.setVisibility(View.GONE);
         }
 
-
-        if(!responseIngredient.get(position).getStrIngredient13().isEmpty()){
-            holder.ingredient_details13.setText(responseIngredient.get(position).getStrIngredient13());
-            Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+responseIngredient.get(position).getStrIngredient13()+"-Small.png")
+        // Ingredient 13
+        if (!currentMeal.getStrIngredient13().isEmpty()) {
+            holder.ingredient_details13.setText(currentMeal.getStrIngredient13());
+            Glide.with(context)
+                    .load("https://www.themealdb.com/images/ingredients/" + currentMeal.getStrIngredient13() + "-Small.png")
                     .into(holder.imageView13);
+            holder.cardView_13.setVisibility(View.VISIBLE);
+        } else {
+            holder.cardView_13.setVisibility(View.GONE);
         }
 
-
-        if(!responseIngredient.get(position).getStrIngredient14().isEmpty()){
-            holder.ingredient_details14.setText(responseIngredient.get(position).getStrIngredient14());
-            Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+responseIngredient.get(position).getStrIngredient14()+"-Small.png")
+        // Ingredient 14
+        if (!currentMeal.getStrIngredient14().isEmpty()) {
+            holder.ingredient_details14.setText(currentMeal.getStrIngredient14());
+            Glide.with(context)
+                    .load("https://www.themealdb.com/images/ingredients/" + currentMeal.getStrIngredient14() + "-Small.png")
                     .into(holder.imageView14);
+            holder.cardView_14.setVisibility(View.VISIBLE);
+        } else {
+            holder.cardView_14.setVisibility(View.GONE);
         }
 
-        if(!responseIngredient.get(position).getStrIngredient15().isEmpty()) {
-            holder.ingredient_details15.setText(responseIngredient.get(position).getStrIngredient15());
-            Glide.with(context).load("https://www.themealdb.com/images/ingredients/" + responseIngredient.get(position).getStrIngredient15() + "-Small.png")
+        // Ingredient 15
+        if (!currentMeal.getStrIngredient15().isEmpty()) {
+            holder.ingredient_details15.setText(currentMeal.getStrIngredient15());
+            Glide.with(context)
+                    .load("https://www.themealdb.com/images/ingredients/" + currentMeal.getStrIngredient15() + "-Small.png")
                     .into(holder.imageView15);
+            holder.cardView_15.setVisibility(View.VISIBLE);
+        } else {
+            holder.cardView_15.setVisibility(View.GONE);
         }
-
-
-
-
-
     }
 
     @Override
@@ -150,12 +212,11 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         return responseIngredient.size();
     }
 
-    class IngredientHolder extends RecyclerView.ViewHolder{
-        //ImageView ingredientImage;
-        CardView cardView_1,cardView_2,cardView_3,cardView_4,cardView_5,cardView_6,cardView_7,cardView_8,cardView_9,cardView_10,cardView_11,cardView_12,cardView_13,cardView_14,cardView_15;
-        TextView ingredient_details,ingredient_details2,ingredient_details3,ingredient_details4,ingredient_details5,ingredient_details6,ingredient_details7,ingredient_details8,ingredient_details9,ingredient_details10, ingredient_details11, ingredient_details12,ingredient_details13, ingredient_details14,ingredient_details15;
+    class IngredientHolder extends RecyclerView.ViewHolder {
+        CardView cardView_1, cardView_2, cardView_3, cardView_4, cardView_5, cardView_6, cardView_7, cardView_8, cardView_9, cardView_10, cardView_11, cardView_12, cardView_13, cardView_14, cardView_15;
+        TextView ingredient_details, ingredient_details2, ingredient_details3, ingredient_details4, ingredient_details5, ingredient_details6, ingredient_details7, ingredient_details8, ingredient_details9, ingredient_details10, ingredient_details11, ingredient_details12, ingredient_details13, ingredient_details14, ingredient_details15;
+        ImageView imageView1, imageView2, imageView3, imageView4, imageView5, imageView6, imageView7, imageView8, imageView9, imageView10, imageView11, imageView12, imageView13, imageView14, imageView15;
 
-        ImageView imageView1,imageView2,imageView3,imageView4,imageView5,imageView6,imageView7,imageView8,imageView9,imageView10,imageView11,imageView12,imageView13,imageView14,imageView15;
         public IngredientHolder(@NonNull View itemView) {
             super(itemView);
             ingredient_details = itemView.findViewById(R.id.ingredient_details);
@@ -188,7 +249,6 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
             imageView13 = itemView.findViewById(R.id.imageView13);
             imageView14 = itemView.findViewById(R.id.imageView14);
             imageView15 = itemView.findViewById(R.id.imageView15);
-
             cardView_1 = itemView.findViewById(R.id.cardView_1);
             cardView_2 = itemView.findViewById(R.id.cardView_2);
             cardView_3 = itemView.findViewById(R.id.cardView_3);
@@ -199,12 +259,11 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
             cardView_8 = itemView.findViewById(R.id.cardView_8);
             cardView_9 = itemView.findViewById(R.id.cardView_9);
             cardView_10 = itemView.findViewById(R.id.cardView_10);
-            cardView_11 = itemView.findViewById(R.id.cardView_1);
-            cardView_12 = itemView.findViewById(R.id.cardView_1);
-            cardView_13 = itemView.findViewById(R.id.cardView_1);
-            cardView_14 = itemView.findViewById(R.id.cardView_1);
-            cardView_15 = itemView.findViewById(R.id.cardView_1);
+            cardView_11 = itemView.findViewById(R.id.cardView_11);
+            cardView_12 = itemView.findViewById(R.id.cardView_12);
+            cardView_13 = itemView.findViewById(R.id.cardView_13);
+            cardView_14 = itemView.findViewById(R.id.cardView_14);
+            cardView_15 = itemView.findViewById(R.id.cardView_15);
         }
     }
-
 }
