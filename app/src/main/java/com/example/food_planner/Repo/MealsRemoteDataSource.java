@@ -4,6 +4,7 @@ import com.example.food_planner.model.dto_repos.ResponseAllIngredients;
 import com.example.food_planner.model.dto_repos.ResponseCategory;
 import com.example.food_planner.model.dto_repos.ResponseCountry;
 import com.example.food_planner.model.dto_repos.ResponseIngredient;
+import com.example.food_planner.model.dto_repos.ResponseMealByIngredientDto;
 import com.example.food_planner.model.dto_repos.ResponseMealInfoDto;
 import com.example.food_planner.model.dto_repos.ResponseMeals;
 
@@ -60,20 +61,6 @@ public class MealsRemoteDataSource {
         });
     }
 
-
-//    public void makeNetworkCallForIngredients(NetworkCallBack networkCallBack){
-//        mealService.getIngredients().enqueue(new Callback<ResponseMeals>() {
-//            @Override
-//            public void onResponse(Call<ResponseMeals> call, Response<ResponseMeals> response) {
-//                networkCallBack.onIngredientSuccess(response.body());
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ResponseMeals> call, Throwable throwable) {
-//                networkCallBack.onIngredientFailure(throwable.getMessage());
-//            }
-//        });
-//    }
 
     public void makeNetworkCallToGetItemByName(NetworkCallBack callBack, String name) {
         mealService.getByName(name).enqueue(new Callback<ResponseMeals>() {
@@ -165,6 +152,20 @@ public class MealsRemoteDataSource {
         });
     }
 
+
+    public void makeNetworkCallForMealsByIngredients(String ingredient, NetworkCallBack callBack){
+        mealService.getMealsByIngredients(ingredient).enqueue(new Callback<ResponseMealByIngredientDto>() {
+            @Override
+            public void onResponse(Call<ResponseMealByIngredientDto> call, Response<ResponseMealByIngredientDto> response) {
+                callBack.onAllMealsByIngredientsSuccess(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ResponseMealByIngredientDto> call, Throwable throwable) {
+                callBack.onAllMealsByIngredientsFailure(throwable.getMessage());
+            }
+        });
+    }
 
 
 }
