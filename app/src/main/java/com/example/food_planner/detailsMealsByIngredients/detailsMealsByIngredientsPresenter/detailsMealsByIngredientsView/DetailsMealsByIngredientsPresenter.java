@@ -1,0 +1,4 @@
+package com.example.food_planner.detailsMealsByIngredients.detailsMealsByIngredientsPresenter.detailsMealsByIngredientsView;
+
+public class DetailsMealsByIngredientsPresenter {
+}
