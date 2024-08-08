@@ -1,6 +1,8 @@
 package com.example.food_planner.model.dtos;
 
-public class AllIngredientDto {
+import java.io.Serializable;
+
+public class AllIngredientDto implements Serializable {
     private String idIngredient;
     private String strIngredient;
     private String strDescription;
