@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -39,6 +40,14 @@ public class AllIngredientsAdapter extends RecyclerView.Adapter<AllIngredientsAd
         AllIngredientDto ingredientDto = allIngredientDtoList.get(position);
         Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+ingredientDto.getStrIngredient()+".png").into(holder.ingredientImage);
         holder.ingredientText.setText(ingredientDto.getStrIngredient());
+        holder.ingredientCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SearchFragmentDirections.ActionSearchFragmentToDetailsMealsByIngredientsFragment action =
+                        SearchFragmentDirections.actionSearchFragmentToDetailsMealsByIngredientsFragment(ingredientDto);
+                Navigation.findNavController(v).navigate(action);
+            }
+        });
 
     }
 
