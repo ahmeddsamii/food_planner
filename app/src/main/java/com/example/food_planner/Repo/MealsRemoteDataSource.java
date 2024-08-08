@@ -61,19 +61,19 @@ public class MealsRemoteDataSource {
     }
 
 
-    public void makeNetworkCallForIngredients(NetworkCallBack networkCallBack){
-        mealService.getIngredients().enqueue(new Callback<ResponseIngredient>() {
-            @Override
-            public void onResponse(Call<ResponseIngredient> call, Response<ResponseIngredient> response) {
-                networkCallBack.onIngredientSuccess(response.body());
-            }
-
-            @Override
-            public void onFailure(Call<ResponseIngredient> call, Throwable throwable) {
-                networkCallBack.onIngredientFailure(throwable.getMessage());
-            }
-        });
-    }
+//    public void makeNetworkCallForIngredients(NetworkCallBack networkCallBack){
+//        mealService.getIngredients().enqueue(new Callback<ResponseMeals>() {
+//            @Override
+//            public void onResponse(Call<ResponseMeals> call, Response<ResponseMeals> response) {
+//                networkCallBack.onIngredientSuccess(response.body());
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResponseMeals> call, Throwable throwable) {
+//                networkCallBack.onIngredientFailure(throwable.getMessage());
+//            }
+//        });
+//    }
 
     public void makeNetworkCallToGetItemByName(NetworkCallBack callBack, String name) {
         mealService.getByName(name).enqueue(new Callback<ResponseMeals>() {

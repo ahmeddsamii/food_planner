@@ -46,7 +46,7 @@ public class MealsByCountryPresenter implements NetworkCallBack {
     }
 
     @Override
-    public void onIngredientSuccess(ResponseIngredient ingredients) {
+    public void onIngredientSuccess(ResponseMeals ingredients) {
 
     }
 

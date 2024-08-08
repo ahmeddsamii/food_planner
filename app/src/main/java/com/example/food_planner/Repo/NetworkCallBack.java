@@ -15,7 +15,7 @@ public interface NetworkCallBack {
     void onAllCategoriesSuccess(ResponseCategory responseCategory);
     void onAllCategoriesFailure(String errMessage);
 
-    void onIngredientSuccess(ResponseIngredient ingredients);
+    void onIngredientSuccess(ResponseMeals ingredients);
     void onIngredientFailure(String errMessage);
 
     void onItemByNameSuccess(MealDto mealDto);

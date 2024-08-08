@@ -7,5 +7,5 @@ import com.example.food_planner.model.dtos.MealDto;
 import java.util.List;
 
 public interface FavoriteView {
-    public void getAllFavMeals(LiveData<List<MealDto>> meals);
+    void getAllFavMeals(LiveData<List<MealDto>> meals);
 }

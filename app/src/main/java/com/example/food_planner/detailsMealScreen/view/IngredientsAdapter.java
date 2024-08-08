@@ -1,6 +1,7 @@
 package com.example.food_planner.detailsMealScreen.view;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,19 +9,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.food_planner.R;
 import com.example.food_planner.model.dtos.IngredientDto;
+import com.example.food_planner.model.dtos.MealDto;
 
 import java.util.List;
 
 public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.IngredientHolder> {
     //List<IngredientWithMeasure> ingredientWithMeasureList;
-    List<IngredientDto> responseIngredient;
+    List<MealDto> responseIngredient;
+    private static final String TAG = "IngredientsAdapter";
     Context context;
-    public IngredientsAdapter(List<IngredientDto> responseIngredient, Context context){
+    public IngredientsAdapter(List<MealDto> responseIngredient, Context context){
         this.responseIngredient = responseIngredient;
         this.context = context;
     }
@@ -36,158 +40,103 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull IngredientHolder holder, int position) {
-        IngredientDto ingredient = responseIngredient.get(position);
-        if(ingredient.getStrIngredient1() != null){
-            holder.ingredient_details.setText(ingredient.getStrIngredient1());
-            Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+ingredient.getStrIngredient1()+"-Small.png")
+
+
+
+        holder.ingredient_details.setText(responseIngredient.get(position).getStrIngredient1());
+        Glide.with(context).load("https://www.themealdb.com/images/ingredients/" + responseIngredient.get(position).getStrIngredient1() + "-Small.png")
                     .into(holder.imageView1);
-        }else {
-            holder.ingredient_details.setVisibility(View.GONE);
-            holder.imageView1.setVisibility(View.GONE);
-            responseIngredient.remove(ingredient.getStrIngredient1());
-        }
 
-        if(ingredient.getStrIngredient2() != null){
-            holder.ingredient_details2.setText(ingredient.getStrIngredient2());
-            Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+ingredient.getStrIngredient2()+"-Small.png")
+        Log.i(TAG, "Ingredient1: " + responseIngredient.get(position).getStrIngredient1());
+
+        if(!responseIngredient.get(position).getStrIngredient2().isEmpty()){
+            holder.ingredient_details2.setText(responseIngredient.get(position).getStrIngredient2());
+            Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+responseIngredient.get(position).getStrIngredient2()+"-Small.png")
                     .into(holder.imageView2);
-        }else {
-            holder.ingredient_details2.setVisibility(View.GONE);
-            holder.imageView2.setVisibility(View.GONE);
-            responseIngredient.remove(ingredient.getStrIngredient2());
         }
 
-        if(ingredient.getStrIngredient3() != null){
-            holder.ingredient_details3.setText(ingredient.getStrIngredient3());
-            Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+ingredient.getStrIngredient3()+"-Small.png")
+
+        if(!responseIngredient.get(position).getStrIngredient3().isEmpty()){
+            holder.ingredient_details3.setText(responseIngredient.get(position).getStrIngredient3());
+            Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+responseIngredient.get(position).getStrIngredient3()+"-Small.png")
                     .into(holder.imageView3);
-        }else {
-            holder.ingredient_details3.setVisibility(View.GONE);
-            holder.imageView3.setVisibility(View.GONE);
-            responseIngredient.remove(ingredient.getStrIngredient3());
         }
 
-        if(ingredient.getStrIngredient4() != null){
-            holder.ingredient_details4.setText(ingredient.getStrIngredient4());
-            Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+ingredient.getStrIngredient4()+"-Small.png")
+        if(!responseIngredient.get(position).getStrIngredient4().isEmpty()){
+            holder.ingredient_details4.setText(responseIngredient.get(position).getStrIngredient4());
+            Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+responseIngredient.get(position).getStrIngredient4()+"-Small.png")
                     .into(holder.imageView4);
-        }else {
-            holder.ingredient_details4.setVisibility(View.GONE);
-            holder.imageView4.setVisibility(View.GONE);
-            responseIngredient.remove(ingredient.getStrIngredient4());
         }
 
-        if(ingredient.getStrIngredient5() != null){
-            holder.ingredient_details5.setText(ingredient.getStrIngredient5());
-            Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+ingredient.getStrIngredient5()+"-Small.png")
+        if(!responseIngredient.get(position).getStrIngredient5().isEmpty()){
+            holder.ingredient_details5.setText(responseIngredient.get(position).getStrIngredient5());
+            Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+responseIngredient.get(position).getStrIngredient5()+"-Small.png")
                     .into(holder.imageView5);
-        }else {
-            holder.ingredient_details5.setVisibility(View.GONE);
-            holder.imageView5.setVisibility(View.GONE);
-            responseIngredient.remove(ingredient.getStrIngredient5());
         }
 
-        if(ingredient.getStrIngredient6() != null){
-            holder.ingredient_details6.setText(ingredient.getStrIngredient6());
-            Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+ingredient.getStrIngredient6()+"-Small.png")
+        if(!responseIngredient.get(position).getStrIngredient6().isEmpty()){
+            holder.ingredient_details6.setText(responseIngredient.get(position).getStrIngredient6());
+            Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+responseIngredient.get(position).getStrIngredient6()+"-Small.png")
                     .into(holder.imageView6);
-        }else {
-            holder.ingredient_details6.setVisibility(View.GONE);
-            holder.imageView6.setVisibility(View.GONE);
-            responseIngredient.remove(ingredient.getStrIngredient6());
         }
 
-        if(ingredient.getStrIngredient7() != null){
-            holder.ingredient_details7.setText(ingredient.getStrIngredient7());
-            Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+ingredient.getStrIngredient7()+"-Small.png")
+        if(!responseIngredient.get(position).getStrIngredient7().isEmpty()){
+            holder.ingredient_details7.setText(responseIngredient.get(position).getStrIngredient7());
+            Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+responseIngredient.get(position).getStrIngredient7()+"-Small.png")
                     .into(holder.imageView7);
-        }else {
-            holder.ingredient_details7.setVisibility(View.GONE);
-            holder.imageView7.setVisibility(View.GONE);
-            responseIngredient.remove(ingredient.getStrIngredient7());
         }
 
 
-        if(ingredient.getStrIngredient8() != null){
-            holder.ingredient_details8.setText(ingredient.getStrIngredient8());
-            Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+ingredient.getStrIngredient8()+"-Small.png")
+        if(!responseIngredient.get(position).getStrIngredient8().isEmpty()){
+            holder.ingredient_details8.setText(responseIngredient.get(position).getStrIngredient8());
+            Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+responseIngredient.get(position).getStrIngredient8()+"-Small.png")
                     .into(holder.imageView8);
-        }else {
-            holder.ingredient_details8.setVisibility(View.GONE);
-            holder.imageView8.setVisibility(View.GONE);
-            responseIngredient.remove(ingredient.getStrIngredient8());
         }
 
-        if(ingredient.getStrIngredient9() != null){
-            holder.ingredient_details9.setText(ingredient.getStrIngredient9());
-            Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+ingredient.getStrIngredient9()+"-Small.png")
+        if(!responseIngredient.get(position).getStrIngredient9().isEmpty()){
+            holder.ingredient_details9.setText(responseIngredient.get(position).getStrIngredient9());
+            Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+responseIngredient.get(position).getStrIngredient9()+"-Small.png")
                     .into(holder.imageView9);
-        }else {
-            holder.ingredient_details9.setVisibility(View.GONE);
-            holder.imageView9.setVisibility(View.GONE);
-            responseIngredient.remove(ingredient.getStrIngredient9());
         }
 
 
-        if(ingredient.getStrIngredient10() != null){
-            holder.ingredient_details10.setText(ingredient.getStrIngredient10());
-            Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+ingredient.getStrIngredient10()+"-Small.png")
+        if(!responseIngredient.get(position).getStrIngredient10().isEmpty()){
+            holder.ingredient_details10.setText(responseIngredient.get(position).getStrIngredient10());
+            Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+responseIngredient.get(position).getStrIngredient10()+"-Small.png")
                     .into(holder.imageView10);
-        }else {
-            holder.ingredient_details10.setVisibility(View.GONE);
-            holder.imageView10.setVisibility(View.GONE);
-            responseIngredient.remove(ingredient.getStrIngredient10());
         }
 
-        if(ingredient.getStrIngredient11() != null){
-            holder.ingredient_details11.setText(ingredient.getStrIngredient11());
-            Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+ingredient.getStrIngredient11()+"-Small.png")
+
+        if(!responseIngredient.get(position).getStrIngredient11().isEmpty()){
+            holder.ingredient_details11.setText(responseIngredient.get(position).getStrIngredient11());
+            Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+responseIngredient.get(position).getStrIngredient11()+"-Small.png")
                     .into(holder.imageView11);
-        }else {
-            holder.ingredient_details11.setVisibility(View.GONE);
-            holder.imageView11.setVisibility(View.GONE);
-            responseIngredient.remove(ingredient.getStrIngredient11());
         }
 
-        if(ingredient.getStrIngredient12() != null){
-            holder.ingredient_details12.setText(ingredient.getStrIngredient12());
-            Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+ingredient.getStrIngredient12()+"-Small.png")
+        if(!responseIngredient.get(position).getStrIngredient12().isEmpty()){
+            holder.ingredient_details12.setText(responseIngredient.get(position).getStrIngredient12());
+            Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+responseIngredient.get(position).getStrIngredient12()+"-Small.png")
                     .into(holder.imageView12);
-        }else {
-            holder.ingredient_details12.setVisibility(View.GONE);
-            holder.imageView12.setVisibility(View.GONE);
-            responseIngredient.remove(ingredient.getStrIngredient12());
         }
 
-        if(ingredient.getStrIngredient13() != null){
-            holder.ingredient_details13.setText(ingredient.getStrIngredient13());
-            Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+ingredient.getStrIngredient13()+"-Small.png")
+
+        if(!responseIngredient.get(position).getStrIngredient13().isEmpty()){
+            holder.ingredient_details13.setText(responseIngredient.get(position).getStrIngredient13());
+            Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+responseIngredient.get(position).getStrIngredient13()+"-Small.png")
                     .into(holder.imageView13);
-        }else {
-            holder.ingredient_details13.setVisibility(View.GONE);
-            holder.imageView13.setVisibility(View.GONE);
-            responseIngredient.remove(ingredient.getStrIngredient13());
         }
 
 
-        if(ingredient.getStrIngredient14() != null){
-            holder.ingredient_details14.setText(ingredient.getStrIngredient14());
-            Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+ingredient.getStrIngredient14()+"-Small.png")
+        if(!responseIngredient.get(position).getStrIngredient14().isEmpty()){
+            holder.ingredient_details14.setText(responseIngredient.get(position).getStrIngredient14());
+            Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+responseIngredient.get(position).getStrIngredient14()+"-Small.png")
                     .into(holder.imageView14);
-        }else {
-            holder.ingredient_details14.setVisibility(View.GONE);
-            holder.imageView14.setVisibility(View.GONE);
-            responseIngredient.remove(ingredient.getStrIngredient14());
         }
 
-        if(ingredient.getStrIngredient15() != null){
-            holder.ingredient_details15.setText(ingredient.getStrIngredient15());
-            Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+ingredient.getStrIngredient15()+"-Small.png")
+        if(!responseIngredient.get(position).getStrIngredient15().isEmpty()) {
+            holder.ingredient_details15.setText(responseIngredient.get(position).getStrIngredient15());
+            Glide.with(context).load("https://www.themealdb.com/images/ingredients/" + responseIngredient.get(position).getStrIngredient15() + "-Small.png")
                     .into(holder.imageView15);
-        }else {
-            holder.ingredient_details14.setVisibility(View.GONE);
-            holder.imageView15.setVisibility(View.GONE);
-            responseIngredient.remove(ingredient.getStrIngredient15());
         }
 
 
@@ -203,6 +152,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
 
     class IngredientHolder extends RecyclerView.ViewHolder{
         //ImageView ingredientImage;
+        CardView cardView_1,cardView_2,cardView_3,cardView_4,cardView_5,cardView_6,cardView_7,cardView_8,cardView_9,cardView_10,cardView_11,cardView_12,cardView_13,cardView_14,cardView_15;
         TextView ingredient_details,ingredient_details2,ingredient_details3,ingredient_details4,ingredient_details5,ingredient_details6,ingredient_details7,ingredient_details8,ingredient_details9,ingredient_details10, ingredient_details11, ingredient_details12,ingredient_details13, ingredient_details14,ingredient_details15;
 
         ImageView imageView1,imageView2,imageView3,imageView4,imageView5,imageView6,imageView7,imageView8,imageView9,imageView10,imageView11,imageView12,imageView13,imageView14,imageView15;
@@ -238,6 +188,22 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
             imageView13 = itemView.findViewById(R.id.imageView13);
             imageView14 = itemView.findViewById(R.id.imageView14);
             imageView15 = itemView.findViewById(R.id.imageView15);
+
+            cardView_1 = itemView.findViewById(R.id.cardView_1);
+            cardView_2 = itemView.findViewById(R.id.cardView_2);
+            cardView_3 = itemView.findViewById(R.id.cardView_3);
+            cardView_4 = itemView.findViewById(R.id.cardView_4);
+            cardView_5 = itemView.findViewById(R.id.cardView_5);
+            cardView_6 = itemView.findViewById(R.id.cardView_6);
+            cardView_7 = itemView.findViewById(R.id.cardView_7);
+            cardView_8 = itemView.findViewById(R.id.cardView_8);
+            cardView_9 = itemView.findViewById(R.id.cardView_9);
+            cardView_10 = itemView.findViewById(R.id.cardView_10);
+            cardView_11 = itemView.findViewById(R.id.cardView_1);
+            cardView_12 = itemView.findViewById(R.id.cardView_1);
+            cardView_13 = itemView.findViewById(R.id.cardView_1);
+            cardView_14 = itemView.findViewById(R.id.cardView_1);
+            cardView_15 = itemView.findViewById(R.id.cardView_1);
         }
     }
 

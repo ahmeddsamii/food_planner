@@ -8,13 +8,14 @@
     android:orientation="horizontal">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
         android:background="@color/primaryColor"
         android:backgroundTint="@color/primaryColor"
         android:elevation="0dp"
         app:cardCornerRadius="0dp"
-        android:layout_marginEnd="12dp"
         app:cardElevation="0dp"
         app:cardMaxElevation="0dp">
 
@@ -28,10 +29,10 @@
                 android:layout_height="90dp"
                 android:layout_marginTop="4dp"
                 android:scaleType="fitXY"
-                tools:srcCompat="@tools:sample/avatars"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
                 android:id="@+id/ingredient_details"
@@ -57,20 +58,20 @@
                 app:layout_constraintTop_toBottomOf="@+id/imageView1" />
 
 
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
         android:background="@color/primaryColor"
         android:backgroundTint="@color/primaryColor"
         android:elevation="0dp"
-        app:cardCornerRadius="0dp"
-        android:layout_marginEnd="12dp"
 
+        app:cardCornerRadius="0dp"
         app:cardElevation="0dp"
         app:cardMaxElevation="0dp">
 
@@ -84,10 +85,10 @@
                 android:layout_height="90dp"
                 android:layout_marginTop="4dp"
                 android:scaleType="fitXY"
-                tools:srcCompat="@tools:sample/avatars"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
                 android:id="@+id/ingredient_details2"
@@ -117,14 +118,15 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView_3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
         android:background="@color/primaryColor"
         android:backgroundTint="@color/primaryColor"
         android:elevation="0dp"
-        app:cardCornerRadius="0dp"
-        android:layout_marginEnd="12dp"
 
+        app:cardCornerRadius="0dp"
         app:cardElevation="0dp"
         app:cardMaxElevation="0dp">
 
@@ -138,9 +140,10 @@
                 android:layout_height="90dp"
                 android:layout_marginTop="4dp"
                 android:scaleType="fitXY"
-                tools:srcCompat="@tools:sample/avatars"                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
                 android:id="@+id/ingredient_details3"
@@ -170,12 +173,13 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView_4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/primaryColor"
-        android:backgroundTint="@color/primaryColor"
         android:layout_marginEnd="12dp"
+        android:background="@color/primaryColor"
 
+        android:backgroundTint="@color/primaryColor"
         android:elevation="0dp"
         app:cardCornerRadius="0dp"
         app:cardElevation="0dp"
@@ -191,10 +195,10 @@
                 android:layout_height="90dp"
                 android:layout_marginTop="4dp"
                 android:scaleType="fitXY"
-                tools:srcCompat="@tools:sample/avatars"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
                 android:id="@+id/ingredient_details4"
@@ -224,14 +228,15 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView_5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
         android:background="@color/primaryColor"
         android:backgroundTint="@color/primaryColor"
         android:elevation="0dp"
-        app:cardCornerRadius="0dp"
-        android:layout_marginEnd="12dp"
 
+        app:cardCornerRadius="0dp"
         app:cardElevation="0dp"
         app:cardMaxElevation="0dp">
 
@@ -245,10 +250,10 @@
                 android:layout_height="90dp"
                 android:layout_marginTop="4dp"
                 android:scaleType="fitXY"
-                tools:srcCompat="@tools:sample/avatars"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
                 android:id="@+id/ingredient_details5"
@@ -278,14 +283,15 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView_6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
         android:background="@color/primaryColor"
         android:backgroundTint="@color/primaryColor"
         android:elevation="0dp"
-        app:cardCornerRadius="0dp"
-        android:layout_marginEnd="12dp"
 
+        app:cardCornerRadius="0dp"
         app:cardElevation="0dp"
         app:cardMaxElevation="0dp">
 
@@ -299,10 +305,10 @@
                 android:layout_height="90dp"
                 android:layout_marginTop="4dp"
                 android:scaleType="fitXY"
-                tools:srcCompat="@tools:sample/avatars"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
                 android:id="@+id/ingredient_details6"
@@ -332,14 +338,15 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView_7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
         android:background="@color/primaryColor"
         android:backgroundTint="@color/primaryColor"
         android:elevation="0dp"
-        app:cardCornerRadius="0dp"
-        android:layout_marginEnd="12dp"
 
+        app:cardCornerRadius="0dp"
         app:cardElevation="0dp"
         app:cardMaxElevation="0dp">
 
@@ -353,10 +360,10 @@
                 android:layout_height="90dp"
                 android:layout_marginTop="4dp"
                 android:scaleType="fitXY"
-                tools:srcCompat="@tools:sample/avatars"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
                 android:id="@+id/ingredient_details7"
@@ -386,13 +393,14 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView_8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
         android:background="@color/primaryColor"
         android:backgroundTint="@color/primaryColor"
-        android:elevation="0dp"
-        android:layout_marginEnd="12dp"
 
+        android:elevation="0dp"
         app:cardCornerRadius="0dp"
         app:cardElevation="0dp"
         app:cardMaxElevation="0dp">
@@ -407,10 +415,10 @@
                 android:layout_height="90dp"
                 android:layout_marginTop="4dp"
                 android:scaleType="fitXY"
-                tools:srcCompat="@tools:sample/avatars"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
                 android:id="@+id/ingredient_details8"
@@ -440,14 +448,15 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView_9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
         android:background="@color/primaryColor"
         android:backgroundTint="@color/primaryColor"
         android:elevation="0dp"
-        app:cardCornerRadius="0dp"
-        android:layout_marginEnd="12dp"
 
+        app:cardCornerRadius="0dp"
         app:cardElevation="0dp"
         app:cardMaxElevation="0dp">
 
@@ -461,10 +470,10 @@
                 android:layout_height="90dp"
                 android:layout_marginTop="4dp"
                 android:scaleType="fitXY"
-                tools:srcCompat="@tools:sample/avatars"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
                 android:id="@+id/ingredient_details9"
@@ -494,14 +503,15 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView_10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
         android:background="@color/primaryColor"
         android:backgroundTint="@color/primaryColor"
         android:elevation="0dp"
-        app:cardCornerRadius="0dp"
-        android:layout_marginEnd="12dp"
 
+        app:cardCornerRadius="0dp"
         app:cardElevation="0dp"
         app:cardMaxElevation="0dp">
 
@@ -515,10 +525,10 @@
                 android:layout_height="90dp"
                 android:layout_marginTop="4dp"
                 android:scaleType="fitXY"
-                tools:srcCompat="@tools:sample/avatars"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
                 android:id="@+id/ingredient_details10"
@@ -548,14 +558,15 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView_11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
         android:background="@color/primaryColor"
         android:backgroundTint="@color/primaryColor"
         android:elevation="0dp"
-        app:cardCornerRadius="0dp"
-        android:layout_marginEnd="12dp"
 
+        app:cardCornerRadius="0dp"
         app:cardElevation="0dp"
         app:cardMaxElevation="0dp">
 
@@ -569,10 +580,10 @@
                 android:layout_height="90dp"
                 android:layout_marginTop="4dp"
                 android:scaleType="fitXY"
-                tools:srcCompat="@tools:sample/avatars"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
                 android:id="@+id/ingredient_details11"
@@ -603,15 +614,16 @@
 
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView_12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
         android:background="@color/primaryColor"
         android:backgroundTint="@color/primaryColor"
         android:elevation="0dp"
         app:cardCornerRadius="0dp"
-        app:cardElevation="0dp"
-        android:layout_marginEnd="12dp"
 
+        app:cardElevation="0dp"
         app:cardMaxElevation="0dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -624,10 +636,10 @@
                 android:layout_height="90dp"
                 android:layout_marginTop="4dp"
                 android:scaleType="fitXY"
-                tools:srcCompat="@tools:sample/avatars"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
                 android:id="@+id/ingredient_details12"
@@ -657,14 +669,15 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView_13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
         android:background="@color/primaryColor"
         android:backgroundTint="@color/primaryColor"
         android:elevation="0dp"
-        app:cardCornerRadius="0dp"
-        android:layout_marginEnd="12dp"
 
+        app:cardCornerRadius="0dp"
         app:cardElevation="0dp"
         app:cardMaxElevation="0dp">
 
@@ -678,10 +691,10 @@
                 android:layout_height="90dp"
                 android:layout_marginTop="4dp"
                 android:scaleType="fitXY"
-                tools:srcCompat="@tools:sample/avatars"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
                 android:id="@+id/ingredient_details13"
@@ -711,14 +724,15 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView_14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
         android:background="@color/primaryColor"
         android:backgroundTint="@color/primaryColor"
         android:elevation="0dp"
-        app:cardCornerRadius="0dp"
-        android:layout_marginEnd="12dp"
 
+        app:cardCornerRadius="0dp"
         app:cardElevation="0dp"
         app:cardMaxElevation="0dp">
 
@@ -732,10 +746,10 @@
                 android:layout_height="90dp"
                 android:layout_marginTop="4dp"
                 android:scaleType="fitXY"
-                tools:srcCompat="@tools:sample/avatars"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
                 android:id="@+id/ingredient_details14"
@@ -765,14 +779,15 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView_15"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
         android:background="@color/primaryColor"
         android:backgroundTint="@color/primaryColor"
         android:elevation="0dp"
-        app:cardCornerRadius="0dp"
-        android:layout_marginEnd="12dp"
 
+        app:cardCornerRadius="0dp"
         app:cardElevation="0dp"
         app:cardMaxElevation="0dp">
 
@@ -786,10 +801,10 @@
                 android:layout_height="90dp"
                 android:layout_marginTop="4dp"
                 android:scaleType="fitXY"
-                tools:srcCompat="@tools:sample/avatars"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
                 android:id="@+id/ingredient_details15"

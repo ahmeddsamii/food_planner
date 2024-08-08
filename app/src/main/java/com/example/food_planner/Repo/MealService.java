@@ -18,8 +18,7 @@ public interface MealService {
     @GET("categories.php")
     Call<ResponseCategory> getAllCategories();
 
-    @GET("random.php")
-    Call<ResponseIngredient> getIngredients();
+
     @GET("search.php")
     Call<ResponseMeals> getByName(@Query("s") String name);
 

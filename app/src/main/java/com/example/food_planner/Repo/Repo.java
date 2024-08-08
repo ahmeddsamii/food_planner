@@ -42,9 +42,9 @@ public class Repo {
         mealsRemoteDataSource.makeNetworkCallForCategories(callBack);
     }
 
-    public void getIngredient(NetworkCallBack networkCallBack){
-        mealsRemoteDataSource.makeNetworkCallForIngredients(networkCallBack);
-    }
+//    public void getIngredient(NetworkCallBack networkCallBack){
+//        mealsRemoteDataSource.makeNetworkCallForIngredients(networkCallBack);
+//    }
 
     public void insert(MealDto mealDto){
         new Thread(){
