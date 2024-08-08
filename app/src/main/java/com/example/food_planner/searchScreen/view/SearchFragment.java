@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.example.food_planner.R;
 import com.example.food_planner.Repo.Repo;
@@ -41,6 +42,7 @@ public class SearchFragment extends Fragment implements CategorySearchView, Coun
     List<CategoryDto> categories;
     List<CountryDto> countries;
     List<MealDto> meals;
+    TextView visibleText;
 
     public SearchFragment() {
     }
@@ -65,6 +67,7 @@ public class SearchFragment extends Fragment implements CategorySearchView, Coun
         countriesChip = view.findViewById(R.id.country_chip);
         mealsChip = view.findViewById(R.id.meals_chip);
         ingredientsChip = view.findViewById(R.id.ingredient_chip);
+        visibleText = view.findViewById(R.id.visibleText);
 
         categoryChip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -102,6 +105,7 @@ public class SearchFragment extends Fragment implements CategorySearchView, Coun
                 if (isChecked) {
                     if (mealsSearchAdapter == null) {
                         mealsSearchAdapter = new MealsSearchAdapter(new ArrayList<>(), getContext());
+                        
                     }
                     mainRecyclerView.setAdapter(mealsSearchAdapter);
                     mainRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -171,13 +175,6 @@ public class SearchFragment extends Fragment implements CategorySearchView, Coun
                         error-> Log.e(TAG, "Error filtering countries: " + error.getMessage()));
     }
 
-    private void filterMeals(String newText){
-        Observable.fromIterable(meals)
-                .filter(mealDto -> mealDto.getStrMeal().toLowerCase().contains(newText.toLowerCase()))
-                .toList()
-                .subscribe(filteredList -> mealsSearchAdapter.setData(filteredList),
-                        error -> Log.e(TAG, "Error filtering meals: "+error.getMessage() ));
-    }
 
     @Override
     public void onCategorySearchViewSuccess(List<CategoryDto> categories) {
@@ -218,6 +215,7 @@ public class SearchFragment extends Fragment implements CategorySearchView, Coun
     @Override
     public void onMealSearchByNameFailure(String message) {
         Log.e(TAG, "Meal search failed: " + message);
-        Toast.makeText(getContext(), "Failed to search meals: " + message, Toast.LENGTH_SHORT).show();
+        mealsSearchAdapter.setData(new ArrayList<>());
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 }

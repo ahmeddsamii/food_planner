@@ -9,12 +9,14 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.food_planner.R;
 import com.example.food_planner.model.dtos.MealDto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MealsSearchAdapter extends RecyclerView.Adapter<MealsSearchAdapter.MealHolder> {
@@ -41,18 +43,27 @@ public class MealsSearchAdapter extends RecyclerView.Adapter<MealsSearchAdapter.
         MealDto mealDto = meals.get(position);
         holder.title.setText(mealDto.getStrMeal());
         Glide.with(context).load(mealDto.getStrMealThumb()).into(holder.imageView);
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SearchFragmentDirections.ActionSearchFragmentToDetailsFragment action =
+                        SearchFragmentDirections.actionSearchFragmentToDetailsFragment(mealDto);
+                Navigation.findNavController(v).navigate(action);
+            }
+        });
+    }
+
+    public void setData(List<MealDto> newMeals) {
+        this.meals = newMeals != null ? newMeals : new ArrayList<>();
+        notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        return meals.size();
+        return meals != null ? meals.size() : 0;
     }
 
-    // New method to update the data
-    public void setData(List<MealDto> newMeals) {
-        this.meals = newMeals;
-        notifyDataSetChanged();
-    }
+
 
     class MealHolder extends RecyclerView.ViewHolder{
         CardView cardView;

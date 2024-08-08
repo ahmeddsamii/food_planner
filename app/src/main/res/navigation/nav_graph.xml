@@ -33,6 +33,12 @@
         <action
             android:id="@+id/action_searchFragment_to_mealsByCountryScreenFragment"
             app:destination="@id/mealsByCountryScreenFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_categoryDetailsFragment"
+            app:destination="@id/categoryDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"

@@ -52,7 +52,7 @@ public class CategoryDetailsAdapter extends RecyclerView.Adapter<CategoryDetails
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.getMessage("You have to search to get this meal details");
+                listener.getMessage("You have to search on this meal to get more details");
             }
         });
     }

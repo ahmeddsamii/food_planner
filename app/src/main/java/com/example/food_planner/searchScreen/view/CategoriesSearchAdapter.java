@@ -8,6 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -41,6 +43,14 @@ public class CategoriesSearchAdapter extends RecyclerView.Adapter<CategoriesSear
         CategoryDto currentCategory = filteredCategories.get(position);
         holder.categoryTitle.setText(currentCategory.getStrCategory());
         Glide.with(context).load(currentCategory.getStrCategoryThumb()).into(holder.imageView);
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SearchFragmentDirections.ActionSearchFragmentToCategoryDetailsFragment action =
+                        SearchFragmentDirections.actionSearchFragmentToCategoryDetailsFragment(currentCategory);
+                Navigation.findNavController(v).navigate(action);
+            }
+        });
     }
 
     @Override
@@ -60,11 +70,13 @@ public class CategoriesSearchAdapter extends RecyclerView.Adapter<CategoriesSear
     class CategoryViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
         TextView categoryTitle;
+        CardView cardView;
 
         public CategoryViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.iv_category_search_item);
             categoryTitle = itemView.findViewById(R.id.tv_search_category_item);
+            cardView = itemView.findViewById(R.id.country_search_screen_cardview);
         }
     }
 }

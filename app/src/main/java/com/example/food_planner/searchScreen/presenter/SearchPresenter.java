@@ -110,11 +110,15 @@ public class SearchPresenter implements NetworkCallBack {
 
     @Override
     public void onSearchMealsByNameSuccess(ResponseMeals responseMeals) {
-        mealsSearchByNameView.onMealSearchByNameSuccess(responseMeals.getMeals());
+        if (responseMeals != null && responseMeals.getMeals() != null) {
+            mealsSearchByNameView.onMealSearchByNameSuccess(responseMeals.getMeals());
+        } else {
+            mealsSearchByNameView.onMealSearchByNameFailure("No meals found");
+        }
     }
 
     @Override
     public void onSearchMealsByNameFailure(String errMessage) {
-        mealsSearchByNameView.onMealSearchByNameFailure(errMessage);
+        mealsSearchByNameView.onMealSearchByNameFailure(errMessage != null ? errMessage : "Unknown error occurred");
     }
 }
