@@ -9,6 +9,7 @@ import com.example.food_planner.model.dto_repos.ResponseAllIngredients;
 import com.example.food_planner.model.dto_repos.ResponseCategory;
 import com.example.food_planner.model.dto_repos.ResponseCountry;
 import com.example.food_planner.model.dto_repos.ResponseIngredient;
+import com.example.food_planner.model.dto_repos.ResponseMealByIngredientDto;
 import com.example.food_planner.model.dto_repos.ResponseMealInfoDto;
 import com.example.food_planner.model.dto_repos.ResponseMeals;
 import com.example.food_planner.model.dtos.MealDto;
@@ -118,6 +119,16 @@ public class HomePresenter implements NetworkCallBack {
 
     @Override
     public void onAllIngredientsFailure(String errMessage) {
+
+    }
+
+    @Override
+    public void onAllMealsByIngredientsSuccess(ResponseMealByIngredientDto meals) {
+
+    }
+
+    @Override
+    public void onAllMealsByIngredientsFailure(String errMessage) {
 
     }
 }

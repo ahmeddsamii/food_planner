@@ -3,6 +3,7 @@ package com.example.food_planner.searchScreen.presenter;
 import com.example.food_planner.Repo.NetworkCallBack;
 import com.example.food_planner.Repo.Repo;
 import com.example.food_planner.model.dto_repos.ResponseAllIngredients;
+import com.example.food_planner.model.dto_repos.ResponseMealByIngredientDto;
 import com.example.food_planner.model.dto_repos.ResponseMealInfoDto;
 import com.example.food_planner.searchScreen.view.AllIngredientsSearchView;
 import com.example.food_planner.searchScreen.view.CategorySearchView;
@@ -138,5 +139,15 @@ public class SearchPresenter implements NetworkCallBack {
     @Override
     public void onAllIngredientsFailure(String errMessage) {
         allIngredientsSearchView.onAllIngredientsFailure(errMessage);
+    }
+
+    @Override
+    public void onAllMealsByIngredientsSuccess(ResponseMealByIngredientDto meals) {
+
+    }
+
+    @Override
+    public void onAllMealsByIngredientsFailure(String errMessage) {
+
     }
 }
