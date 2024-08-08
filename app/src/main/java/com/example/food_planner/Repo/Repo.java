@@ -96,5 +96,9 @@ public class Repo {
         mealsRemoteDataSource.makeCallForAllIngredients(callBack);
     }
 
+    public void getAllMealsByIngredients(String ingredient , NetworkCallBack callBack){
+        mealsRemoteDataSource.makeNetworkCallForMealsByIngredients(ingredient, callBack);
+    }
+
 
 }
