@@ -39,6 +39,9 @@
         <action
             android:id="@+id/action_searchFragment_to_categoryDetailsFragment"
             app:destination="@id/categoryDetailsFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_detailsMealsByIngredientsFragment"
+            app:destination="@id/detailsMealsByIngredientsFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -74,6 +77,15 @@
         <argument
             android:name="countryDto"
             app:argType="com.example.food_planner.model.dtos.CountryDto" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailsMealsByIngredientsFragment"
+        android:name="com.example.food_planner.detailsMealsByIngredients.detailsMealsByIngredientsView.DetailsMealsByIngredientsFragment"
+        android:label="fragment_details_meals_by_ingredients"
+        tools:layout="@layout/fragment_details_meals_by_ingredients" >
+        <argument
+            android:name="IngredientDto"
+            app:argType="com.example.food_planner.model.dtos.AllIngredientDto" />
     </fragment>
 
 
