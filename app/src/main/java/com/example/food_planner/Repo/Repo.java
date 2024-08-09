@@ -1,12 +1,23 @@
 package com.example.food_planner.Repo;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
 import com.example.food_planner.model.dtos.MealDto;
 
+import org.reactivestreams.Subscription;
+
 import java.util.List;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.CompletableObserver;
+import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.FlowableSubscriber;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class Repo {
     FirebaseDataSource firebaseDataSource;
@@ -15,6 +26,7 @@ public class Repo {
 
     MealDao dao;
     private static Repo instance = null;
+    private static final String TAG = "Repo";
 
     private Repo(Context context){
         firebaseDataSource = FirebaseDataSource.getInstance();
@@ -47,12 +59,31 @@ public class Repo {
 //    }
 
     public void insert(MealDto mealDto){
-        new Thread(){
-            @Override
-            public void run() {
-                dao.insert(mealDto);
-            }
-        }.start();
+//        new Thread(){
+//            @Override
+//            public void run() {
+//                dao.insert(mealDto);
+//            }
+//        }.start();
+
+        dao.insert(mealDto).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new CompletableObserver() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Log.i(TAG, "Inserted Successfully: ");
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+
+                    }
+                });
     }
 
     public void getItemByName(NetworkCallBack callBack,String name){
@@ -68,13 +99,10 @@ public class Repo {
         }.start();
 
     }
-    public LiveData<List<MealDto>> getLocalData(){
+    public Flowable<List<MealDto>> getLocalData(){
        return dao.getAllMeals();
     }
 
-    public LiveData<List<MealDto>> getAllMeals(){
-        return dao.getAllMeals();
-    }
 
     public void getAllCountries(NetworkCallBack callBack){
         mealsRemoteDataSource.makeNetworkCallForAllCountries( callBack);

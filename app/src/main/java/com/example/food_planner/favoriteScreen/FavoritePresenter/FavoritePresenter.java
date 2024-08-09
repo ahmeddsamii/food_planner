@@ -7,7 +7,16 @@ import com.example.food_planner.favoriteScreen.view.FavoriteView;
 import com.example.food_planner.favoriteScreen.view.onFavClickListener;
 import com.example.food_planner.model.dtos.MealDto;
 
+import org.reactivestreams.Subscription;
+
 import java.util.List;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.FlowableSubscriber;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+import kotlinx.coroutines.flow.Flow;
 
 public class FavoritePresenter implements onFavClickListener , FavoriteView {
     Repo repo;
@@ -17,6 +26,18 @@ public class FavoritePresenter implements onFavClickListener , FavoriteView {
     public FavoritePresenter(Repo repo, FavoriteView view){
         this.repo = repo;
         this.view = view;
+    }
+
+    public void getLocalData() {
+        repo.getLocalData()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        mealDtos -> view.getAllFavMeals(mealDtos),
+                        throwable -> {
+                            // Handle error
+                        }
+                );
     }
 
 
@@ -50,12 +71,12 @@ public class FavoritePresenter implements onFavClickListener , FavoriteView {
     }
 
 
-    public void setData(LiveData<List<MealDto>> meals){
-        view.getAllFavMeals(repo.getLocalData());
+    public void setData(Flowable<List<MealDto>> meals){
+
     }
 
     @Override
-    public void getAllFavMeals(LiveData<List<MealDto>> meals) {
+    public void getAllFavMeals(List<MealDto> meals) {
 
     }
 }

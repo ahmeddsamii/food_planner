@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +34,8 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Flowable;
+
 public class DetailsFragment extends Fragment implements IngredientsView, FavoriteView {
     private static final String TAG = "DetailsFragment";
 
@@ -48,6 +51,7 @@ public class DetailsFragment extends Fragment implements IngredientsView, Favori
 
     // Data
     private MealDto currentMeal;
+    private YouTubePlayerView youTubePlayerView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -63,8 +67,14 @@ public class DetailsFragment extends Fragment implements IngredientsView, Favori
         favoriteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences sharedPreferences = requireContext().getSharedPreferences(SignUpScreen.UID_KEY, Context.MODE_PRIVATE);
+                String uId = sharedPreferences.getString("LoggedIn", "error");
+                if("error".equals(uId)){
+                    Toast.makeText(getContext(), "You have to login to get this feature", Toast.LENGTH_SHORT).show();
+                }else {
                     favoritePresenter.insert(currentMeal);
                     Toast.makeText(requireContext(), "Added to your favorites successfully", Toast.LENGTH_SHORT).show();
+                }
             }
         }
         );
@@ -76,6 +86,9 @@ public class DetailsFragment extends Fragment implements IngredientsView, Favori
         mealImageView = view.findViewById(R.id.details_imageView);
         favoriteButton = view.findViewById(R.id.iv_addToFav);
         stepsTextView = view.findViewById(R.id.tv_steps_implementation);
+        youTubePlayerView = view.findViewById(R.id.youtube_player_view);
+        getLifecycle().addObserver(youTubePlayerView);
+
     }
 
     private void setupPresenters() {
@@ -85,7 +98,18 @@ public class DetailsFragment extends Fragment implements IngredientsView, Favori
 
     private void loadData() {
         currentMeal = DetailsFragmentArgs.fromBundle(getArguments()).getMealDto();
+        String youtubeId = getYoutubeId(currentMeal.getStrYoutube());
+        setupYouTubePlayer(youtubeId);
         displayMealDetails();
+    }
+
+    private void setupYouTubePlayer(String videoId) {
+        youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+            @Override
+            public void onReady(@NonNull YouTubePlayer youTubePlayer) {
+                youTubePlayer.cueVideo(videoId, 0);
+            }
+        });
     }
 
 
@@ -134,7 +158,7 @@ public class DetailsFragment extends Fragment implements IngredientsView, Favori
     }
 
     @Override
-    public void getAllFavMeals(LiveData<List<MealDto>> meals) {
+    public void getAllFavMeals(List<MealDto> meals) {
 
     }
 
@@ -146,5 +170,18 @@ public class DetailsFragment extends Fragment implements IngredientsView, Favori
     @Override
     public void onAllIngredientsFailure(String errMessage) {
 
+    }
+
+    private String getYoutubeId(String link) {
+        if (link != null && link.split("\\?v=").length > 1)
+            return link.split("\\?v=")[1];
+        else return "";
+    }
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        youTubePlayerView.release();
     }
 }

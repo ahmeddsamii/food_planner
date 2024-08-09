@@ -6,6 +6,8 @@ import com.example.food_planner.model.dtos.MealDto;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Flowable;
+
 public interface FavoriteView {
-    void getAllFavMeals(LiveData<List<MealDto>> meals);
+    void getAllFavMeals(List<MealDto> meals);
 }

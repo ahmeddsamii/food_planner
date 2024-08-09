@@ -8,39 +8,40 @@ import com.example.food_planner.model.dto_repos.ResponseMealByIngredientDto;
 import com.example.food_planner.model.dto_repos.ResponseMealInfoDto;
 import com.example.food_planner.model.dto_repos.ResponseMeals;
 
+import io.reactivex.rxjava3.core.Single;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface MealService {
     @GET("random.php")
-    Call<ResponseMeals> getRandomMeal();
+    Single<ResponseMeals> getRandomMeal();
 
     @GET("categories.php")
-    Call<ResponseCategory> getAllCategories();
+    Single<ResponseCategory> getAllCategories();
 
 
     @GET("search.php")
-    Call<ResponseMeals> getByName(@Query("s") String name);
+    Single<ResponseMeals> getByName(@Query("s") String name);
 
 
     @GET("list.php?a=list")
-    Call<ResponseCountry> getAllCountries();
+    Single<ResponseCountry> getAllCountries();
 
     @GET("filter.php")
-    Call<ResponseMeals> getMealsByCategory(@Query("c") String category);
+    Single<ResponseMeals> getMealsByCategory(@Query("c") String category);
 
     @GET("filter.php")
-    Call<ResponseMealInfoDto> getMealsByCountry(@Query("a") String country);
+    Single<ResponseMealInfoDto> getMealsByCountry(@Query("a") String country);
 
     @GET("search.php")
-    Call<ResponseMeals> searchMealsByName(@Query("s") String name);
+    Single<ResponseMeals> searchMealsByName(@Query("s") String name);
 
     @GET("list.php?i=list")
-    Call<ResponseAllIngredients> getAllIngredient();
+    Single<ResponseAllIngredients> getAllIngredient();
 
     @GET("filter.php")
-    Call<ResponseMealByIngredientDto> getMealsByIngredients(@Query("i") String ingredient);
+    Single<ResponseMealByIngredientDto> getMealsByIngredients(@Query("i") String ingredient);
 
 
 }

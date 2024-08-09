@@ -56,25 +56,18 @@ public class FavoriteFragment extends Fragment implements FavoriteView, onFavCli
         Log.i(TAG, "onViewCreated: "+Repo.getInstance(getContext()).getLocalData());
 
         presenter = new FavoritePresenter(Repo.getInstance(getContext()), this);
-        Repo.getInstance(getContext()).getAllMeals().observe(getViewLifecycleOwner(), mealDtos -> {
-            recyclerView.setAdapter(new FavoriteAdapter(mealDtos, getContext(),FavoriteFragment.this));
-            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        });
+        presenter.getLocalData();
+
 
     }
 
 
     @Override
-    public void getAllFavMeals(LiveData<List<MealDto>> meals) {
-        presenter.setData(meals);
+    public void getAllFavMeals(List<MealDto> meals) {
+        FavoriteAdapter adapter = new FavoriteAdapter(meals, getContext() , this);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        meals.observe(this, new Observer<List<MealDto>>() {
-            @Override
-            public void onChanged(List<MealDto> mealDtos) {
-                recyclerView.setAdapter(new FavoriteAdapter(mealDtos,getContext(),FavoriteFragment.this));
-                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            }
-        });
     }
 
     @Override

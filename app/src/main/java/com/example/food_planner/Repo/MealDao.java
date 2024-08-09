@@ -11,10 +11,14 @@ import androidx.room.Update;
 import com.example.food_planner.model.dtos.MealDto;
 
 import java.util.List;
+
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Flowable;
+
 @Dao
 public interface MealDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    public void insert(MealDto meal);
+    Completable insert(MealDto meal);
 
     @Update
     public void Update(MealDto meal);
@@ -24,7 +28,7 @@ public interface MealDao {
 
 
     @Query("SELECT * FROM meal")
-    LiveData<List<MealDto>> getAllMeals();
+    Flowable<List<MealDto>> getAllMeals();
 
 
 

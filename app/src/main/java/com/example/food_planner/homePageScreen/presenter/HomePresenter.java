@@ -30,7 +30,10 @@ public class HomePresenter implements NetworkCallBack {
         repo.getRandomMeal(this);
     }
 
-    public  void getAllCategories(){repo.getAllCategories(this);}
+
+    public  void getAllCategories(){
+        repo.getAllCategories(this);
+    }
 
 
     @Override
