@@ -1,4 +1,4 @@
-package com.example.food_planner.detailsMealsByIngredients.detailsMealsByIngredientsPresenter.detailsMealsByIngredientsView;
+package com.example.food_planner.detailsMealsByIngredients.detailsMealsByIngredientsPresenter;
 
 import com.example.food_planner.Repo.NetworkCallBack;
 import com.example.food_planner.Repo.Repo;
@@ -24,6 +24,10 @@ public class DetailsMealsByIngredientsPresenter implements NetworkCallBack {
 
     public void getAllMealsByIngredients(String ingredient){
         repo.getAllMealsByIngredients(ingredient, this);
+    }
+
+    public void getMealByName(String mealName){
+        repo.getItemByName(this, mealName);
     }
 
     @Override
@@ -58,12 +62,12 @@ public class DetailsMealsByIngredientsPresenter implements NetworkCallBack {
 
     @Override
     public void onItemByNameSuccess(MealDto mealDto) {
-
+        detailsMealsByIngredientsView.onItemByNameSuccess(mealDto);
     }
 
     @Override
     public void onItemByNameFailure(String errMessage) {
-
+        detailsMealsByIngredientsView.onItemByNameFailure(errMessage);
     }
 
     @Override
@@ -77,7 +81,7 @@ public class DetailsMealsByIngredientsPresenter implements NetworkCallBack {
     }
 
     @Override
-    public void onMealsByCategorySuccess(ResponseMealInfoDto responseMealInfoDto) {
+    public void onMealsByCategorySuccess(ResponseMeals responseMealInfoDto) {
 
     }
 

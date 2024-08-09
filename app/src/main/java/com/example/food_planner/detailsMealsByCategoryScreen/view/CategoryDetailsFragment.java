@@ -5,10 +5,12 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,11 +20,13 @@ import com.example.food_planner.R;
 import com.example.food_planner.Repo.Repo;
 import com.example.food_planner.detailsMealsByCategoryScreen.presenter.CategoryDetailsFragmentPresenter;
 import com.example.food_planner.model.dto_repos.ResponseMealInfoDto;
+import com.example.food_planner.model.dto_repos.ResponseMeals;
+import com.example.food_planner.model.dtos.MealDto;
 
 import java.util.ArrayList;
 
 
-public class CategoryDetailsFragment extends Fragment implements CategoryDetailsView, onMealsCategoryHomeClickListener{
+public class CategoryDetailsFragment extends Fragment implements CategoryDetailsView, onMealsCategoryHomeClickListener , onMealByNameView{
 
     RecyclerView recyclerView;
     CategoryDetailsAdapter adapter;
@@ -53,16 +57,15 @@ public class CategoryDetailsFragment extends Fragment implements CategoryDetails
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         String categoryTitle = CategoryDetailsFragmentArgs.fromBundle(getArguments()).getCategoryDto().getStrCategory();
-        presenter = new CategoryDetailsFragmentPresenter(Repo.getInstance(getContext()),this);
+        presenter = new CategoryDetailsFragmentPresenter(Repo.getInstance(getContext()),this , this);
         presenter.getAllMealsByCategory(categoryTitle);
-        presenter.getMealByName(categoryTitle);
+
 
     }
 
     @Override
-    public void onSuccess(ResponseMealInfoDto responseMealInfoDto) {
-        adapter.setData(responseMealInfoDto.getMealInfoList());
-        recyclerView.setAdapter(adapter);
+    public void onSuccess(ResponseMeals responseMealInfoDto) {
+        recyclerView.setAdapter(new CategoryDetailsAdapter(responseMealInfoDto.getMeals(),getContext(), this));
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
     }
@@ -72,8 +75,27 @@ public class CategoryDetailsFragment extends Fragment implements CategoryDetails
 
     }
 
+
+
     @Override
-    public void getMessage(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    public void getNameOfTheMeal(String message) {
+        presenter.getMealByName(message);
+        Log.i("TAG", "the name is: "+message);
+
+    }
+
+
+    @Override
+    public void onMealByNameSuccess(MealDto mealDto) {
+        CategoryDetailsFragmentDirections.ActionCategoryDetailsFragmentToDetailsFragment action =
+                CategoryDetailsFragmentDirections.actionCategoryDetailsFragmentToDetailsFragment(mealDto);
+        Navigation.findNavController(getView()).navigate(action);
+
+
+    }
+
+    @Override
+    public void onMealByNameFailure(String errMessage) {
+        Log.i("TAG", "onMealByNameFailure: " +errMessage);
     }
 }

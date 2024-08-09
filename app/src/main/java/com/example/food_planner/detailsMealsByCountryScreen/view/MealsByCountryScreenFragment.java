@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,11 +17,13 @@ import com.example.food_planner.R;
 import com.example.food_planner.Repo.Repo;
 import com.example.food_planner.detailsMealsByCountryScreen.presenter.MealsByCountryPresenter;
 import com.example.food_planner.model.dto_repos.ResponseMealInfoDto;
+import com.example.food_planner.model.dtos.MealDto;
+import com.example.food_planner.searchScreen.view.SearchFragmentDirections;
 
 import java.util.ArrayList;
 
 
-public class MealsByCountryScreenFragment extends Fragment implements onMealsByCountryView{
+public class MealsByCountryScreenFragment extends Fragment implements onMealsByCountryView , onMealsByCountryClickListener{
 
     RecyclerView recyclerView;
     MealsByCountryPresenter presenter;
@@ -48,7 +51,7 @@ public class MealsByCountryScreenFragment extends Fragment implements onMealsByC
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = view.findViewById(R.id.mealsByCountryRv);
-        MealsByCountryAdapter adapter = new MealsByCountryAdapter(new ArrayList<>(), getContext());
+        MealsByCountryAdapter adapter = new MealsByCountryAdapter(new ArrayList<>(), getContext(), this);
         String countryName = MealsByCountryScreenFragmentArgs.fromBundle(getArguments()).getCountryDto().getStrArea();
         presenter = new MealsByCountryPresenter(Repo.getInstance(getContext()), this);
         presenter.getMealsByCountry(countryName);
@@ -58,12 +61,24 @@ public class MealsByCountryScreenFragment extends Fragment implements onMealsByC
 
     @Override
     public void onSuccess(ResponseMealInfoDto responseMealInfoDto) {
-        recyclerView.setAdapter(new MealsByCountryAdapter(responseMealInfoDto.getMealInfoList(),getContext()));
+        recyclerView.setAdapter(new MealsByCountryAdapter(responseMealInfoDto.getMealInfoList(),getContext() , this));
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
     }
 
     @Override
     public void onFailure(String errMessage) {
 
+    }
+
+    @Override
+    public void onItemByNameSuccess(MealDto mealDto) {
+        MealsByCountryScreenFragmentDirections.ActionMealsByCountryScreenFragmentToDetailsFragment action =
+                MealsByCountryScreenFragmentDirections.actionMealsByCountryScreenFragmentToDetailsFragment(mealDto);
+        Navigation.findNavController(getView()).navigate(action);
+    }
+
+    @Override
+    public void getNameOfTheMeal(String mealName) {
+        presenter.getMealByName(mealName);
     }
 }

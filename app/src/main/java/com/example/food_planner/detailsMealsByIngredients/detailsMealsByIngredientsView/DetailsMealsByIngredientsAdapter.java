@@ -21,9 +21,11 @@ public class DetailsMealsByIngredientsAdapter extends RecyclerView.Adapter<Detai
 
     List<MealByIngredientDto> meals;
     Context context;
-    public DetailsMealsByIngredientsAdapter(List<MealByIngredientDto> meals , Context context){
+    onMealsByIngredientsClickListener listener;
+    public DetailsMealsByIngredientsAdapter(List<MealByIngredientDto> meals , Context context ,onMealsByIngredientsClickListener listener){
         this.meals = meals;
         this.context = context;
+        this.listener = listener;
     }
 
     @NonNull
@@ -43,7 +45,7 @@ public class DetailsMealsByIngredientsAdapter extends RecyclerView.Adapter<Detai
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "search this meal to get more details", Toast.LENGTH_SHORT).show();
+                listener.getNameOfTheMeal(meal.getStrMeal());
             }
         });
     }

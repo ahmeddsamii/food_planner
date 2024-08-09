@@ -1,6 +1,7 @@
 package com.example.food_planner.detailsMealsByCategoryScreen.view;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,28 +13,27 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.food_planner.R;
+import com.example.food_planner.model.dto_repos.ResponseMeals;
+import com.example.food_planner.model.dtos.MealDto;
 import com.example.food_planner.model.dtos.MealInfoDto;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryDetailsAdapter extends RecyclerView.Adapter<CategoryDetailsAdapter.CategoryDetailsViewHolder> {
-    private List<MealInfoDto> mealInfoDtos;
-    private List<MealInfoDto> filteredList;
+    private List<MealDto> mealInfoDtos;
     private Context context;
     onMealsCategoryHomeClickListener listener;
 
 
-    public CategoryDetailsAdapter(List<MealInfoDto> mealInfoDtos, Context context, onMealsCategoryHomeClickListener listener) {
+    public CategoryDetailsAdapter(List<MealDto> mealInfoDtos, Context context, onMealsCategoryHomeClickListener listener) {
         this.context = context;
         this.listener = listener;
-        this.mealInfoDtos = new ArrayList<>(mealInfoDtos);
-        this.filteredList = new ArrayList<>(mealInfoDtos);
+        this.mealInfoDtos = mealInfoDtos;
     }
 
-    public void setData(List<MealInfoDto> updatedList) {
-        this.mealInfoDtos = new ArrayList<>(updatedList);
-        this.filteredList = new ArrayList<>(updatedList);
+    public void setData(List<MealDto> updatedList) {
+        this.mealInfoDtos = updatedList;
         notifyDataSetChanged();
     }
 
@@ -46,20 +46,20 @@ public class CategoryDetailsAdapter extends RecyclerView.Adapter<CategoryDetails
 
     @Override
     public void onBindViewHolder(@NonNull CategoryDetailsViewHolder holder, int position) {
-        MealInfoDto currentMeal = filteredList.get(position);
+        MealDto currentMeal = mealInfoDtos.get(position);
         Glide.with(context).load(currentMeal.getStrMealThumb()).into(holder.imageView);
         holder.title.setText(currentMeal.getStrMeal());
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.getMessage("You have to search on this meal to get more details");
+                listener.getNameOfTheMeal(currentMeal.getStrMeal());
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return filteredList.size();
+        return mealInfoDtos.size();
     }
 
     static class CategoryDetailsViewHolder extends RecyclerView.ViewHolder {

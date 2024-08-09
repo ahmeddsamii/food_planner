@@ -5,8 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -16,14 +16,16 @@ import android.widget.Toast;
 
 import com.example.food_planner.R;
 import com.example.food_planner.Repo.Repo;
-import com.example.food_planner.detailsMealsByIngredients.detailsMealsByIngredientsPresenter.detailsMealsByIngredientsView.DetailsMealsByIngredientsPresenter;
+import com.example.food_planner.detailsMealsByIngredients.detailsMealsByIngredientsPresenter.DetailsMealsByIngredientsPresenter;
 import com.example.food_planner.model.dto_repos.ResponseMealByIngredientDto;
 import com.example.food_planner.model.dtos.AllIngredientDto;
+import com.example.food_planner.model.dtos.MealDto;
 
 
-public class DetailsMealsByIngredientsFragment extends Fragment implements DetailsMealsByIngredientsView{
+public class DetailsMealsByIngredientsFragment extends Fragment implements DetailsMealsByIngredientsView , onMealsByIngredientsClickListener{
 
    RecyclerView mealsByIngredientsRv;
+    DetailsMealsByIngredientsPresenter presenter;
     public DetailsMealsByIngredientsFragment() {
 
     }
@@ -48,13 +50,13 @@ public class DetailsMealsByIngredientsFragment extends Fragment implements Detai
         super.onViewCreated(view, savedInstanceState);
         mealsByIngredientsRv = view.findViewById(R.id.details_meals_by_ingredients_rv);
         AllIngredientDto ingredientDto= DetailsMealsByIngredientsFragmentArgs.fromBundle(getArguments()).getIngredientDto();
-        DetailsMealsByIngredientsPresenter presenter = new DetailsMealsByIngredientsPresenter(Repo.getInstance(getContext()),this);
+        presenter = new DetailsMealsByIngredientsPresenter(Repo.getInstance(getContext()),this);
         presenter.getAllMealsByIngredients(ingredientDto.getStrIngredient());
     }
 
     @Override
     public void onAllMealsByIngredientsSuccess(ResponseMealByIngredientDto responseMealByIngredientDto) {
-        DetailsMealsByIngredientsAdapter adapter = new DetailsMealsByIngredientsAdapter(responseMealByIngredientDto.getMeals(), getContext());
+        DetailsMealsByIngredientsAdapter adapter = new DetailsMealsByIngredientsAdapter(responseMealByIngredientDto.getMeals(), getContext(), this);
         mealsByIngredientsRv.setAdapter(adapter);
         mealsByIngredientsRv.setLayoutManager(new GridLayoutManager(getContext(), 2));
     }
@@ -62,5 +64,22 @@ public class DetailsMealsByIngredientsFragment extends Fragment implements Detai
     @Override
     public void onAllMealsByIngredientsFailure(String errMessage) {
         Toast.makeText(getContext(), errMessage, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onItemByNameSuccess(MealDto mealDto) {
+        DetailsMealsByIngredientsFragmentDirections.ActionDetailsMealsByIngredientsFragmentToDetailsFragment action =
+                DetailsMealsByIngredientsFragmentDirections.actionDetailsMealsByIngredientsFragmentToDetailsFragment(mealDto);
+        Navigation.findNavController(getView()).navigate(action);
+    }
+
+    @Override
+    public void onItemByNameFailure(String errMessage) {
+
+    }
+
+    @Override
+    public void getNameOfTheMeal(String mealName) {
+        presenter.getMealByName(mealName);
     }
 }

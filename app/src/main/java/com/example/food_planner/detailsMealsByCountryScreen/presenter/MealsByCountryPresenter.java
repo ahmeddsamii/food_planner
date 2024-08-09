@@ -22,6 +22,10 @@ public class MealsByCountryPresenter implements NetworkCallBack {
         this.view = view;
     }
 
+    public void getMealByName(String mealName){
+        repo.getItemByName(this,mealName);
+    }
+
     public void getMealsByCountry(String country){
         repo.getMealsByCountry(country, this);
     }
@@ -58,7 +62,7 @@ public class MealsByCountryPresenter implements NetworkCallBack {
 
     @Override
     public void onItemByNameSuccess(MealDto mealDto) {
-
+        view.onItemByNameSuccess(mealDto);
     }
 
     @Override
@@ -77,7 +81,7 @@ public class MealsByCountryPresenter implements NetworkCallBack {
     }
 
     @Override
-    public void onMealsByCategorySuccess(ResponseMealInfoDto responseMealInfoDto) {
+    public void onMealsByCategorySuccess(ResponseMeals responseMealInfoDto) {
 
     }
 

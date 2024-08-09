@@ -96,14 +96,14 @@ public class MealsRemoteDataSource {
 
 
     public void makeNetworkCallForMealsByCategory(String category,NetworkCallBack callBack){
-        mealService.getMealsByCategory(category).enqueue(new Callback<ResponseMealInfoDto>() {
+        mealService.getMealsByCategory(category).enqueue(new Callback<ResponseMeals>() {
             @Override
-            public void onResponse(Call<ResponseMealInfoDto> call, Response<ResponseMealInfoDto> response) {
+            public void onResponse(Call<ResponseMeals> call, Response<ResponseMeals> response) {
                 callBack.onMealsByCategorySuccess(response.body());
             }
 
             @Override
-            public void onFailure(Call<ResponseMealInfoDto> call, Throwable throwable) {
+            public void onFailure(Call<ResponseMeals> call, Throwable throwable) {
                 callBack.onMealsByCategoryFailure(throwable.getMessage());
             }
         });

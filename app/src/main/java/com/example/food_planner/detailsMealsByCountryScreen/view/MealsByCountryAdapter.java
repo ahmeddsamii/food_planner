@@ -1,11 +1,13 @@
 package com.example.food_planner.detailsMealsByCountryScreen.view;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,10 +22,12 @@ public class MealsByCountryAdapter extends RecyclerView.Adapter<MealsByCountryAd
 
     List<MealInfoDto> mealInfoDtos;
     Context context;
+    onMealsByCountryClickListener onMealsByCountryClickListener;
 
-    public MealsByCountryAdapter(List<MealInfoDto> mealInfoDtos , Context context){
+    public MealsByCountryAdapter(List<MealInfoDto> mealInfoDtos , Context context ,onMealsByCountryClickListener onMealsByCountryClickListener){
         this.context = context;
         this.mealInfoDtos = mealInfoDtos;
+        this.onMealsByCountryClickListener = onMealsByCountryClickListener;
     }
 
     @NonNull
@@ -40,6 +44,13 @@ public class MealsByCountryAdapter extends RecyclerView.Adapter<MealsByCountryAd
         MealInfoDto meal = mealInfoDtos.get(position);
         holder.title.setText(meal.getStrMeal());
         Glide.with(context).load(meal.getStrMealThumb()).into(holder.imageView);
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onMealsByCountryClickListener.getNameOfTheMeal(meal.getStrMeal());
+                Log.i("TAG", "onClick: "+meal.getStrMeal());
+            }
+        });
     }
 
     @Override

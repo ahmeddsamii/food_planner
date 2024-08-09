@@ -94,7 +94,7 @@ public class SearchPresenter implements NetworkCallBack {
     }
 
     @Override
-    public void onMealsByCategorySuccess(ResponseMealInfoDto responseMealInfoDto) {
+    public void onMealsByCategorySuccess(ResponseMeals responseMealInfoDto) {
 
     }
 

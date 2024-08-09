@@ -3,10 +3,10 @@ package com.example.food_planner.detailsMealsByCategoryScreen.presenter;
 import com.example.food_planner.Repo.NetworkCallBack;
 import com.example.food_planner.Repo.Repo;
 import com.example.food_planner.detailsMealsByCategoryScreen.view.CategoryDetailsView;
+import com.example.food_planner.detailsMealsByCategoryScreen.view.onMealByNameView;
 import com.example.food_planner.model.dto_repos.ResponseAllIngredients;
 import com.example.food_planner.model.dto_repos.ResponseCategory;
 import com.example.food_planner.model.dto_repos.ResponseCountry;
-import com.example.food_planner.model.dto_repos.ResponseIngredient;
 import com.example.food_planner.model.dto_repos.ResponseMealByIngredientDto;
 import com.example.food_planner.model.dto_repos.ResponseMealInfoDto;
 import com.example.food_planner.model.dto_repos.ResponseMeals;
@@ -14,13 +14,15 @@ import com.example.food_planner.model.dtos.MealDto;
 
 public class CategoryDetailsFragmentPresenter implements NetworkCallBack {
     Repo repo;
+    onMealByNameView onMealByNameView;
 
     CategoryDetailsView view;
 
 
-    public CategoryDetailsFragmentPresenter(Repo repo, CategoryDetailsView view){
+    public CategoryDetailsFragmentPresenter(Repo repo, CategoryDetailsView view , onMealByNameView onMealByNameView){
         this.repo = repo;
         this.view = view;
+        this.onMealByNameView = onMealByNameView;
     }
 
     public void getMealByName(String MealName){
@@ -64,12 +66,13 @@ public class CategoryDetailsFragmentPresenter implements NetworkCallBack {
 
     @Override
     public void onItemByNameSuccess(MealDto mealDto) {
+        onMealByNameView.onMealByNameSuccess(mealDto);
 
     }
 
     @Override
     public void onItemByNameFailure(String errMessage) {
-
+        onMealByNameView.onMealByNameFailure(errMessage);
     }
 
     @Override
@@ -83,7 +86,7 @@ public class CategoryDetailsFragmentPresenter implements NetworkCallBack {
     }
 
     @Override
-    public void onMealsByCategorySuccess(ResponseMealInfoDto responseMealInfoDto) {
+    public void onMealsByCategorySuccess(ResponseMeals responseMealInfoDto) {
         view.onSuccess(responseMealInfoDto);
     }
 

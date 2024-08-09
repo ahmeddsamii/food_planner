@@ -77,6 +77,9 @@
         <argument
             android:name="countryDto"
             app:argType="com.example.food_planner.model.dtos.CountryDto" />
+        <action
+            android:id="@+id/action_mealsByCountryScreenFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailsMealsByIngredientsFragment"
@@ -86,6 +89,9 @@
         <argument
             android:name="IngredientDto"
             app:argType="com.example.food_planner.model.dtos.AllIngredientDto" />
+        <action
+            android:id="@+id/action_detailsMealsByIngredientsFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
     </fragment>
 
 
