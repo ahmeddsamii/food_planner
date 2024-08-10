@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,10 +23,13 @@ import com.example.food_planner.homePageScreen.view.HomePageScreen;
 import com.example.food_planner.loginScreen.view.LoginScreen;
 import com.example.food_planner.settingsScreen.settingsPresenter.SettingsPresenter;
 import com.example.food_planner.signupScreen.view.SignUpScreen;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class SettingsFragment extends Fragment implements SettingsView , OnSignOutListener {
     Button btn_signOut;
     SettingsPresenter presenter;
+    TextView username;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -46,6 +50,9 @@ public class SettingsFragment extends Fragment implements SettingsView , OnSignO
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         btn_signOut = view.findViewById(R.id.btn_signOut);
+        username = view.findViewById(R.id.tv_setting_username);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        username.setText(user.getEmail());
         presenter = new SettingsPresenter(Repo.getInstance(getContext()), this);
         btn_signOut.setOnClickListener(v -> presenter.signOut());
     }
@@ -53,8 +60,6 @@ public class SettingsFragment extends Fragment implements SettingsView , OnSignO
     @Override
     public void onSignOutSuccess() {
         Toast.makeText(requireContext(), "Sign out successful", Toast.LENGTH_SHORT).show();
-        // Navigate to the login screen or home screen for non-authenticated users
-       // Navigation.findNavController(requireView()).navigate(R.id.);
         Intent intent = new Intent(getContext(), LoginScreen.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
