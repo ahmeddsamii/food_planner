@@ -14,6 +14,7 @@ import com.example.food_planner.R;
 import com.example.food_planner.homePageScreen.view.HomePageScreen;
 import com.example.food_planner.loginScreen.view.LoginScreen;
 import com.example.food_planner.signupScreen.view.SignUpScreen;
+import com.google.firebase.FirebaseApp;
 
 public class SplashScreen extends AppCompatActivity {
     Intent intent;
@@ -24,6 +25,7 @@ public class SplashScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_splash);
+        FirebaseApp.initializeApp(this);
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -36,6 +38,8 @@ public class SplashScreen extends AppCompatActivity {
                         intent = new Intent(SplashScreen.this, LoginScreen.class);
                     }else{
                         intent = new Intent(SplashScreen.this, HomePageScreen.class);
+                        ;
+
                     }
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);

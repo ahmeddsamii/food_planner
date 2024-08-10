@@ -16,6 +16,7 @@ import com.example.food_planner.loginScreen.view.LoginScreen;
 import com.example.food_planner.signupScreen.view.SignUpScreen;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.FirebaseApp;
 
 public class HomePageScreen extends AppCompatActivity {
 
@@ -27,6 +28,7 @@ public class HomePageScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_home_page_screen);
+        FirebaseApp.initializeApp(this);
         bottomNavigationView = findViewById(R.id.bottomNavBar);
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);

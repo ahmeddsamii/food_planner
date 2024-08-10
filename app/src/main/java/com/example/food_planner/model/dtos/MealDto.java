@@ -10,7 +10,7 @@ import java.io.Serializable;
 public class MealDto implements Serializable {
     String strMeal;
     @PrimaryKey
-            @NonNull
+    @NonNull
     String idMeal;
     String strCategory;
     String strArea;

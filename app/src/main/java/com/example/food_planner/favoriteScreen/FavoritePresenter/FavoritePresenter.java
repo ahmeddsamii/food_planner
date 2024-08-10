@@ -6,6 +6,7 @@ import com.example.food_planner.Repo.Repo;
 import com.example.food_planner.favoriteScreen.view.FavoriteView;
 import com.example.food_planner.favoriteScreen.view.onFavClickListener;
 import com.example.food_planner.model.dtos.MealDto;
+import com.example.food_planner.model.dtos.UserData;
 
 import org.reactivestreams.Subscription;
 
@@ -70,6 +71,28 @@ public class FavoritePresenter implements onFavClickListener , FavoriteView {
         repo.getLocalData();
     }
 
+    public void deleteTheMealFromFirebase(String mealId){
+        repo.deleteItemFromFirebase(repo.getUidOfUser(),mealId);
+    }
+
+    public void fetchUserFavoriteMeals(String uid) {
+        repo.getUserFavoriteMeals(uid, new Repo.OnFavoriteMealsCallback() {
+            @Override
+            public void onSuccess(List<MealDto> meals) {
+                view.onFavoriteMealsRetrieved(meals);
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                view.onFavoriteMealsRetrievedFailure("Failed to retrieve favorite meals: " + errorMessage);
+            }
+        });
+    }
+
+    public void insertMealIntoFirebase(String uId, MealDto mealDto){
+        repo.saveMealToFireStore(uId, mealDto);
+    }
+
 
     public void setData(Flowable<List<MealDto>> meals){
 
@@ -79,4 +102,15 @@ public class FavoritePresenter implements onFavClickListener , FavoriteView {
     public void getAllFavMeals(List<MealDto> meals) {
 
     }
+
+    @Override
+    public void onFavoriteMealsRetrieved(List<MealDto> meals) {
+
+    }
+
+    @Override
+    public void onFavoriteMealsRetrievedFailure(String errMessage) {
+
+    }
+
 }

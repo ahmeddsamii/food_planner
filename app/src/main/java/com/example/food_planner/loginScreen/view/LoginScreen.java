@@ -58,7 +58,11 @@ public class LoginScreen extends AppCompatActivity implements LoginView {
             @Override
             public void onClick(View v) {
                 Log.i("LoginScreen", "onClick: clicked on login button");
+                if(isValidEmail(email.getText().toString())){
                 presenter.login(email.getText().toString(),password.getText().toString());
+                }else {
+                    runOnUiThread(() -> Toast.makeText(LoginScreen.this, "Email is not valid", Toast.LENGTH_SHORT).show());
+                }
             }
         });
 

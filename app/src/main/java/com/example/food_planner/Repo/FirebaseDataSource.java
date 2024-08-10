@@ -1,16 +1,36 @@
 package com.example.food_planner.Repo;
 
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+
+import com.example.food_planner.model.dtos.MealData;
+import com.example.food_planner.model.dtos.MealDto;
+import com.example.food_planner.model.dtos.UserData;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.WriteBatch;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FirebaseDataSource {
 
     private static FirebaseDataSource instance = null;
     private FirebaseAuth firebaseAuth;
+    private FirebaseFirestore db;
+    private static final String TAG = "FirebaseDataSource";
 
     private FirebaseDataSource(){
         firebaseAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
     }
 
     public static FirebaseDataSource getInstance(){
@@ -24,6 +44,72 @@ public class FirebaseDataSource {
     {
         return firebaseAuth;
     }
+
+    public Task<Void> saveMealsToFirestore(String uid, List<MealDto> meals) {
+        WriteBatch batch = db.batch();
+        for (MealDto meal : meals) {
+            DocumentReference docRef = db.collection("users")
+                    .document(uid)
+                    .collection("meals")
+                    .document(meal.getIdMeal());
+            batch.set(docRef, meal);
+        }
+        return batch.commit();
+    }
+
+    public Task<Void> saveMealToFirestore(String uid, MealDto meal) {
+        // Get a reference to the document where you want to save the meal
+        DocumentReference docRef = db.collection("users")
+                .document(uid)
+                .collection("meals")
+                .document(meal.getIdMeal());
+
+        // Set the meal data in Firestore
+        return docRef.set(meal);
+    }
+
+
+    public Task<List<MealDto>> getUserFavoriteMeals(String uid) {
+        return db.collection("users")
+                .document(uid)
+                .collection("meals")
+                .get()
+                .continueWith(task -> {
+                    if (task.isSuccessful()) {
+                        List<MealDto> meals = new ArrayList<>();
+                        for (DocumentSnapshot document : task.getResult()) {
+                            MealDto meal = document.toObject(MealDto.class);
+                            if (meal != null) {
+                                meals.add(meal);
+                            }
+                        }
+                        return meals;
+                    } else {
+                        throw task.getException();
+                    }
+                });
+    }
+
+    public void deleteMeal(String userId, String mealId) {
+        db.collection("users")
+                .document(userId)
+                .collection("meals")
+                .document(mealId)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("DELETE", "DocumentSnapshot successfully deleted!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("DELETE", "Error deleting document", e);
+                    }
+                });
+    }
+
 
     public FirebaseUser getCurrentUser(){
         return firebaseAuth.getCurrentUser();

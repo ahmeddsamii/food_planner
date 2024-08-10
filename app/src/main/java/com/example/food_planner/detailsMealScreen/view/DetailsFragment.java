@@ -27,6 +27,7 @@ import com.example.food_planner.favoriteScreen.view.FavoriteView;
 import com.example.food_planner.model.dto_repos.ResponseMeals;
 import com.example.food_planner.model.dtos.MealDto;
 import com.example.food_planner.signupScreen.view.SignUpScreen;
+import com.google.firebase.auth.FirebaseUser;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
@@ -73,6 +74,8 @@ public class DetailsFragment extends Fragment implements IngredientsView, Favori
                     Toast.makeText(getContext(), "You have to login to get this feature", Toast.LENGTH_SHORT).show();
                 }else {
                     favoritePresenter.insert(currentMeal);
+                    FirebaseUser user = Repo.getInstance(getContext()).getFirebaseDataSource().getFirebaseAuth().getCurrentUser();
+                    favoritePresenter.insertMealIntoFirebase(user.getUid(), currentMeal);
                     Toast.makeText(requireContext(), "Added to your favorites successfully", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -159,6 +162,16 @@ public class DetailsFragment extends Fragment implements IngredientsView, Favori
 
     @Override
     public void getAllFavMeals(List<MealDto> meals) {
+
+    }
+
+    @Override
+    public void onFavoriteMealsRetrieved(List<MealDto> meals) {
+
+    }
+
+    @Override
+    public void onFavoriteMealsRetrievedFailure(String errMessage) {
 
     }
 

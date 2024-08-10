@@ -30,6 +30,9 @@ public interface MealDao {
     @Query("SELECT * FROM meal")
     Flowable<List<MealDto>> getAllMeals();
 
+    @Query("DELETE FROM meal")
+    Completable deleteAllMeals();
+
 
 
 

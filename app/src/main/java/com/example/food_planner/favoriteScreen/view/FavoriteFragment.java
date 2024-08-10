@@ -20,6 +20,7 @@ import com.example.food_planner.R;
 import com.example.food_planner.Repo.Repo;
 import com.example.food_planner.favoriteScreen.FavoritePresenter.FavoritePresenter;
 import com.example.food_planner.model.dtos.MealDto;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
 
@@ -28,6 +29,7 @@ public class FavoriteFragment extends Fragment implements FavoriteView, onFavCli
     RecyclerView recyclerView;
 
     FavoritePresenter presenter;
+    FirebaseUser user ;
     private static final String TAG = "FavoriteFragment";
 
 
@@ -56,7 +58,9 @@ public class FavoriteFragment extends Fragment implements FavoriteView, onFavCli
         Log.i(TAG, "onViewCreated: "+Repo.getInstance(getContext()).getLocalData());
 
         presenter = new FavoritePresenter(Repo.getInstance(getContext()), this);
-        presenter.getLocalData();
+        //presenter.getLocalData();
+        user = Repo.getInstance(getContext()).getFirebaseDataSource().getFirebaseAuth().getCurrentUser();
+        presenter.fetchUserFavoriteMeals(user.getUid());
 
 
     }
@@ -71,6 +75,18 @@ public class FavoriteFragment extends Fragment implements FavoriteView, onFavCli
     }
 
     @Override
+    public void onFavoriteMealsRetrieved(List<MealDto> meals) {
+        FavoriteAdapter adapter = new FavoriteAdapter(meals, getContext() , this);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+    }
+
+    @Override
+    public void onFavoriteMealsRetrievedFailure(String errMessage) {
+        Log.i(TAG, "onFavoriteMealsRetrievedFailure: "+errMessage);
+    }
+
+    @Override
     public void onFavItemClicked(MealDto mealDto) {
         FavoriteFragmentDirections.ActionFavoriteFragmentToDetailsFragment action =
                 FavoriteFragmentDirections.actionFavoriteFragmentToDetailsFragment(mealDto);
@@ -80,6 +96,8 @@ public class FavoriteFragment extends Fragment implements FavoriteView, onFavCli
     @Override
     public void onFavItemDelete(MealDto mealDto) {
         presenter.delete(mealDto);
+        presenter.deleteTheMealFromFirebase(mealDto.getIdMeal());
+        presenter.fetchUserFavoriteMeals(user.getUid());
 
     }
 }

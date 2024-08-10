@@ -5,7 +5,11 @@ import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
+import com.example.food_planner.model.dtos.MealData;
 import com.example.food_planner.model.dtos.MealDto;
+import com.example.food_planner.model.dtos.UserData;
+import com.example.food_planner.settingsScreen.settingsView.OnSignOutListener;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.reactivestreams.Subscription;
 
@@ -19,10 +23,11 @@ import io.reactivex.rxjava3.core.FlowableSubscriber;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class Repo {
+public class Repo implements OnSignOutListener{
     FirebaseDataSource firebaseDataSource;
     MealsRemoteDataSource mealsRemoteDataSource;
     MealsLocalDataSource mealsLocalDataSource;
+    OnSignOutListener listener;
 
     MealDao dao;
     private static Repo instance = null;
@@ -129,4 +134,57 @@ public class Repo {
     }
 
 
+
+
+    public void deleteAllMeals(){
+        dao.deleteAllMeals();
+    }
+
+    public void saveMealToFireStore(String uId , MealDto mealDto){
+        firebaseDataSource.saveMealToFirestore(uId, mealDto);
+    }
+
+
+
+
+
+
+
+    @Override
+    public void onSignOutSuccess() {
+        firebaseDataSource.getFirebaseAuth().signOut();
+        listener.onSignOutSuccess();
+    }
+
+    public void getUserFavoriteMeals(String uid, OnFavoriteMealsCallback callback) {
+        firebaseDataSource.getUserFavoriteMeals(uid)
+                .addOnSuccessListener(meals -> callback.onSuccess(meals))
+                .addOnFailureListener(e -> callback.onFailure(e.getMessage()));
+    }
+
+    public void deleteItemFromFirebase(String uId , String mealId){
+        firebaseDataSource.deleteMeal(uId, mealId);
+    }
+
+    public String getUidOfUser(){
+        FirebaseUser user = getFirebaseDataSource().getFirebaseAuth().getCurrentUser();
+        return user.getUid();
+    }
+
+    public interface OnFavoriteMealsCallback {
+    void onSuccess(List<MealDto> meals);
+    void onFailure(String errorMessage);
+}
+
+    public interface OnUserDataCallback {
+        void onSuccess(UserData userData);
+        void onFailure(String errorMessage);
+    }
+
+
+
+    @Override
+    public void onSignOutFailure(String errorMessage) {
+        listener.onSignOutFailure(errorMessage);
+    }
 }
