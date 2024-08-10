@@ -6,7 +6,6 @@
 
     android:layout_height="match_parent"
     android:layout_marginTop="50dp"
-    android:layout_marginBottom="48dp"
     android:orientation="vertical"
     tools:context=".searchScreen.view.SearchFragment">
 
