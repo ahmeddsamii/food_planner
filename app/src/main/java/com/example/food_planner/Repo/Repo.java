@@ -64,13 +64,6 @@ public class Repo implements OnSignOutListener{
 //    }
 
     public void insert(MealDto mealDto){
-//        new Thread(){
-//            @Override
-//            public void run() {
-//                dao.insert(mealDto);
-//            }
-//        }.start();
-
         dao.insert(mealDto).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new CompletableObserver() {

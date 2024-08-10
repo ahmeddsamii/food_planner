@@ -22,4 +22,5 @@
     <string name="tv_countries">Countries:</string>
     <string name="web_id">AIzaSyAyBeZbkglQ1jBdTmhGC0wkD0IpjjqzcHA</string>
     <string name="btn_signOutText">SignOut</string>
+    <string name="tv_favorite_loading">Loading...</string>
 </resources>

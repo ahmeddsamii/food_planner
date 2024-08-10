@@ -72,7 +72,7 @@ public class DetailsFragment extends Fragment implements IngredientsView, Favori
                 String uId = sharedPreferences.getString("LoggedIn", "error");
                 if("error".equals(uId)){
                     Toast.makeText(getContext(), "You have to login to get this feature", Toast.LENGTH_SHORT).show();
-                }else {
+                }else{
                     favoritePresenter.insert(currentMeal);
                     FirebaseUser user = Repo.getInstance(getContext()).getFirebaseDataSource().getFirebaseAuth().getCurrentUser();
                     favoritePresenter.insertMealIntoFirebase(user.getUid(), currentMeal);
@@ -166,12 +166,12 @@ public class DetailsFragment extends Fragment implements IngredientsView, Favori
     }
 
     @Override
-    public void onFavoriteMealsRetrieved(List<MealDto> meals) {
+    public void onFavoriteMealsRetrievedFromFirebaseSuccess(List<MealDto> meals) {
 
     }
 
     @Override
-    public void onFavoriteMealsRetrievedFailure(String errMessage) {
+    public void onFavoriteMealsRetrievedFromFirebaseFailure(String errMessage) {
 
     }
 

@@ -42,7 +42,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         MealDto currentMeal = responseIngredient.get(position);
 
         // Ingredient 1
-        if (!currentMeal.getStrIngredient1().isEmpty() && currentMeal.getStrIngredient1() != null) {
+        if (currentMeal.getStrIngredient1() != null && !currentMeal.getStrIngredient1().isEmpty()) {
             holder.ingredient_details.setText(currentMeal.getStrIngredient1());
             Glide.with(context)
                     .load("https://www.themealdb.com/images/ingredients/" + currentMeal.getStrIngredient1() + "-Small.png")
@@ -53,7 +53,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         }
 
         // Ingredient 2
-        if (!currentMeal.getStrIngredient2().isEmpty()&& currentMeal.getStrIngredient2() != null) {
+        if ( currentMeal.getStrIngredient2() != null && !currentMeal.getStrIngredient2().isEmpty()) {
             holder.ingredient_details2.setText(currentMeal.getStrIngredient2());
             Glide.with(context)
                     .load("https://www.themealdb.com/images/ingredients/" + currentMeal.getStrIngredient2() + "-Small.png")
@@ -64,7 +64,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         }
 
         // Ingredient 3
-        if (!currentMeal.getStrIngredient3().isEmpty()&& currentMeal.getStrIngredient3() != null) {
+        if ( currentMeal.getStrIngredient3() != null && !currentMeal.getStrIngredient3().isEmpty()) {
             holder.ingredient_details3.setText(currentMeal.getStrIngredient3());
             Glide.with(context)
                     .load("https://www.themealdb.com/images/ingredients/" + currentMeal.getStrIngredient3() + "-Small.png")
@@ -75,7 +75,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         }
 
         // Ingredient 4
-        if (!currentMeal.getStrIngredient4().isEmpty()&& currentMeal.getStrIngredient4() != null) {
+        if ( currentMeal.getStrIngredient4() != null && !currentMeal.getStrIngredient4().isEmpty()) {
             holder.ingredient_details4.setText(currentMeal.getStrIngredient4());
             Glide.with(context)
                     .load("https://www.themealdb.com/images/ingredients/" + currentMeal.getStrIngredient4() + "-Small.png")
@@ -86,7 +86,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         }
 
         // Ingredient 5
-        if (!currentMeal.getStrIngredient5().isEmpty()&& currentMeal.getStrIngredient5() != null) {
+        if (currentMeal.getStrIngredient5() != null && !currentMeal.getStrIngredient5().isEmpty()) {
             holder.ingredient_details5.setText(currentMeal.getStrIngredient5());
             Glide.with(context)
                     .load("https://www.themealdb.com/images/ingredients/" + currentMeal.getStrIngredient5() + "-Small.png")
@@ -97,7 +97,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         }
 
         // Ingredient 6
-        if (!currentMeal.getStrIngredient6().isEmpty()&& currentMeal.getStrIngredient6() != null) {
+        if ( currentMeal.getStrIngredient6() != null && !currentMeal.getStrIngredient6().isEmpty()) {
             holder.ingredient_details6.setText(currentMeal.getStrIngredient6());
             Glide.with(context)
                     .load("https://www.themealdb.com/images/ingredients/" + currentMeal.getStrIngredient6() + "-Small.png")
@@ -108,7 +108,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         }
 
         // Ingredient 7
-        if (!currentMeal.getStrIngredient7().isEmpty()&& currentMeal.getStrIngredient7() != null) {
+        if (currentMeal.getStrIngredient7() != null && !currentMeal.getStrIngredient7().isEmpty()) {
             holder.ingredient_details7.setText(currentMeal.getStrIngredient7());
             Glide.with(context)
                     .load("https://www.themealdb.com/images/ingredients/" + currentMeal.getStrIngredient7() + "-Small.png")
@@ -119,7 +119,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         }
 
         // Ingredient 8
-        if (!currentMeal.getStrIngredient8().isEmpty()&& currentMeal.getStrIngredient8() != null) {
+        if (currentMeal.getStrIngredient8() != null && !currentMeal.getStrIngredient8().isEmpty()) {
             holder.ingredient_details8.setText(currentMeal.getStrIngredient8());
             Glide.with(context)
                     .load("https://www.themealdb.com/images/ingredients/" + currentMeal.getStrIngredient8() + "-Small.png")
