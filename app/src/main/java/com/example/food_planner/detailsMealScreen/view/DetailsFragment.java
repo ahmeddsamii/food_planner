@@ -1,5 +1,6 @@
 package com.example.food_planner.detailsMealScreen.view;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,8 +27,12 @@ import com.example.food_planner.R;
 import com.example.food_planner.Repo.Repo;
 import com.example.food_planner.favoriteScreen.FavoritePresenter.FavoritePresenter;
 import com.example.food_planner.favoriteScreen.view.FavoriteView;
+import com.example.food_planner.helpers.ConvertMealDtoToPlanDto;
 import com.example.food_planner.model.dto_repos.ResponseMeals;
 import com.example.food_planner.model.dtos.MealDto;
+import com.example.food_planner.model.dtos.PlanDto;
+import com.example.food_planner.planFragment.planPresenter.PlanPresenter;
+import com.example.food_planner.planFragment.planView.OnPlansView;
 import com.example.food_planner.signupScreen.view.SignUpScreen;
 import com.google.firebase.auth.FirebaseUser;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
@@ -33,11 +40,12 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.Abs
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Flowable;
 
-public class DetailsFragment extends Fragment implements IngredientsView, FavoriteView {
+public class DetailsFragment extends Fragment implements IngredientsView, FavoriteView , OnPlansView {
     private static final String TAG = "DetailsFragment";
 
     // UI Components
@@ -49,9 +57,11 @@ public class DetailsFragment extends Fragment implements IngredientsView, Favori
 
     // Presenters
     private FavoritePresenter favoritePresenter;
-
+    ImageView btnAddToCalender;
+    PlanPresenter planPresenter;
     // Data
     private MealDto currentMeal;
+    PlanDto planDto;
     private YouTubePlayerView youTubePlayerView;
 
     @Override
@@ -79,8 +89,20 @@ public class DetailsFragment extends Fragment implements IngredientsView, Favori
                     Toast.makeText(requireContext(), "Added to your favorites successfully", Toast.LENGTH_SHORT).show();
                 }
             }
-        }
-        );
+        });
+
+        btnAddToCalender.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sharedPreferences = requireContext().getSharedPreferences(SignUpScreen.UID_KEY, Context.MODE_PRIVATE);
+                String uId = sharedPreferences.getString("LoggedIn", "error");
+                if("error".equals(uId)){
+                    Toast.makeText(getContext(), "You have to login to get this feature", Toast.LENGTH_SHORT).show();
+                }else{
+                    showDatePicker();
+                }
+            }
+        });
     }
 
     private void initializeViews(View view) {
@@ -89,6 +111,7 @@ public class DetailsFragment extends Fragment implements IngredientsView, Favori
         mealImageView = view.findViewById(R.id.details_imageView);
         favoriteButton = view.findViewById(R.id.iv_addToFav);
         stepsTextView = view.findViewById(R.id.tv_steps_implementation);
+        btnAddToCalender = view.findViewById(R.id.btn_addToCalender);
         youTubePlayerView = view.findViewById(R.id.youtube_player_view);
         getLifecycle().addObserver(youTubePlayerView);
 
@@ -197,4 +220,39 @@ public class DetailsFragment extends Fragment implements IngredientsView, Favori
         super.onDestroyView();
         youTubePlayerView.release();
     }
+
+    @Override
+    public void onPlansSuccess(List<PlanDto> planDtos) {
+
+    }
+
+    @Override
+    public void onPlansFailure(String errMessage) {
+
+    }
+
+    public void showDatePicker(){
+        final Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                getContext(),
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        planPresenter = new PlanPresenter(Repo.getInstance(getContext()), DetailsFragment.this);
+                        planDto = new PlanDto();
+                        planDto = ConvertMealDtoToPlanDto.convertMealDtoToPlanDto(planDto, currentMeal);
+                        planDto.setDayOfWeek(dayOfMonth);
+                        // You might want to set other fields like month and year as well
+                        planPresenter.insertIntoPlans(planDto);
+                        Toast.makeText(getContext(), "Added successfully for day " + dayOfMonth, Toast.LENGTH_SHORT).show();
+                    }
+                },
+                year, month, day);
+        datePickerDialog.show();
+    }
 }
+

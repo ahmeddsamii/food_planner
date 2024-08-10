@@ -3,10 +3,8 @@ package com.example.food_planner.Repo;
 import android.content.Context;
 import android.util.Log;
 
-import androidx.lifecycle.LiveData;
-
-import com.example.food_planner.model.dtos.MealData;
 import com.example.food_planner.model.dtos.MealDto;
+import com.example.food_planner.model.dtos.PlanDto;
 import com.example.food_planner.model.dtos.UserData;
 import com.example.food_planner.settingsScreen.settingsView.OnSignOutListener;
 import com.google.firebase.auth.FirebaseUser;
@@ -17,6 +15,7 @@ import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.CompletableObserver;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.FlowableSubscriber;
@@ -28,8 +27,9 @@ public class Repo implements OnSignOutListener{
     MealsRemoteDataSource mealsRemoteDataSource;
     MealsLocalDataSource mealsLocalDataSource;
     OnSignOutListener listener;
-
-    MealDao dao;
+    PlanLocalDataSource planLocalDataSource;
+    MealDao mealDao;
+    PlanDao planDao;
     private static Repo instance = null;
     private static final String TAG = "Repo";
 
@@ -37,7 +37,9 @@ public class Repo implements OnSignOutListener{
         firebaseDataSource = FirebaseDataSource.getInstance();
         mealsRemoteDataSource = MealsRemoteDataSource.getInstance();
         mealsLocalDataSource = MealsLocalDataSource.getInstance(context);
-        dao = mealsLocalDataSource.mealDao();
+        planLocalDataSource = PlanLocalDataSource.getInstance(context);
+        mealDao = mealsLocalDataSource.mealDao();
+        planDao = planLocalDataSource.planDao();
     }
 
     public static Repo getInstance(Context context){
@@ -59,12 +61,15 @@ public class Repo implements OnSignOutListener{
         mealsRemoteDataSource.makeNetworkCallForCategories(callBack);
     }
 
-//    public void getIngredient(NetworkCallBack networkCallBack){
-//        mealsRemoteDataSource.makeNetworkCallForIngredients(networkCallBack);
-//    }
+
+    public Flowable<List<PlanDto>> getPlansByDay(int day) {
+        return planDao.getMealByDay(day)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 
     public void insert(MealDto mealDto){
-        dao.insert(mealDto).subscribeOn(Schedulers.io())
+        mealDao.insert(mealDto).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new CompletableObserver() {
                     @Override
@@ -84,6 +89,20 @@ public class Repo implements OnSignOutListener{
                 });
     }
 
+    public void insertIntoPlans(PlanDto planDto){
+        planDao.insert(planDto).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        new CompletableObserver() {
+                            @Override
+                            public void onSubscribe(@NonNull Disposable d) {}
+                            @Override
+                            public void onComplete() {Log.i(TAG, "onComplete: inserted successfully into plan");}
+                            @Override
+                            public void onError(@NonNull Throwable e) {}
+                        });
+    }
+
     public void getItemByName(NetworkCallBack callBack,String name){
         mealsRemoteDataSource.makeNetworkCallToGetItemByName(callBack, name);
     }
@@ -92,13 +111,18 @@ public class Repo implements OnSignOutListener{
         new Thread(){
             @Override
             public void run() {
-                dao.delete(mealDto);
+                mealDao.delete(mealDto);
             }
         }.start();
 
     }
+
+    public Completable deletePlanMeal(PlanDto planDto){
+        return planDao.deletePlanMeal(planDto).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
     public Flowable<List<MealDto>> getLocalData(){
-       return dao.getAllMeals();
+       return mealDao.getAllMeals();
     }
 
 
@@ -130,7 +154,7 @@ public class Repo implements OnSignOutListener{
 
 
     public void deleteAllMeals(){
-        dao.deleteAllMeals();
+        mealDao.deleteAllMeals();
     }
 
     public void saveMealToFireStore(String uId , MealDto mealDto){

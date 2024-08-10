@@ -14,7 +14,12 @@
         android:icon="@drawable/favorite"
         android:title="@string/favorite" />
     <item
+        android:id="@+id/planFragment"
+        android:icon="@drawable/calender_primary_color"
+        android:title="@string/plans"/>
+    <item
         android:id="@+id/settingsFragment"
         android:icon="@drawable/settings"
         android:title="@string/settings" />
+
 </menu>

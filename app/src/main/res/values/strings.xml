@@ -23,4 +23,6 @@
     <string name="web_id">AIzaSyAyBeZbkglQ1jBdTmhGC0wkD0IpjjqzcHA</string>
     <string name="btn_signOutText">SignOut</string>
     <string name="tv_favorite_loading">Loading...</string>
+    <string name="plans">Plans</string>
+    <string name="delete_from_plan_btn_text">Delete</string>
 </resources>

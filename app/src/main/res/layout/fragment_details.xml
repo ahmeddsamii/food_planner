@@ -39,8 +39,15 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="end"
-                    android:background="#6A000000"
                     android:src="@drawable/favorite_white" />
+
+                <ImageView
+                    android:id="@+id/btn_addToCalender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="60dp"
+                    android:src="@drawable/calender_white_color_small" />
 
                 <TextView
                     android:id="@+id/tv_title_details"

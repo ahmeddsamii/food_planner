@@ -93,6 +93,15 @@
             android:id="@+id/action_detailsMealsByIngredientsFragment_to_detailsFragment"
             app:destination="@id/detailsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/planFragment"
+        android:name="com.example.food_planner.planFragment.planView.PlanFragment"
+        android:label="fragment_plan"
+        tools:layout="@layout/fragment_plan" >
+        <action
+            android:id="@+id/action_planFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
 
 
 </navigation>
