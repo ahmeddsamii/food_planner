@@ -21,6 +21,9 @@ import com.example.food_planner.Repo.Repo;
 import com.example.food_planner.homePageScreen.view.HomePageScreen;
 import com.example.food_planner.loginScreen.presenter.LoginPresenter;
 import com.example.food_planner.signupScreen.view.SignUpScreen;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -33,7 +36,8 @@ public class LoginScreen extends AppCompatActivity implements LoginView {
     EditText email;
     EditText password;
     TextView guestMode;
-
+    ImageView signInWithGoogle;
+    LoginPresenter presenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +48,9 @@ public class LoginScreen extends AppCompatActivity implements LoginView {
         email = findViewById(R.id.et_mail_login_username);
         password = findViewById(R.id.et_login_password);
         guestMode = findViewById(R.id.tv_guestMode);
-        LoginPresenter presenter = LoginPresenter.getInstance(this, Repo.getInstance(LoginScreen.this));
+        signInWithGoogle = findViewById(R.id.iv_login_google);
+        presenter = LoginPresenter.getInstance(this, Repo.getInstance(LoginScreen.this));
+        presenter.setupGoogleSignIn(this);
 
         goToSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,7 +82,13 @@ public class LoginScreen extends AppCompatActivity implements LoginView {
             }
         });
 
+        signInWithGoogle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.signInWithGoogle(LoginScreen.this);
+            }
 
+        });
 
     }
 
@@ -104,5 +116,15 @@ public class LoginScreen extends AppCompatActivity implements LoginView {
     public void LoginFailure(String errMessage) {
         Log.e("LoginScreen", "Failure method called: " + errMessage);
         runOnUiThread(() -> Toast.makeText(this, errMessage, Toast.LENGTH_LONG).show());
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 9001) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            presenter.handleGoogleSignInResult(task);
+        }
     }
 }
