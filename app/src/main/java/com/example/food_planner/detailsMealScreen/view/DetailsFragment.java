@@ -34,6 +34,7 @@ import com.example.food_planner.model.dtos.PlanDto;
 import com.example.food_planner.planFragment.planPresenter.PlanPresenter;
 import com.example.food_planner.planFragment.planView.OnPlansView;
 import com.example.food_planner.signupScreen.view.SignUpScreen;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
@@ -43,7 +44,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class DetailsFragment extends Fragment implements IngredientsView, FavoriteView , OnPlansView {
     private static final String TAG = "DetailsFragment";
@@ -78,7 +81,7 @@ public class DetailsFragment extends Fragment implements IngredientsView, Favori
         favoriteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences sharedPreferences = requireContext().getSharedPreferences(SignUpScreen.UID_KEY, Context.MODE_PRIVATE);
+                SharedPreferences sharedPreferences = getContext().getSharedPreferences(SignUpScreen.UID_KEY, Context.MODE_PRIVATE);
                 String uId = sharedPreferences.getString("LoggedIn", "error");
                 if("error".equals(uId)){
                     Toast.makeText(getContext(), "You have to login to get this feature", Toast.LENGTH_SHORT).show();
@@ -86,7 +89,7 @@ public class DetailsFragment extends Fragment implements IngredientsView, Favori
                     favoritePresenter.insert(currentMeal);
                     FirebaseUser user = Repo.getInstance(getContext()).getFirebaseDataSource().getFirebaseAuth().getCurrentUser();
                     favoritePresenter.insertMealIntoFirebase(user.getUid(), currentMeal);
-                    Toast.makeText(requireContext(), "Added to your favorites successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Added to your favorites successfully", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -94,7 +97,7 @@ public class DetailsFragment extends Fragment implements IngredientsView, Favori
         btnAddToCalender.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences sharedPreferences = requireContext().getSharedPreferences(SignUpScreen.UID_KEY, Context.MODE_PRIVATE);
+                SharedPreferences sharedPreferences = getContext().getSharedPreferences(SignUpScreen.UID_KEY, Context.MODE_PRIVATE);
                 String uId = sharedPreferences.getString("LoggedIn", "error");
                 if("error".equals(uId)){
                     Toast.makeText(getContext(), "You have to login to get this feature", Toast.LENGTH_SHORT).show();
@@ -118,7 +121,7 @@ public class DetailsFragment extends Fragment implements IngredientsView, Favori
     }
 
     private void setupPresenters() {
-        Repo repo = Repo.getInstance(requireContext());
+        Repo repo = Repo.getInstance(getContext());
         favoritePresenter = new FavoritePresenter(repo, this);
     }
 
@@ -175,7 +178,7 @@ public class DetailsFragment extends Fragment implements IngredientsView, Favori
     private void displayMealDetails() {
         titleTextView.setText(currentMeal.getStrMeal());
         stepsTextView.setText(currentMeal.getStrInstructions());
-        Glide.with(requireContext())
+        Glide.with(getContext())
                 .load(currentMeal.getStrMealThumb())
                 .into(mealImageView);
 
@@ -231,6 +234,16 @@ public class DetailsFragment extends Fragment implements IngredientsView, Favori
 
     }
 
+    @Override
+    public void onPlansSuccessFromFirebase(List<PlanDto> planDtos) {
+
+    }
+
+    @Override
+    public void onPlansFailureFromFirebase(String errMessage) {
+
+    }
+
     public void showDatePicker(){
         final Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);
@@ -247,7 +260,23 @@ public class DetailsFragment extends Fragment implements IngredientsView, Favori
                         planDto = ConvertMealDtoToPlanDto.convertMealDtoToPlanDto(planDto, currentMeal);
                         planDto.setDayOfWeek(dayOfMonth);
                         // You might want to set other fields like month and year as well
-                        planPresenter.insertIntoPlans(planDto);
+                        FirebaseAuth user = FirebaseAuth.getInstance();
+
+                        if (user != null) {
+                            planPresenter.insertIntoPlans(planDto);
+                            planPresenter.savePlanToFirestore(user.getUid(), planDto)
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(
+                                            () -> {
+                                                Toast.makeText(getContext(), "Added successfully for day " + dayOfMonth, Toast.LENGTH_SHORT).show();
+                                                planPresenter.insertIntoPlans(planDto);
+                                            },
+                                            error -> Toast.makeText(getContext(), "Error saving plan: " + error.getMessage(), Toast.LENGTH_SHORT).show()
+                                    );
+                        } else {
+                            Toast.makeText(getContext(), "User not logged in", Toast.LENGTH_SHORT).show();
+                        }
                         Toast.makeText(getContext(), "Added successfully for day " + dayOfMonth, Toast.LENGTH_SHORT).show();
                     }
                 },

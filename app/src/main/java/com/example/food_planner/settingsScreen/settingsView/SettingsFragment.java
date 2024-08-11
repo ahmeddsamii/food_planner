@@ -59,21 +59,23 @@ public class SettingsFragment extends Fragment implements SettingsView , OnSignO
 
     @Override
     public void onSignOutSuccess() {
-        Toast.makeText(requireContext(), "Sign out successful", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Sign out successful", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(getContext(), LoginScreen.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
-        SharedPreferences sharedPreferences = requireContext().getSharedPreferences(SignUpScreen.UID_KEY, Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences(SignUpScreen.UID_KEY, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("LoggedIn", "error");
         editor.apply();
+
+
 
 
     }
 
     @Override
     public void onSignOutFailure(String errorMessage) {
-        Toast.makeText(requireContext(), "Sign out failed: " + errorMessage, Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), "Sign out failed: " + errorMessage, Toast.LENGTH_LONG).show();
         Log.i("TAG", "onSignOutFailure: "+errorMessage);
     }
 }

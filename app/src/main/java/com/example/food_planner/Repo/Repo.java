@@ -5,11 +5,10 @@ import android.util.Log;
 
 import com.example.food_planner.model.dtos.MealDto;
 import com.example.food_planner.model.dtos.PlanDto;
-import com.example.food_planner.model.dtos.UserData;
+import com.example.food_planner.planFragment.planView.OnPlanMealsCallback;
 import com.example.food_planner.settingsScreen.settingsView.OnSignOutListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
-
-import org.reactivestreams.Subscription;
 
 import java.util.List;
 
@@ -18,7 +17,6 @@ import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.CompletableObserver;
 import io.reactivex.rxjava3.core.Flowable;
-import io.reactivex.rxjava3.core.FlowableSubscriber;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
@@ -152,7 +150,6 @@ public class Repo implements OnSignOutListener{
 
 
 
-
     public void deleteAllMeals(){
         mealDao.deleteAllMeals();
     }
@@ -162,10 +159,10 @@ public class Repo implements OnSignOutListener{
     }
 
 
-
-
-
-
+    public Task<Void> savePlanToFirebase(String uId, PlanDto plan) {
+        // Return the Task directly for better error handling
+            return firebaseDataSource.savePlanToFirestore(uId, plan);
+    }
 
     @Override
     public void onSignOutSuccess() {
@@ -177,6 +174,12 @@ public class Repo implements OnSignOutListener{
         firebaseDataSource.getUserFavoriteMeals(uid)
                 .addOnSuccessListener(meals -> callback.onSuccess(meals))
                 .addOnFailureListener(e -> callback.onFailure(e.getMessage()));
+    }
+
+    public void getUserPlanMealsFromFirebase(String uId, int dayOfWeek, OnPlanMealsCallback callback){
+        firebaseDataSource.getUserPlanMeals(uId,dayOfWeek).addOnSuccessListener(
+                plans-> callback.onPlanMealsSuccess(plans))
+                .addOnFailureListener(e -> callback.onPlanMealsFailure(e.getMessage()));
     }
 
     public void deleteItemFromFirebase(String uId , String mealId){
@@ -192,13 +195,6 @@ public class Repo implements OnSignOutListener{
     void onSuccess(List<MealDto> meals);
     void onFailure(String errorMessage);
 }
-
-    public interface OnUserDataCallback {
-        void onSuccess(UserData userData);
-        void onFailure(String errorMessage);
-    }
-
-
 
     @Override
     public void onSignOutFailure(String errorMessage) {

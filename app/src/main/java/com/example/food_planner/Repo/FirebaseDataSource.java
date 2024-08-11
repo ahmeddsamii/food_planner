@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 
 import com.example.food_planner.model.dtos.MealData;
 import com.example.food_planner.model.dtos.MealDto;
+import com.example.food_planner.model.dtos.PlanDto;
 import com.example.food_planner.model.dtos.UserData;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -68,6 +69,20 @@ public class FirebaseDataSource {
         return docRef.set(meal);
     }
 
+    public Task<Void> savePlanToFirestore(String uid, PlanDto plan) {
+        // The implementation here is already correct, but we'll add some logging
+        DocumentReference docRef = db.collection("plans")
+                .document(uid)
+                .collection("plans")
+                .document(String.valueOf(plan.getDayOfWeek()))
+                .collection("meals")
+                .document(plan.getId());
+
+        return docRef.set(plan)
+                .addOnSuccessListener(aVoid -> Log.d(TAG, "Plan saved successfully to Firestore"))
+                .addOnFailureListener(e -> Log.e(TAG, "Error saving plan to Firestore", e));
+    }
+
 
     public Task<List<MealDto>> getUserFavoriteMeals(String uid) {
         return db.collection("users")
@@ -89,6 +104,31 @@ public class FirebaseDataSource {
                     }
                 });
     }
+
+    public Task<List<PlanDto>> getUserPlanMeals(String uid, int dayOfWeek) {
+        return db.collection("plans")
+                .document(uid)
+                .collection("plans")
+                .document(String.valueOf(dayOfWeek))
+                .collection("meals")
+                .get()
+                .continueWith(task -> {
+                    if (task.isSuccessful()) {
+                        List<PlanDto> plans = new ArrayList<>();
+                        for (DocumentSnapshot document : task.getResult()) {
+                            PlanDto plan = document.toObject(PlanDto.class);
+                            if (plan != null) {
+                                plans.add(plan);
+                            }
+                        }
+                        return plans;
+                    } else {
+                        throw task.getException();
+                    }
+                });
+    }
+
+
 
     public void deleteMeal(String userId, String mealId) {
         db.collection("users")

@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.example.food_planner.Repo.Repo;
 import com.example.food_planner.model.dtos.PlanDto;
+import com.example.food_planner.planFragment.planView.OnPlanMealsCallback;
 import com.example.food_planner.planFragment.planView.OnPlansView;
 
 import org.reactivestreams.Subscription;
@@ -16,7 +17,7 @@ import io.reactivex.rxjava3.core.CompletableObserver;
 import io.reactivex.rxjava3.core.FlowableSubscriber;
 import io.reactivex.rxjava3.disposables.Disposable;
 
-public class PlanPresenter {
+public class PlanPresenter{
     Repo repo;
     OnPlansView onPlansView;
 
@@ -41,6 +42,35 @@ public class PlanPresenter {
             @Override
             public void onError(@NonNull Throwable e) {
 
+            }
+        });
+    }
+
+    public Completable savePlanToFirestore(String uId, PlanDto planDto) {
+        // Convert the Firebase Task to an RxJava Completable
+        return Completable.create(emitter -> {
+            repo.savePlanToFirebase(uId, planDto)
+                    .addOnSuccessListener(aVoid -> {
+                        Log.d("PlanPresenter", "Plan saved successfully to Firestore");
+                        emitter.onComplete();
+                    })
+                    .addOnFailureListener(e -> {
+                        Log.e("PlanPresenter", "Error saving plan to Firestore", e);
+                        emitter.onError(e);
+                    });
+        });
+    }
+
+    public void fetchDataForPlanMealsFromFirebase(String uId, int dayOfWeek){
+        repo.getUserPlanMealsFromFirebase(uId, dayOfWeek, new OnPlanMealsCallback() {
+            @Override
+            public void onPlanMealsSuccess(List<PlanDto> plans) {
+                onPlansView.onPlansSuccessFromFirebase(plans);
+            }
+
+            @Override
+            public void onPlanMealsFailure(String errMessage) {
+                onPlansView.onPlansFailure(errMessage);
             }
         });
     }
@@ -73,4 +103,6 @@ public class PlanPresenter {
             }
         });
     }
+
+
 }

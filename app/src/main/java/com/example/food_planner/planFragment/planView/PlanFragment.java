@@ -14,9 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +22,7 @@ import com.example.food_planner.R;
 import com.example.food_planner.Repo.Repo;
 import com.example.food_planner.model.dtos.PlanDto;
 import com.example.food_planner.planFragment.planPresenter.PlanPresenter;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -37,8 +36,9 @@ public class PlanFragment extends Fragment implements OnPlansView , OnPlanMealDe
     RecyclerView planMealsRecyclerView;
     PlansAdapter plansAdapter;
     int tempDay;
-
+    FirebaseAuth user;
     PlanPresenter presenter;
+    List<PlanDto> plans;
     private static final String TAG = "PlanFragment";
 
 
@@ -65,11 +65,11 @@ public class PlanFragment extends Fragment implements OnPlansView , OnPlanMealDe
         tv_dateFormat = view.findViewById(R.id.tv_date_format);
         cv_dateFormat = view.findViewById(R.id.cv_date_format);
         planMealsRecyclerView = view.findViewById(R.id.rv_date_format);
-
         plansAdapter = new PlansAdapter(new ArrayList<>(), getContext(), this);
         planMealsRecyclerView.setAdapter(plansAdapter);
         planMealsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         presenter = new PlanPresenter(Repo.getInstance(getContext()),this);
+        user = FirebaseAuth.getInstance();
 
 
         cv_dateFormat.setOnClickListener(new View.OnClickListener() {
@@ -93,7 +93,8 @@ public class PlanFragment extends Fragment implements OnPlansView , OnPlanMealDe
                                                   int monthOfYear, int dayOfMonth) {
                                 // on below line we are setting date to our text view.
                                 tv_dateFormat.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-                                presenter.getMealsByDay(dayOfMonth);
+                                //presenter.getMealsByDay(dayOfMonth);
+                                presenter.fetchDataForPlanMealsFromFirebase(user.getUid(), dayOfMonth);
                                 tempDay = dayOfMonth;
 
                             }
@@ -116,6 +117,19 @@ public class PlanFragment extends Fragment implements OnPlansView , OnPlanMealDe
     @Override
     public void onPlansFailure(String errMessage) {
         Toast.makeText(getContext(), "Failed to load the list", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onPlansSuccessFromFirebase(List<PlanDto> planDtos) {
+        plansAdapter.setUpdateList(planDtos);
+        plansAdapter.notifyDataSetChanged();
+        planMealsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        Log.i(TAG, "onPlansSuccess: " + planDtos.size());
+    }
+
+    @Override
+    public void onPlansFailureFromFirebase(String errMessage) {
+        Log.i(TAG, "onPlansFailureFromFirebase: " + errMessage);
     }
 
     @Override

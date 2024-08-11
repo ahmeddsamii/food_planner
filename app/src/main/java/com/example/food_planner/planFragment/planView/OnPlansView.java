@@ -7,4 +7,7 @@ import java.util.List;
 public interface OnPlansView {
     void onPlansSuccess(List<PlanDto> planDtos);
     void onPlansFailure(String errMessage);
+
+    void onPlansSuccessFromFirebase(List<PlanDto> planDtos);
+    void onPlansFailureFromFirebase(String errMessage);
 }
