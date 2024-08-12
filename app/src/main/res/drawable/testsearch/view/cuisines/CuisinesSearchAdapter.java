@@ -1,6 +1,7 @@
-package com.example.food_planner.searchScreen.view;
+package com.example.foodplanner.views.testsearch.view.cuisines;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,50 +10,79 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.example.food_planner.R;
-import com.example.food_planner.model.dtos.CountryDto;
+import com.example.foodplanner.R;
+import com.example.foodplanner.model.dtos.CuisineDto;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class CountrySearchAdapter extends RecyclerView.Adapter<CountrySearchAdapter.CountryViewHolder> {
 
-    private List<CountryDto> countries;
-    private List<CountryDto> countriesFull;
-    private Context context;
+public class CuisinesSearchAdapter extends RecyclerView.Adapter<CuisinesSearchAdapter.ViewHolder> {
 
-    public CountrySearchAdapter(List<CountryDto> countries, Context context){
-        this.countries = countries;
-        this.countriesFull = new ArrayList<>(countries); // Initialize the full list
+    private final Context context;
+    private List<CuisineDto> countryList;
+
+    public void setCuisinesList(List<CuisineDto> countryList) {
+        this.countryList = countryList;
+        notifyDataSetChanged();
+    }
+
+    private OnCuisineClicked onCuisineClicked;
+
+    public CuisinesSearchAdapter(Context context, List<CuisineDto> countryList,OnCuisineClicked onCuisineClicked)
+    {
         this.context = context;
+        this.countryList = countryList;
+        this.onCuisineClicked = onCuisineClicked;
     }
 
     @NonNull
     @Override
-    public CountryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View v = layoutInflater.inflate(R.layout.country_search_item, parent, false);
-        return new CountryViewHolder(v);
+    public CuisinesSearchAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        View v = layoutInflater.inflate(R.layout.country_search_row_layout, parent, false);
+        CuisinesSearchAdapter.ViewHolder vh = new CuisinesSearchAdapter.ViewHolder(v);
+        return vh;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CountryViewHolder holder, int position) {
-        CountryDto currentCountry = countries.get(position);
-        holder.title.setText(currentCountry.getStrArea());
-        holder.country_flag.setImageResource(getImage(currentCountry.getStrArea()));
+    public void onBindViewHolder(@NonNull CuisinesSearchAdapter.ViewHolder holder, int position) {
+        String name = countryList.get(position).getStrArea();
+        if (name.equals("Unknown"))
+            name = "Palestine";
+        holder.countryTextView.setText(name);
+        holder.flag.setImageResource(getImage(name));
+
+        String finalName = name;
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SearchFragmentDirections.ActionSearchFragmentToMealsByCountryScreenFragment action=
-                        SearchFragmentDirections.actionSearchFragmentToMealsByCountryScreenFragment(currentCountry);
-                Navigation.findNavController(v).navigate(action);
+                onCuisineClicked.onCuisineClicked(countryList.get(position).getStrArea());
             }
         });
+    }
+
+    @Override
+    public int getItemCount() {
+        return countryList.size();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+
+        TextView countryTextView;
+        ImageView flag;
+        CardView cardView;
+        View layout;
+
+        public ViewHolder(@NonNull View v) {
+            super(v);
+            layout = v;
+            flag = v.findViewById(R.id.img_flag);
+            countryTextView = v.findViewById(R.id.country_TextView_search);
+            Log.i("texxxxt", "TextView " + countryTextView);
+            cardView = v.findViewById(R.id.card_country_search_item);
+        }
     }
 
     int getImage(String cuisine)
@@ -119,28 +149,5 @@ public class CountrySearchAdapter extends RecyclerView.Adapter<CountrySearchAdap
         }
     }
 
-    @Override
-    public int getItemCount() {
-        return countries.size();
-    }
-
-
-    public void setData(List<CountryDto> newCountries) {
-        this.countries = new ArrayList<>(newCountries); // Update the current list
-        this.countriesFull = new ArrayList<>(newCountries); // Update the full list for filtering
-        notifyDataSetChanged(); // Notify the adapter that the data has changed
-    }
-
-    class CountryViewHolder extends RecyclerView.ViewHolder {
-        TextView title;
-        ImageView country_flag;
-        CardView cardView;
-
-        public CountryViewHolder(@NonNull View itemView) {
-            super(itemView);
-            title = itemView.findViewById(R.id.tv_search_country_item);
-            country_flag = itemView.findViewById(R.id.iv_country_search_item);
-            cardView = itemView.findViewById(R.id.country_search_screen_cardview);
-        }
-    }
 }
+
