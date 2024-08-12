@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.food_planner.R;
-import com.example.food_planner.helpers.ConvertPlanDtoToMealDto;
+import com.example.food_planner.helpers.converters.ConvertPlanDtoToMealDto;
 import com.example.food_planner.model.dtos.MealDto;
 import com.example.food_planner.model.dtos.PlanDto;
 

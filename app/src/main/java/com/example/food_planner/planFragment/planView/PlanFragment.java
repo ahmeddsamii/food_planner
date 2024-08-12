@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.food_planner.R;
 import com.example.food_planner.Repo.Repo;
+import com.example.food_planner.helpers.networkUtils.NetworkUtils;
 import com.example.food_planner.model.dtos.PlanDto;
 import com.example.food_planner.planFragment.planPresenter.PlanPresenter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -71,7 +72,6 @@ public class PlanFragment extends Fragment implements OnPlansView , OnPlanMealDe
         presenter = new PlanPresenter(Repo.getInstance(getContext()),this);
         user = FirebaseAuth.getInstance();
 
-
         cv_dateFormat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,9 +93,16 @@ public class PlanFragment extends Fragment implements OnPlansView , OnPlanMealDe
                                                   int monthOfYear, int dayOfMonth) {
                                 // on below line we are setting date to our text view.
                                 tv_dateFormat.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-                                //presenter.getMealsByDay(dayOfMonth);
-                                presenter.fetchDataForPlanMealsFromFirebase(user.getUid(), dayOfMonth);
                                 tempDay = dayOfMonth;
+
+                                if (NetworkUtils.isInternetAvailable(getContext())){
+                                    presenter.fetchDataForPlanMealsFromFirebase(user.getUid(), dayOfMonth);
+                                }else {
+                                    presenter.getMealsByDay(dayOfMonth);
+                                }
+
+
+
 
                             }
                         },

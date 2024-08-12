@@ -117,7 +117,6 @@ public class LoginPresenter {
                             } else if (exception instanceof FirebaseAuthInvalidCredentialsException) {
                                 view.LoginFailure("username or password is incorrect, please try again.");
                             } else {
-                                Log.e("LoginPresenter", "Login failed: " + exception.getMessage());
                                 view.LoginFailure("Error: " + exception.getMessage());
                             }
                         }

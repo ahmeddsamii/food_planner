@@ -32,6 +32,13 @@ public class SettingsPresenter {
 //        repo.signOut(this);
 //    }
 
+
+    public void deleteAllLocalData(){
+        repo.deleteAllLocalPlans().subscribe(() -> Log.i("TAG", "deleteAllLocalData: deleted successfully"));
+        repo.deleteAllMeals().subscribe(() -> Log.i("TAG", "deleteAllLocalData: deleted successfully"));
+    }
+
+
     public void signOut() {
         repo.getLocalData()
                 .subscribeOn(Schedulers.io())

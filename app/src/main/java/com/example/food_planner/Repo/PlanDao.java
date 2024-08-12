@@ -23,4 +23,7 @@ public interface PlanDao {
 
     @Delete
     Completable deletePlanMeal(PlanDto planDto);
+
+    @Query("DELETE FROM `plan` ")
+    Completable deleteAllPlans();
 }

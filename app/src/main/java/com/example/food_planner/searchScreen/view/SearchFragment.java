@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.example.food_planner.R;
 import com.example.food_planner.Repo.Repo;
+import com.example.food_planner.helpers.networkUtils.NetworkUtils;
 import com.example.food_planner.model.dto_repos.ResponseAllIngredients;
 import com.example.food_planner.model.dtos.AllIngredientDto;
 import com.example.food_planner.model.dtos.MealDto;
@@ -60,6 +61,7 @@ public class SearchFragment extends Fragment implements CategorySearchView, Coun
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         return inflater.inflate(R.layout.fragment_search, container, false);
     }
 
@@ -73,6 +75,12 @@ public class SearchFragment extends Fragment implements CategorySearchView, Coun
         mealsChip = view.findViewById(R.id.meals_chip);
         ingredientsChip = view.findViewById(R.id.ingredient_chip);
         visibleText = view.findViewById(R.id.visibleText);
+
+
+        if(!NetworkUtils.isInternetAvailable(getContext()))
+        {
+            Toast.makeText(getContext(), "No internet, please check your connection", Toast.LENGTH_SHORT).show();
+        }
 
         categoryChip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.food_planner.R;
 import com.example.food_planner.Repo.Repo;
+import com.example.food_planner.helpers.networkUtils.NetworkUtils;
 import com.example.food_planner.homePageScreen.view.HomePageScreen;
 import com.example.food_planner.loginScreen.presenter.LoginPresenter;
 import com.example.food_planner.signupScreen.view.SignUpScreen;
@@ -63,29 +64,41 @@ public class LoginScreen extends AppCompatActivity implements LoginView {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("LoginScreen", "onClick: clicked on login button");
-                if(isValidEmail(email.getText().toString())){
-                presenter.login(email.getText().toString(),password.getText().toString());
-                }else {
-                    runOnUiThread(() -> Toast.makeText(LoginScreen.this, "Email is not valid", Toast.LENGTH_SHORT).show());
+                if(NetworkUtils.isInternetAvailable(LoginScreen.this)){
+                    if(!email.getText().toString().isEmpty() && !password.getText().toString().isEmpty()) {
+                        presenter.login(email.getText().toString(), password.getText().toString());
+                    }else {
+                        Toast.makeText(LoginScreen.this, "All fields must be filled!", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(LoginScreen.this, "No Internet, please check your connection", Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
 
         guestMode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(NetworkUtils.isInternetAvailable(LoginScreen.this)){
                 Intent signInAsGuest = new Intent(LoginScreen.this, HomePageScreen.class);
                 signInAsGuest.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 signInAsGuest.putExtra("guest", "guest");
                 startActivity(signInAsGuest);
+                }else {
+                    Toast.makeText(LoginScreen.this, "No Internet, please check your connection", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
         signInWithGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(NetworkUtils.isInternetAvailable(LoginScreen.this)){
                 presenter.signInWithGoogle(LoginScreen.this);
+                }else {
+                    Toast.makeText(LoginScreen.this, "No Internet, please check your connection", Toast.LENGTH_SHORT).show();
+                }
             }
 
         });
@@ -93,12 +106,7 @@ public class LoginScreen extends AppCompatActivity implements LoginView {
     }
 
 
-    private boolean isValidEmail(String email) {
-        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-        Pattern pattern = Pattern.compile(emailPattern);
-        Matcher matcher = pattern.matcher(email);
-        return matcher.matches();
-    }
+
 
     @Override
     public void LoginSuccess(FirebaseUser user) {
@@ -114,7 +122,6 @@ public class LoginScreen extends AppCompatActivity implements LoginView {
 
     @Override
     public void LoginFailure(String errMessage) {
-        Log.e("LoginScreen", "Failure method called: " + errMessage);
         runOnUiThread(() -> Toast.makeText(this, errMessage, Toast.LENGTH_LONG).show());
     }
 

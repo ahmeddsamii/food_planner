@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.food_planner.R;
+import com.example.food_planner.helpers.networkUtils.NetworkUtils;
 import com.example.food_planner.loginScreen.view.LoginScreen;
 import com.example.food_planner.signupScreen.view.SignUpScreen;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -34,10 +36,13 @@ public class HomePageScreen extends AppCompatActivity {
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
         SharedPreferences sharedPreferences = getSharedPreferences(SignUpScreen.UID_KEY, MODE_PRIVATE);
         String uId = sharedPreferences.getString("LoggedIn", "error");
+        if(!NetworkUtils.isInternetAvailable(HomePageScreen.this)){
+            Toast.makeText(this, "No internet, please check your connection", Toast.LENGTH_SHORT).show();
+        }
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
-            if (itemId == R.id.favoriteFragment || itemId == R.id.settingsFragment || itemId == R.id.searchFragment) {
+            if (itemId == R.id.favoriteFragment || itemId == R.id.settingsFragment || itemId == R.id.searchFragment || itemId == R.id.planFragment) {
                 if ("error".equals(uId)) {
                     showSignInSnackbar();
                     return false; // prevent navigation
@@ -58,8 +63,8 @@ public class HomePageScreen extends AppCompatActivity {
     }
 
     private void navigateToSignInScreen() {
-
         Intent intent = new Intent(this, LoginScreen.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 }

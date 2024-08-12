@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.example.food_planner.R;
 import com.example.food_planner.Repo.Repo;
 import com.example.food_planner.favoriteScreen.FavoritePresenter.FavoritePresenter;
+import com.example.food_planner.helpers.networkUtils.NetworkUtils;
 import com.example.food_planner.model.dtos.MealDto;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -64,11 +65,17 @@ public class FavoriteFragment extends Fragment implements FavoriteView, onFavCli
         presenter = new FavoritePresenter(Repo.getInstance(getContext()), this);
         //presenter.getLocalData();
         user = Repo.getInstance(getContext()).getFirebaseDataSource().getFirebaseAuth().getCurrentUser();
-        presenter.fetchUserFavoriteMeals(user.getUid());
+
+
+        if (!NetworkUtils.isInternetAvailable(getContext())){
+            presenter.getLocalData();
+            loading.setVisibility(View.GONE);
+        }else{
+            presenter.fetchUserFavoriteMeals(user.getUid());
+        }
 
 
     }
-
 
     @Override
     public void getAllFavMeals(List<MealDto> meals) {

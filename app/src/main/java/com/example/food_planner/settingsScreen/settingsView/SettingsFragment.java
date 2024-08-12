@@ -19,6 +19,7 @@ import androidx.navigation.Navigation;
 
 import com.example.food_planner.R;
 import com.example.food_planner.Repo.Repo;
+import com.example.food_planner.helpers.networkUtils.NetworkUtils;
 import com.example.food_planner.homePageScreen.view.HomePageScreen;
 import com.example.food_planner.loginScreen.view.LoginScreen;
 import com.example.food_planner.settingsScreen.settingsPresenter.SettingsPresenter;
@@ -54,7 +55,17 @@ public class SettingsFragment extends Fragment implements SettingsView , OnSignO
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         username.setText(user.getEmail());
         presenter = new SettingsPresenter(Repo.getInstance(getContext()), this);
-        btn_signOut.setOnClickListener(v -> presenter.signOut());
+        //btn_signOut.setOnClickListener(new  presenter.signOut());
+        btn_signOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (NetworkUtils.isInternetAvailable(getContext())){
+                presenter.signOut();
+                }else{
+                    Toast.makeText(getContext(), "Failed to sign out, check your connection", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     @Override
@@ -67,9 +78,7 @@ public class SettingsFragment extends Fragment implements SettingsView , OnSignO
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("LoggedIn", "error");
         editor.apply();
-
-
-
+        presenter.deleteAllLocalData();
 
     }
 

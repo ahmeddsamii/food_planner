@@ -8,8 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,7 +16,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,7 +24,7 @@ import com.example.food_planner.R;
 import com.example.food_planner.Repo.Repo;
 import com.example.food_planner.favoriteScreen.FavoritePresenter.FavoritePresenter;
 import com.example.food_planner.favoriteScreen.view.FavoriteView;
-import com.example.food_planner.helpers.ConvertMealDtoToPlanDto;
+import com.example.food_planner.helpers.converters.ConvertMealDtoToPlanDto;
 import com.example.food_planner.model.dto_repos.ResponseMeals;
 import com.example.food_planner.model.dtos.MealDto;
 import com.example.food_planner.model.dtos.PlanDto;
@@ -45,7 +42,6 @@ import java.util.Calendar;
 import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class DetailsFragment extends Fragment implements IngredientsView, FavoriteView , OnPlansView {
@@ -89,6 +85,7 @@ public class DetailsFragment extends Fragment implements IngredientsView, Favori
                     favoritePresenter.insert(currentMeal);
                     FirebaseUser user = Repo.getInstance(getContext()).getFirebaseDataSource().getFirebaseAuth().getCurrentUser();
                     favoritePresenter.insertMealIntoFirebase(user.getUid(), currentMeal);
+                    favoritePresenter.insert(currentMeal);
                     Toast.makeText(getContext(), "Added to your favorites successfully", Toast.LENGTH_SHORT).show();
                 }
             }

@@ -150,12 +150,18 @@ public class Repo implements OnSignOutListener{
 
 
 
-    public void deleteAllMeals(){
-        mealDao.deleteAllMeals();
+    public Completable deleteAllMeals(){
+        return mealDao.deleteAllMeals().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     public void saveMealToFireStore(String uId , MealDto mealDto){
         firebaseDataSource.saveMealToFirestore(uId, mealDto);
+    }
+
+    public Completable deleteAllLocalPlans(){
+        return planDao.deleteAllPlans().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
 
