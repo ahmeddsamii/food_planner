@@ -30,21 +30,27 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class SignUpScreen extends AppCompatActivity implements SignUpView{
+public class SignUpScreen extends AppCompatActivity implements SignUpView {
 
     TextView goToLogin;
     Button btn_signUp;
-    EditText email,password, username;
+    EditText email, password, username;
     ImageView signUpWithGoogle;
     SignUpPresenter presenter;
     public static String UID_KEY = "UID_LOGIN";
     private static final String TAG = "SignUpScreen";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_sign_up_screen);
 
+        initializeViews();
+        setupListeners();
+    }
+
+    private void initializeViews() {
         goToLogin = findViewById(R.id.tv_signIn);
         btn_signUp = findViewById(R.id.btn_signup);
         email = findViewById(R.id.et_signUp_email);
@@ -52,76 +58,93 @@ public class SignUpScreen extends AppCompatActivity implements SignUpView{
         username = findViewById(R.id.et_signup_username);
         signUpWithGoogle = findViewById(R.id.iv_singUp_google);
         presenter = new SignUpPresenter(this, Repo.getInstance(SignUpScreen.this));
-        goToLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent goToLogin = new Intent(SignUpScreen.this, LoginScreen.class);
-                startActivity(goToLogin);
+    }
+
+    private void setupListeners() {
+        goToLogin.setOnClickListener(v -> {
+            Intent goToLogin = new Intent(SignUpScreen.this, LoginScreen.class);
+            startActivity(goToLogin);
+        });
+
+        signUpWithGoogle.setOnClickListener(v -> {
+            if (NetworkUtils.isInternetAvailable(SignUpScreen.this)) {
+                presenter.signInWithGoogle(SignUpScreen.this);
+            } else {
+                showToast("No Internet, please check your connection");
             }
         });
 
-        signUpWithGoogle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(NetworkUtils.isInternetAvailable(SignUpScreen.this)){
-                    presenter.signInWithGoogle(SignUpScreen.this);
-                } else {
-                    Toast.makeText(SignUpScreen.this, "No Internet, please check your connection", Toast.LENGTH_SHORT).show();
-                }
+        btn_signUp.setOnClickListener(v -> handleSignUp());
+    }
+
+    private void handleSignUp() {
+        String email_text = email.getText().toString().trim();
+        String password_text = password.getText().toString().trim();
+        String username_text = username.getText().toString().trim();
+
+        if (NetworkUtils.isInternetAvailable(SignUpScreen.this)) {
+            if (validateInputs(email_text, password_text, username_text)) {
+                presenter.singUp(email_text, password_text, username_text);
             }
-        });
+        } else {
+            showToast("No connection, please check your internet");
+        }
+    }
 
-        btn_signUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email_text = email.getText().toString();
-                String password_text = password.getText().toString();
-                String username_text = username.getText().toString();
-                if(NetworkUtils.isInternetAvailable(SignUpScreen.this)){
-                    if(email_text.isEmpty() || password_text.isEmpty() || username_text.isEmpty()){
-                        Toast.makeText(SignUpScreen.this, "All fields must be filled!", Toast.LENGTH_SHORT).show();
-                    }
-                    else{
-                        if (isValidEmail(email_text)){
-                            presenter.singUp(email_text,password_text, SignUpScreen.this);
-                        }else
-                        {
-                            Toast.makeText(SignUpScreen.this, "Not valid email address!", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                }else {
-                    Toast.makeText(SignUpScreen.this, "No connection, please check your internet", Toast.LENGTH_SHORT).show();
-                }
+    private boolean validateInputs(String email, String password, String username) {
+        boolean isValid = true;
 
-            }
-        });
+        if (email.isEmpty()) {
+            this.email.setError("This field is required");
+            isValid = false;
+        } else if (!isValidEmail(email)) {
+            this.email.setError("Invalid email address");
+            isValid = false;
+        }
 
+        if (password.isEmpty()) {
+            this.password.setError("This field is required");
+            isValid = false;
+        } else if (!isValidPassword(password)) {
+            this.password.setError("Invalid password. Must be at least 8 characters long and contain a number.");
+            isValid = false;
+        }
+
+        if (username.isEmpty()) {
+            this.username.setError("This field is required");
+            isValid = false;
+        } else if (!isValidUsername(username)) {
+            this.username.setError("Invalid username. Must be 3-20 characters long and contain only letters, numbers, and underscores.");
+            isValid = false;
+        }
+
+        return isValid;
     }
 
     private boolean isValidEmail(String email) {
-        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-        Pattern pattern = Pattern.compile(emailPattern);
-        Matcher matcher = pattern.matcher(email);
-        return matcher.matches();
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
+    private boolean isValidPassword(String password) {
+        String passwordRegex = "^(?=.*\\d).{8,}$";
+        return password.matches(passwordRegex);
+    }
 
+    private boolean isValidUsername(String username) {
+        String usernameRegex = "^[a-zA-Z0-9_]{3,20}$";
+        return username.matches(usernameRegex);
+    }
 
     @Override
     public void signUpSuccess(FirebaseUser user) {
-        Toast.makeText(this, "Registered successfully", Toast.LENGTH_SHORT).show();
-        SharedPreferences sharedPreferences = getSharedPreferences(UID_KEY , MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("LoggedIn", user.getUid());
-        editor.apply();
-        Intent intent = new Intent(SignUpScreen.this, HomePageScreen.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
+        showToast("Registered successfully");
+        saveUserIdToSharedPreferences(user.getUid());
+        navigateToHomeScreen();
     }
 
     @Override
     public void signUpFailure(String errMessage) {
-        Toast.makeText(this, errMessage, Toast.LENGTH_SHORT).show();
+        runOnUiThread(() -> showToast(errMessage));
     }
 
     @Override
@@ -137,5 +160,22 @@ public class SignUpScreen extends AppCompatActivity implements SignUpView{
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             presenter.handleGoogleSignInResult(task);
         }
+    }
+
+    private void saveUserIdToSharedPreferences(String userId) {
+        SharedPreferences sharedPreferences = getSharedPreferences(UID_KEY, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("LoggedIn", userId);
+        editor.apply();
+    }
+
+    private void navigateToHomeScreen() {
+        Intent intent = new Intent(SignUpScreen.this, HomePageScreen.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }

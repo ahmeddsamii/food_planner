@@ -40,7 +40,6 @@
             this.repo = repo;
         }
 
-
         public void signInWithGoogle(Context context) {
             Intent signInIntent = mGoogleSignInClient.getSignInIntent();
             view.startGoogleSignInActivity(signInIntent, RC_SIGN_IN);
@@ -66,10 +65,8 @@
                         if (task.isSuccessful()) {
                             boolean isNewUser = task.getResult().getSignInMethods().isEmpty();
                             if (isNewUser) {
-                                // This is a new user, proceed with sign up
                                 createUserWithGoogle(credential);
                             } else {
-                                // This user already exists
                                 view.signUpFailure("An account already exists with this email. Please sign in instead.");
                             }
                         } else {
@@ -94,58 +91,61 @@
                     });
         }
 
-        public void singUp(String email, String password, Context context) {
-            if (email.isEmpty() || password.isEmpty()) {
+        public void singUp(String email, String password, String username) {
+            if (email.isEmpty() || password.isEmpty() || username.isEmpty()) {
                 view.signUpFailure("All fields must be filled!");
                 return;
             }
+
+            if (!isValidEmail(email)) {
+                view.signUpFailure("Please enter a valid email address!");
+                return;
+            }
+
+            if (!isValidPassword(password)) {
+                view.signUpFailure("Password must be at least 8 characters long and contain at least one number!");
+                return;
+            }
+
+            if (!isValidUsername(username)) {
+                view.signUpFailure("Username must be 3-20 characters long and contain only letters, numbers, and underscores!");
+                return;
+            }
+
             Log.d("SignUpPresenter", "Attempting signUp with email: " + email);
             repo.getFirebaseDataSource().getFirebaseAuth().createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                if(isValidEmail(email)){
-                                    FirebaseUser user = repo.getFirebaseDataSource().getFirebaseAuth().getCurrentUser();
-                                    view.signUpSuccess(user);
-                                    Log.d("SignUpPresenter", email + " is registered successfully");
-                                }else {
-                                    view.signUpFailure("Please enter a valid email address!");
-                                }
-                            } else
-
-                            {   Exception exception = task.getException();
+                                FirebaseUser user = repo.getFirebaseDataSource().getFirebaseAuth().getCurrentUser();
+                                view.signUpSuccess(user);
+                                Log.d("SignUpPresenter", email + " is registered successfully");
+                            } else {
+                                Exception exception = task.getException();
                                 if(exception instanceof FirebaseAuthWeakPasswordException){
                                     view.signUpFailure("Weak password!");
                                 } else if (exception instanceof FirebaseAuthUserCollisionException) {
                                     view.signUpFailure("This email is already registered");
-                                }else {
+                                } else {
                                     view.signUpFailure(exception.getMessage());
                                 }
-
                             }
                         }
                     });
         }
 
         private boolean isValidEmail(String email) {
-            String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-            Pattern pattern = Pattern.compile(emailPattern);
-            Matcher matcher = pattern.matcher(email);
-            return matcher.matches();
+            return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
         }
 
+        private boolean isValidPassword(String password) {
+            String passwordRegex = "^(?=.*\\d).{8,}$";
+            return password.matches(passwordRegex);
+        }
 
-//        public void signOut() {
-//            repo.signOut(new Repo.OnSignOutListener() {
-//                @Override
-//                public void onSignOutSuccess() {
-//                    view.onSignOutSuccess();
-//                }
-//
-//                @Override
-//                public void onSignOutFailure(String errorMessage) {
-//                    view.onSignOutFailure(errorMessage);
-//                }
-//            });
+        private boolean isValidUsername(String username) {
+            String usernameRegex = "^[a-zA-Z0-9_]{3,20}$";
+            return username.matches(usernameRegex);
+        }
     }
