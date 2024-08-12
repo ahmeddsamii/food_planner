@@ -64,25 +64,42 @@ public class LoginScreen extends AppCompatActivity implements LoginView {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(NetworkUtils.isInternetAvailable(LoginScreen.this)){
-                    if(!email.getText().toString().isEmpty() && !password.getText().toString().isEmpty()) {
-                        presenter.login(email.getText().toString(), password.getText().toString());
-                    }else {
-                        Toast.makeText(LoginScreen.this, "All fields must be filled!", Toast.LENGTH_SHORT).show();
+                if (NetworkUtils.isInternetAvailable(LoginScreen.this)) {
+                    String emailText = email.getText().toString().trim();
+                    String passwordText = password.getText().toString().trim();
+
+                    if (!emailText.isEmpty() && !passwordText.isEmpty()) {
+                        if (isValidEmail(emailText)) {
+                            if (isValidPassword(passwordText)) {
+                                presenter.login(emailText, passwordText);
+                            } else {
+                                password.setError("Invalid password. Must be at least 8 characters long and contain a number.");
+                            }
+                        } else {
+                            email.setError("Invalid email format");
+                        }
+                    } else {
+                        if (emailText.isEmpty()) {
+                            email.setError("This field is required");
+                        }
+                        if (passwordText.isEmpty()) {
+                            password.setError("This field is required");
+                        }
                     }
-                }else{
+                } else {
                     Toast.makeText(LoginScreen.this, "No Internet, please check your connection", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
+
+
+
 
         guestMode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(NetworkUtils.isInternetAvailable(LoginScreen.this)){
                 Intent signInAsGuest = new Intent(LoginScreen.this, HomePageScreen.class);
-                signInAsGuest.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 signInAsGuest.putExtra("guest", "guest");
                 startActivity(signInAsGuest);
                 }else {
@@ -105,8 +122,15 @@ public class LoginScreen extends AppCompatActivity implements LoginView {
 
     }
 
+    private boolean isValidEmail(String email) {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
 
-
+    private boolean isValidPassword(String password) {
+        // Password must be at least 8 characters long and contain at least one number
+        String passwordRegex = "^(?=.*\\d).{8,}$";
+        return password.matches(passwordRegex);
+    }
 
     @Override
     public void LoginSuccess(FirebaseUser user) {
@@ -122,7 +146,8 @@ public class LoginScreen extends AppCompatActivity implements LoginView {
 
     @Override
     public void LoginFailure(String errMessage) {
-        runOnUiThread(() -> Toast.makeText(this, errMessage, Toast.LENGTH_LONG).show());
+        email.setError(errMessage.toString());
+        password.setError(errMessage.toString());
     }
 
     @Override
