@@ -108,7 +108,9 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="200dp"
+                android:orientation="horizontal"
+                android:id="@+id/home_country_rv"/>
 
         </LinearLayout>
     </ScrollView>

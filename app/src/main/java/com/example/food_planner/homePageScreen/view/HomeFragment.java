@@ -27,26 +27,33 @@ import com.example.food_planner.helpers.networkUtils.NetworkUtils;
 import com.example.food_planner.homePageScreen.presenter.HomePresenter;
 import com.example.food_planner.homePageScreen.view.adapters.CategoriesAdapter;
 import com.example.food_planner.model.dto_repos.ResponseCategory;
+import com.example.food_planner.model.dto_repos.ResponseCountry;
 import com.example.food_planner.model.dto_repos.ResponseMeals;
+import com.example.food_planner.model.dtos.CategoryDto;
 import com.example.food_planner.model.dtos.MealDto;
 import com.example.food_planner.model.dtos.PlanDto;
 import com.example.food_planner.planFragment.planPresenter.PlanPresenter;
 import com.example.food_planner.planFragment.planView.OnPlansView;
+import com.example.food_planner.searchScreen.presenter.SearchPresenter;
+import com.example.food_planner.searchScreen.view.CategorySearchView;
+import com.example.food_planner.searchScreen.view.CountrySearchAdapter;
+import com.example.food_planner.searchScreen.view.CountrySearchView;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Calendar;
 import java.util.List;
 
 
-public class HomeFragment extends Fragment implements RandomMealView , AllCategoriesView, OnPlansView , FavoriteView {
+public class HomeFragment extends Fragment implements RandomMealView , AllCategoriesView, OnPlansView , FavoriteView , CountrySearchView {
 
     CardView cardView;
     ImageView imageView;
     TextView title, mealOfDayTv, tv_categories , tv_country;
     private static final String TAG = "HomeFragment";
-    RecyclerView recyclerView;
+    RecyclerView category_recyclerView , country_recyclerview;
     PlanPresenter planPresenter;
    FavoritePresenter favoritePresenter;
+
 
 
     public HomeFragment() {
@@ -74,15 +81,16 @@ public class HomeFragment extends Fragment implements RandomMealView , AllCatego
          cardView= view.findViewById(R.id.country_search_screen_cardview);
          imageView= view.findViewById(R.id.image_meal);
          title= view.findViewById(R.id.tv_meal_title);
-         recyclerView = view.findViewById(R.id.category_recyclerview);
+        category_recyclerView = view.findViewById(R.id.category_recyclerview);
          mealOfDayTv = view.findViewById(R.id.tv_meal_of_the_day);
          tv_categories = view.findViewById(R.id.tv_categories);
         tv_country = view.findViewById(R.id.tv_country);
+        country_recyclerview = view.findViewById(R.id.home_country_rv);
         if(!NetworkUtils.isInternetAvailable(getContext())){
             Toast.makeText(getContext(), "No internet, please check your connection", Toast.LENGTH_SHORT).show();
             imageView.setVisibility(View.GONE);
             title.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.GONE);
+            category_recyclerView.setVisibility(View.GONE);
             mealOfDayTv.setVisibility(View.GONE);
             tv_categories.setVisibility(View.GONE);
             tv_country.setVisibility(View.GONE);
@@ -99,6 +107,8 @@ public class HomeFragment extends Fragment implements RandomMealView , AllCatego
         planPresenter.fetchDataForPlanMealsFromFirebase(FirebaseAuth.getInstance().getUid(), day);
         favoritePresenter = new FavoritePresenter(Repo.getInstance(getContext()), this);
         favoritePresenter.fetchUserFavoriteMeals(FirebaseAuth.getInstance().getUid());
+        SearchPresenter searchPresenter = new SearchPresenter(Repo.getInstance(getContext()),null, this, null, null);
+        searchPresenter.getAllCountriesSearchItems();
 
 
     }
@@ -121,9 +131,9 @@ public class HomeFragment extends Fragment implements RandomMealView , AllCatego
     public void onAllCategoriesSuccess(ResponseCategory category) {
         Log.i(TAG, "onAllCategoriesSuccess: "+category.getCategories().get(0).getStrCategory());
         CategoriesAdapter adapter = new CategoriesAdapter(category.getCategories(),getContext());
-        recyclerView.setAdapter(adapter);
+        category_recyclerView.setAdapter(adapter);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        category_recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
     }
 
     @Override
@@ -156,7 +166,7 @@ public class HomeFragment extends Fragment implements RandomMealView , AllCatego
 
     @Override
     public void onPlansFailureFromFirebaseByDay(String errMessage) {
-
+        Log.e(TAG, "onPlansFailureFromFirebaseByDay: "+ errMessage );
     }
 
     @Override
@@ -174,6 +184,19 @@ public class HomeFragment extends Fragment implements RandomMealView , AllCatego
 
     @Override
     public void onFavoriteMealsRetrievedFromFirebaseFailure(String errMessage) {
-
+        Log.e(TAG, "onFavoriteMealsRetrievedFromFirebaseFailure: " + errMessage );
     }
+
+    @Override
+    public void onCountrySearchViewSuccess(ResponseCountry countries) {
+        country_recyclerview.setAdapter(new CountrySearchAdapter(countries.getCountries(),getContext()));
+        country_recyclerview.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+    }
+
+    @Override
+    public void onCountrySearchViewFailure(String errMessage) {
+        Log.e(TAG, "onCountrySearchViewFailure: "+errMessage );
+    }
+
+
 }

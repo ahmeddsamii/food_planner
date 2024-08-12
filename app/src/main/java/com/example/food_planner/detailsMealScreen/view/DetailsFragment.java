@@ -44,7 +44,7 @@ import java.util.List;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class DetailsFragment extends Fragment implements IngredientsView, FavoriteView , OnPlansView {
+public class DetailsFragment extends Fragment  {
     private static final String TAG = "DetailsFragment";
 
     // UI Components
@@ -114,12 +114,11 @@ public class DetailsFragment extends Fragment implements IngredientsView, Favori
         btnAddToCalender = view.findViewById(R.id.btn_addToCalender);
         youTubePlayerView = view.findViewById(R.id.youtube_player_view);
         getLifecycle().addObserver(youTubePlayerView);
-
     }
 
     private void setupPresenters() {
         Repo repo = Repo.getInstance(getContext());
-        favoritePresenter = new FavoritePresenter(repo, this);
+        favoritePresenter = new FavoritePresenter(repo, null);
     }
 
     private void loadData() {
@@ -178,35 +177,11 @@ public class DetailsFragment extends Fragment implements IngredientsView, Favori
         Glide.with(getContext())
                 .load(currentMeal.getStrMealThumb())
                 .into(mealImageView);
-
-
          setupIngredientsAdapter(currentMeal);
     }
 
-    @Override
-    public void getAllFavMeals(List<MealDto> meals) {
 
-    }
 
-    @Override
-    public void onFavoriteMealsRetrievedFromFirebaseSuccess(List<MealDto> meals) {
-
-    }
-
-    @Override
-    public void onFavoriteMealsRetrievedFromFirebaseFailure(String errMessage) {
-
-    }
-
-    @Override
-    public void onAllIngredientsSuccess(ResponseMeals ingredients) {
-
-    }
-
-    @Override
-    public void onAllIngredientsFailure(String errMessage) {
-
-    }
 
     private String getYoutubeId(String link) {
         if (link != null && link.split("\\?v=").length > 1)
@@ -219,26 +194,6 @@ public class DetailsFragment extends Fragment implements IngredientsView, Favori
     public void onDestroyView() {
         super.onDestroyView();
         youTubePlayerView.release();
-    }
-
-    @Override
-    public void onPlansSuccess(List<PlanDto> planDtos) {
-
-    }
-
-    @Override
-    public void onPlansFailure(String errMessage) {
-
-    }
-
-    @Override
-    public void onPlansSuccessFromFirebaseByDay(List<PlanDto> planDtos) {
-
-    }
-
-    @Override
-    public void onPlansFailureFromFirebaseByDay(String errMessage) {
-
     }
 
 
@@ -254,11 +209,11 @@ public class DetailsFragment extends Fragment implements IngredientsView, Favori
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        planPresenter = new PlanPresenter(Repo.getInstance(getContext()), DetailsFragment.this);
+                        planPresenter = new PlanPresenter(Repo.getInstance(getContext()), null);
                         planDto = new PlanDto();
                         planDto = ConvertMealDtoToPlanDto.convertMealDtoToPlanDto(planDto, currentMeal);
                         planDto.setDayOfWeek(dayOfMonth);
-                        // You might want to set other fields like month and year as well
+
                         FirebaseAuth user = FirebaseAuth.getInstance();
 
                         if (user != null) {
@@ -269,7 +224,6 @@ public class DetailsFragment extends Fragment implements IngredientsView, Favori
                                     .subscribe(
                                             () -> {
                                                 Toast.makeText(getContext(), "Added successfully for day " + dayOfMonth, Toast.LENGTH_SHORT).show();
-                                                planPresenter.insertIntoPlans(planDto);
                                             },
                                             error -> Toast.makeText(getContext(), "Error saving plan: " + error.getMessage(), Toast.LENGTH_SHORT).show()
                                     );

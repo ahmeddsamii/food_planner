@@ -72,7 +72,7 @@ public class CategoryDetailsFragment extends Fragment implements CategoryDetails
 
     @Override
     public void onFailure(String errMessage) {
-
+        Log.e("TAG", "onFailure: " + errMessage );
     }
 
 
