@@ -1,4 +1,4 @@
-package com.example.food_planner.helpers;
+package com.example.food_planner.helpers.converters;
 
 import com.example.food_planner.model.dtos.MealDto;
 import com.example.food_planner.model.dtos.PlanDto;
