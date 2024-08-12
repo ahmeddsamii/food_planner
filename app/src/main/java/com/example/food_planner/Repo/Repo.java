@@ -61,7 +61,7 @@ public class Repo implements OnSignOutListener{
 
 
     public Flowable<List<PlanDto>> getPlansByDay(int day) {
-        return planDao.getMealByDay(day)
+        return planDao.getPlanByDay(day)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -184,9 +184,11 @@ public class Repo implements OnSignOutListener{
 
     public void getUserPlanMealsFromFirebase(String uId, int dayOfWeek, OnPlanMealsCallback callback){
         firebaseDataSource.getUserPlanMeals(uId,dayOfWeek).addOnSuccessListener(
-                plans-> callback.onPlanMealsSuccess(plans))
-                .addOnFailureListener(e -> callback.onPlanMealsFailure(e.getMessage()));
+                plans-> callback.onPlanMealsByDaySuccess(plans))
+                .addOnFailureListener(e -> callback.onPlanMealsByFailure(e.getMessage()));
     }
+
+
 
     public void deleteItemFromFirebase(String uId , String mealId){
         firebaseDataSource.deleteMeal(uId, mealId);

@@ -8,6 +8,7 @@ public interface OnPlansView {
     void onPlansSuccess(List<PlanDto> planDtos);
     void onPlansFailure(String errMessage);
 
-    void onPlansSuccessFromFirebase(List<PlanDto> planDtos);
-    void onPlansFailureFromFirebase(String errMessage);
+    void onPlansSuccessFromFirebaseByDay(List<PlanDto> planDtos);
+    void onPlansFailureFromFirebaseByDay(String errMessage);
+
 }

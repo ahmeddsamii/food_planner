@@ -61,16 +61,24 @@ public class FavoriteFragment extends Fragment implements FavoriteView, onFavCli
         super.onViewCreated(view, savedInstanceState);
          recyclerView = view.findViewById(R.id.favorite_recyclerview);
          loading = view.findViewById(R.id.tv_favorite_loading);
-        Log.i(TAG, "onViewCreated: "+Repo.getInstance(getContext()).getLocalData());
-        presenter = new FavoritePresenter(Repo.getInstance(getContext()), this);
-        //presenter.getLocalData();
-        user = Repo.getInstance(getContext()).getFirebaseDataSource().getFirebaseAuth().getCurrentUser();
+         Log.i(TAG, "onViewCreated: "+Repo.getInstance(getContext()).getLocalData());
+         user = Repo.getInstance(getContext()).getFirebaseDataSource().getFirebaseAuth().getCurrentUser();
+         presenter = new FavoritePresenter(Repo.getInstance(getContext()), this);
 
-
-        if (!NetworkUtils.isInternetAvailable(getContext())){
+        if (!NetworkUtils.isInternetAvailable(getContext())) {
             presenter.getLocalData();
-            loading.setVisibility(View.GONE);
-        }else{
+            // Add this to handle visibility for local data
+            new Handler().postDelayed(() -> {
+                if (recyclerView.getAdapter() == null || recyclerView.getAdapter().getItemCount() == 0) {
+                    recyclerView.setVisibility(View.GONE);
+                    loading.setVisibility(View.VISIBLE);
+                    loading.setText("Empty list");
+                } else {
+                    recyclerView.setVisibility(View.VISIBLE);
+                    loading.setVisibility(View.GONE);
+                }
+            }, 1000); // Give some time for local data to load
+        } else {
             presenter.fetchUserFavoriteMeals(user.getUid());
         }
 
@@ -87,22 +95,11 @@ public class FavoriteFragment extends Fragment implements FavoriteView, onFavCli
 
     @Override
     public void onFavoriteMealsRetrievedFromFirebaseSuccess(List<MealDto> meals) {
-        loading.setVisibility(View.VISIBLE);
-        recyclerView.setVisibility(View.GONE);
-
-        new Handler().postDelayed(() -> {
-            if (meals.isEmpty()) {
-                recyclerView.setVisibility(View.GONE);
-                loading.setVisibility(View.VISIBLE);
-                loading.setText("Empty list");
-            } else {
                 recyclerView.setVisibility(View.VISIBLE);
                 loading.setVisibility(View.GONE);
                 FavoriteAdapter adapter = new FavoriteAdapter(meals, getContext(), this);
                 recyclerView.setAdapter(adapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            }
-        }, 3000);
     }
 
 

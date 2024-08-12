@@ -6,21 +6,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:attr/colorPrimary"
-    android:layout_marginBottom="48dp"
     android:backgroundTint="?android:attr/colorPrimary"
     android:fitsSystemWindows="true"
 
     tools:context=".loginScreen.view.LoginScreen"
-    tools:layout_editor_absoluteX="2dp"
-    tools:layout_editor_absoluteY="15dp">
+    tools:layout_editor_absoluteX="1dp"
+    tools:layout_editor_absoluteY="21dp">
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/animationView_login"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:layout_marginTop="136dp"
+        android:layout_marginTop="128dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.454"
+        app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
@@ -31,28 +30,30 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="108dp"
-        android:fontFamily="@font/boldddd"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/ubuntu_bolditalic"
         android:text="@string/food_planner"
         android:textColor="#FFFFFF"
         android:textSize="40dp"
+        app:layout_constraintBottom_toTopOf="@+id/animationView_login"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.518"
+        app:layout_constraintHorizontal_bias="0.512"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/tv_signup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:text="SignUp"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
 
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/btn_login"
-        app:layout_constraintHorizontal_bias="0.318"
+        app:layout_constraintHorizontal_bias="0.34"
         app:layout_constraintStart_toEndOf="@+id/textView4"
         app:layout_constraintTop_toBottomOf="@+id/btn_login" />
 
@@ -60,7 +61,7 @@
         android:id="@+id/et_mail_login_username"
         android:layout_width="340dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="452dp"
+        android:layout_marginBottom="444dp"
         android:background="@drawable/rounded_edittext_background"
         android:drawableStart="@drawable/mail"
         android:drawablePadding="6dp"
@@ -69,14 +70,14 @@
         app:circularflow_radiusInDP="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintHorizontal_bias="0.521"
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/et_login_password"
         android:layout_width="342dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="392dp"
+        android:layout_marginBottom="384dp"
         android:background="@drawable/rounded_edittext_background"
         android:drawableStart="@drawable/password"
         android:drawableEnd="@drawable/eye_password_show"
@@ -89,14 +90,13 @@
         app:circularflow_radiusInDP="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/et_mail_login_username"
-        app:layout_constraintHorizontal_bias="0.538"
         app:layout_constraintStart_toStartOf="@+id/et_mail_login_username" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_login"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="60dp"
         android:background="@drawable/rounded_edittext_background"
         android:fontFamily="@font/bolditalicc"
         android:text="Login"
@@ -109,7 +109,7 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:text="Don't have an account?"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
@@ -122,9 +122,9 @@
         android:id="@+id/iv_login_google"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="32dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.319"
+        app:layout_constraintHorizontal_bias="0.324"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4"
         app:srcCompat="@drawable/google_icon_logo" />
@@ -135,22 +135,23 @@
         android:layout_height="112dp"
         app:layout_constraintBottom_toBottomOf="@+id/iv_login_google"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.656"
+        app:layout_constraintHorizontal_bias="0.663"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/iv_login_google"
+        app:layout_constraintVertical_bias="0.442"
         app:srcCompat="@drawable/twitter_x_icon" />
 
     <TextView
         android:id="@+id/tv_guestMode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="68dp"
+        android:layout_marginBottom="60dp"
         android:text="Guest Mode"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent" />
 
 

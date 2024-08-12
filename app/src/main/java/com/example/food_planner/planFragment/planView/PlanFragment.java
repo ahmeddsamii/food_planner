@@ -127,7 +127,7 @@ public class PlanFragment extends Fragment implements OnPlansView , OnPlanMealDe
     }
 
     @Override
-    public void onPlansSuccessFromFirebase(List<PlanDto> planDtos) {
+    public void onPlansSuccessFromFirebaseByDay(List<PlanDto> planDtos) {
         plansAdapter.setUpdateList(planDtos);
         plansAdapter.notifyDataSetChanged();
         planMealsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -135,9 +135,11 @@ public class PlanFragment extends Fragment implements OnPlansView , OnPlanMealDe
     }
 
     @Override
-    public void onPlansFailureFromFirebase(String errMessage) {
+    public void onPlansFailureFromFirebaseByDay(String errMessage) {
         Log.i(TAG, "onPlansFailureFromFirebase: " + errMessage);
     }
+
+
 
     @Override
     public void onDeleteClick(PlanDto planDto) {

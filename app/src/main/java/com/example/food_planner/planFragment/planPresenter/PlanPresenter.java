@@ -64,13 +64,23 @@ public class PlanPresenter{
     public void fetchDataForPlanMealsFromFirebase(String uId, int dayOfWeek){
         repo.getUserPlanMealsFromFirebase(uId, dayOfWeek, new OnPlanMealsCallback() {
             @Override
-            public void onPlanMealsSuccess(List<PlanDto> plans) {
-                onPlansView.onPlansSuccessFromFirebase(plans);
+            public void onPlanMealsByDaySuccess(List<PlanDto> plans) {
+                onPlansView.onPlansSuccessFromFirebaseByDay(plans);
             }
 
             @Override
-            public void onPlanMealsFailure(String errMessage) {
+            public void onPlanMealsByFailure(String errMessage) {
                 onPlansView.onPlansFailure(errMessage);
+            }
+
+            @Override
+            public void onAllPlanMealsSuccess(List<PlanDto> planDtos) {
+
+            }
+
+            @Override
+            public void onAllPlanMealsFailure(String errMessage) {
+
             }
         });
     }

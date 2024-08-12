@@ -19,7 +19,7 @@ public interface PlanDao {
     Completable insert(PlanDto planDto);
 
     @Query("SELECT * FROM `plan` WHERE dayOfWeek = :day")
-    Flowable<List<PlanDto>> getMealByDay(int day);
+    Flowable<List<PlanDto>> getPlanByDay(int day);
 
     @Delete
     Completable deletePlanMeal(PlanDto planDto);

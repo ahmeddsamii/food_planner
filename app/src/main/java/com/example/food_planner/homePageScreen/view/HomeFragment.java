@@ -147,7 +147,7 @@ public class HomeFragment extends Fragment implements RandomMealView , AllCatego
     }
 
     @Override
-    public void onPlansSuccessFromFirebase(List<PlanDto> planDtos) {
+    public void onPlansSuccessFromFirebaseByDay(List<PlanDto> planDtos) {
         for (PlanDto planDto : planDtos){
             planPresenter.insertIntoPlans(planDto);
             Log.i(TAG, "inserted from Firebase to LocalDatabase: "+planDto.getStrMeal());
@@ -155,7 +155,7 @@ public class HomeFragment extends Fragment implements RandomMealView , AllCatego
     }
 
     @Override
-    public void onPlansFailureFromFirebase(String errMessage) {
+    public void onPlansFailureFromFirebaseByDay(String errMessage) {
 
     }
 

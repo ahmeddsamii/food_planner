@@ -232,14 +232,16 @@ public class DetailsFragment extends Fragment implements IngredientsView, Favori
     }
 
     @Override
-    public void onPlansSuccessFromFirebase(List<PlanDto> planDtos) {
+    public void onPlansSuccessFromFirebaseByDay(List<PlanDto> planDtos) {
 
     }
 
     @Override
-    public void onPlansFailureFromFirebase(String errMessage) {
+    public void onPlansFailureFromFirebaseByDay(String errMessage) {
 
     }
+
+
 
     public void showDatePicker(){
         final Calendar c = Calendar.getInstance();
