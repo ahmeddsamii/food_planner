@@ -21,20 +21,32 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.food_planner.R;
 import com.example.food_planner.Repo.Repo;
+import com.example.food_planner.favoriteScreen.FavoritePresenter.FavoritePresenter;
+import com.example.food_planner.favoriteScreen.view.FavoriteView;
 import com.example.food_planner.helpers.networkUtils.NetworkUtils;
 import com.example.food_planner.homePageScreen.presenter.HomePresenter;
 import com.example.food_planner.homePageScreen.view.adapters.CategoriesAdapter;
 import com.example.food_planner.model.dto_repos.ResponseCategory;
 import com.example.food_planner.model.dto_repos.ResponseMeals;
+import com.example.food_planner.model.dtos.MealDto;
+import com.example.food_planner.model.dtos.PlanDto;
+import com.example.food_planner.planFragment.planPresenter.PlanPresenter;
+import com.example.food_planner.planFragment.planView.OnPlansView;
+import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.Calendar;
+import java.util.List;
 
 
-public class HomeFragment extends Fragment implements RandomMealView , AllCategoriesView{
+public class HomeFragment extends Fragment implements RandomMealView , AllCategoriesView, OnPlansView , FavoriteView {
 
     CardView cardView;
     ImageView imageView;
     TextView title, mealOfDayTv, tv_categories , tv_country;
     private static final String TAG = "HomeFragment";
     RecyclerView recyclerView;
+    PlanPresenter planPresenter;
+   FavoritePresenter favoritePresenter;
 
 
     public HomeFragment() {
@@ -76,10 +88,19 @@ public class HomeFragment extends Fragment implements RandomMealView , AllCatego
             tv_country.setVisibility(View.GONE);
         }
 
+        final Calendar c = java.util.Calendar.getInstance();
+
+        int day = c.get(java.util.Calendar.DAY_OF_MONTH);
 
         HomePresenter homePresenter = new HomePresenter(this, Repo.getInstance(getContext()),this);
         homePresenter.getRandomMeal();
         homePresenter.getAllCategories();
+        planPresenter = new PlanPresenter(Repo.getInstance(getContext()), this);
+        planPresenter.fetchDataForPlanMealsFromFirebase(FirebaseAuth.getInstance().getUid(), day);
+        favoritePresenter = new FavoritePresenter(Repo.getInstance(getContext()), this);
+        favoritePresenter.fetchUserFavoriteMeals(FirebaseAuth.getInstance().getUid());
+
+
     }
 
     @Override
@@ -113,5 +134,46 @@ public class HomeFragment extends Fragment implements RandomMealView , AllCatego
     @Override
     public void onRandomMealFailure(String errMessage) {
         Toast.makeText(getContext(), "failed to fetch the data", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onPlansSuccess(List<PlanDto> planDtos) {
+
+    }
+
+    @Override
+    public void onPlansFailure(String errMessage) {
+
+    }
+
+    @Override
+    public void onPlansSuccessFromFirebase(List<PlanDto> planDtos) {
+        for (PlanDto planDto : planDtos){
+            planPresenter.insertIntoPlans(planDto);
+            Log.i(TAG, "inserted from Firebase to LocalDatabase: "+planDto.getStrMeal());
+        }
+    }
+
+    @Override
+    public void onPlansFailureFromFirebase(String errMessage) {
+
+    }
+
+    @Override
+    public void getAllFavMeals(List<MealDto> meals) {
+
+    }
+
+    @Override
+    public void onFavoriteMealsRetrievedFromFirebaseSuccess(List<MealDto> meals) {
+        for(MealDto mealDto: meals){
+            favoritePresenter.insert(mealDto);
+            Log.i(TAG, "inserted from Firebase to LocalDatabase: "+ mealDto.getStrMeal()+"meal");
+        }
+    }
+
+    @Override
+    public void onFavoriteMealsRetrievedFromFirebaseFailure(String errMessage) {
+
     }
 }
