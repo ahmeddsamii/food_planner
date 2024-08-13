@@ -15,6 +15,9 @@
         <action
             android:id="@+id/action_homeFragment_to_categoryDetailsFragment"
             app:destination="@id/categoryDetailsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_mealsByCountryScreenFragment"
+            app:destination="@id/mealsByCountryScreenFragment" />
     </fragment>
     <fragment
         android:id="@+id/favoriteFragment"

@@ -101,10 +101,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
                 android:fontFamily="@font/ubuntu_bolditalic"
+                android:text="@string/tv_countries"
                 android:textColor="@color/white"
-                android:textSize="20dp"
-                android:text="@string/tv_countries" />
+                android:textSize="20dp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"

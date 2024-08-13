@@ -26,6 +26,7 @@ import com.example.food_planner.favoriteScreen.view.FavoriteView;
 import com.example.food_planner.helpers.networkUtils.NetworkUtils;
 import com.example.food_planner.homePageScreen.presenter.HomePresenter;
 import com.example.food_planner.homePageScreen.view.adapters.CategoriesAdapter;
+import com.example.food_planner.homePageScreen.view.adapters.CountryHomeAdapter;
 import com.example.food_planner.model.dto_repos.ResponseCategory;
 import com.example.food_planner.model.dto_repos.ResponseCountry;
 import com.example.food_planner.model.dto_repos.ResponseMeals;
@@ -189,7 +190,7 @@ public class HomeFragment extends Fragment implements RandomMealView , AllCatego
 
     @Override
     public void onCountrySearchViewSuccess(ResponseCountry countries) {
-        country_recyclerview.setAdapter(new CountrySearchAdapter(countries.getCountries(),getContext()));
+        country_recyclerview.setAdapter(new CountryHomeAdapter(countries.getCountries(),getContext()));
         country_recyclerview.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
     }
 
