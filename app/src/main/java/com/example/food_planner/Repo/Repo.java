@@ -3,13 +3,21 @@ package com.example.food_planner.Repo;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.food_planner.Repo.network.firebase.FirebaseDataSource;
 import com.example.food_planner.Repo.local.MealDao;
 import com.example.food_planner.Repo.local.MealsLocalDataSource;
 import com.example.food_planner.Repo.local.PlanDao;
 import com.example.food_planner.Repo.local.PlanLocalDataSource;
-import com.example.food_planner.Repo.network.FirebaseDataSource;
-import com.example.food_planner.Repo.network.MealsRemoteDataSource;
-import com.example.food_planner.Repo.network.NetworkCallBack;
+import com.example.food_planner.Repo.network.api.MealsRemoteDataSource;
+import com.example.food_planner.Repo.network.api.callbacks.AllCountriesNetworkCallBack;
+import com.example.food_planner.Repo.network.api.callbacks.AllIngredientsNetworkCallBack;
+import com.example.food_planner.Repo.network.api.callbacks.CategoriesNetworkCallBack;
+import com.example.food_planner.Repo.network.api.callbacks.ItemByNameNetworkCallBack;
+import com.example.food_planner.Repo.network.api.callbacks.MealsByCategoriesNetworkCallBack;
+import com.example.food_planner.Repo.network.api.callbacks.MealsByCountryNetworkCallBack;
+import com.example.food_planner.Repo.network.api.callbacks.MealsByIngredientNetworkCallBack;
+import com.example.food_planner.Repo.network.api.callbacks.RandomMealCallBack;
+import com.example.food_planner.Repo.network.api.callbacks.SearchMealsByNameNetworkCallBack;
 import com.example.food_planner.model.dtos.MealDto;
 import com.example.food_planner.model.dtos.PlanDto;
 import com.example.food_planner.planFragment.planView.OnPlanMealsCallback;
@@ -60,11 +68,11 @@ public class Repo implements OnSignOutListener{
         return firebaseDataSource;
     }
 
-    public void getRandomMeal(NetworkCallBack callBack){
+    public void getRandomMeal(RandomMealCallBack callBack){
         mealsRemoteDataSource.makeNetworkCallForRandomMeal(callBack);
     }
 
-    public void getAllCategories(NetworkCallBack callBack){
+    public void getAllCategories(CategoriesNetworkCallBack callBack){
         mealsRemoteDataSource.makeNetworkCallForCategories(callBack);
     }
 
@@ -110,7 +118,7 @@ public class Repo implements OnSignOutListener{
                         });
     }
 
-    public void getItemByName(NetworkCallBack callBack,String name){
+    public void getItemByName(ItemByNameNetworkCallBack callBack, String name){
         mealsRemoteDataSource.makeNetworkCallToGetItemByName(callBack, name);
     }
 
@@ -133,27 +141,27 @@ public class Repo implements OnSignOutListener{
     }
 
 
-    public void getAllCountries(NetworkCallBack callBack){
+    public void getAllCountries(AllCountriesNetworkCallBack callBack){
         mealsRemoteDataSource.makeNetworkCallForAllCountries( callBack);
     }
 
-    public void getMealsByCategory(String category, NetworkCallBack callBack){
+    public void getMealsByCategory(String category, MealsByCategoriesNetworkCallBack callBack){
         mealsRemoteDataSource.makeNetworkCallForMealsByCategory(category, callBack);
     }
 
-    public void getMealsByCountry(String country, NetworkCallBack callBack){
+    public void getMealsByCountry(String country, MealsByCountryNetworkCallBack callBack){
         mealsRemoteDataSource.makeNetworkCallToGetMealsByCountry(country,callBack);
     }
 
-    public void getSearchMealsByName(String name , NetworkCallBack networkCallBack){
+    public void getSearchMealsByName(String name , SearchMealsByNameNetworkCallBack networkCallBack){
         mealsRemoteDataSource.makeNetworkCallForMealsByName(name,networkCallBack);
     }
 
-    public void getAllIngredients(NetworkCallBack callBack){
+    public void getAllIngredients(AllIngredientsNetworkCallBack callBack){
         mealsRemoteDataSource.makeCallForAllIngredients(callBack);
     }
 
-    public void getAllMealsByIngredients(String ingredient , NetworkCallBack callBack){
+    public void getAllMealsByIngredients(String ingredient , MealsByIngredientNetworkCallBack callBack){
         mealsRemoteDataSource.makeNetworkCallForMealsByIngredients(ingredient, callBack);
     }
 

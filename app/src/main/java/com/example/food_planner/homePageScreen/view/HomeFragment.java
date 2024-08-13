@@ -25,6 +25,7 @@ import com.example.food_planner.favoriteScreen.FavoritePresenter.FavoritePresent
 import com.example.food_planner.favoriteScreen.view.FavoriteView;
 import com.example.food_planner.helpers.networkUtils.NetworkUtils;
 import com.example.food_planner.homePageScreen.presenter.HomePresenter;
+import com.example.food_planner.homePageScreen.view.adapters.AllCountriesView;
 import com.example.food_planner.homePageScreen.view.adapters.CategoriesAdapter;
 import com.example.food_planner.homePageScreen.view.adapters.CountryHomeAdapter;
 import com.example.food_planner.model.dto_repos.ResponseCategory;
@@ -45,7 +46,7 @@ import java.util.Calendar;
 import java.util.List;
 
 
-public class HomeFragment extends Fragment implements RandomMealView , AllCategoriesView, OnPlansView , FavoriteView , CountrySearchView {
+public class HomeFragment extends Fragment implements RandomMealView , AllCategoriesView, OnPlansView , FavoriteView , AllCountriesView {
 
     CardView cardView;
     ImageView imageView;
@@ -101,15 +102,14 @@ public class HomeFragment extends Fragment implements RandomMealView , AllCatego
 
         int day = c.get(java.util.Calendar.DAY_OF_MONTH);
 
-        HomePresenter homePresenter = new HomePresenter(this, Repo.getInstance(getContext()),this);
+        HomePresenter homePresenter = new HomePresenter(this, Repo.getInstance(getContext()),this, this);
         homePresenter.getRandomMeal();
         homePresenter.getAllCategories();
+        homePresenter.getAllCountries();
         planPresenter = new PlanPresenter(Repo.getInstance(getContext()), this);
         planPresenter.fetchDataForPlanMealsFromFirebase(FirebaseAuth.getInstance().getUid(), day);
         favoritePresenter = new FavoritePresenter(Repo.getInstance(getContext()), this);
         favoritePresenter.fetchUserFavoriteMeals(FirebaseAuth.getInstance().getUid());
-        SearchPresenter searchPresenter = new SearchPresenter(Repo.getInstance(getContext()),null, this, null, null);
-        searchPresenter.getAllCountriesSearchItems();
 
 
     }
@@ -188,16 +188,18 @@ public class HomeFragment extends Fragment implements RandomMealView , AllCatego
         Log.e(TAG, "onFavoriteMealsRetrievedFromFirebaseFailure: " + errMessage );
     }
 
+
+
+
     @Override
-    public void onCountrySearchViewSuccess(ResponseCountry countries) {
+    public void onAllCountriesSuccess(ResponseCountry countries) {
         country_recyclerview.setAdapter(new CountryHomeAdapter(countries.getCountries(),getContext()));
         country_recyclerview.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+
     }
 
     @Override
-    public void onCountrySearchViewFailure(String errMessage) {
+    public void onAllCountriesFailure(String errMessage) {
         Log.e(TAG, "onCountrySearchViewFailure: "+errMessage );
     }
-
-
 }

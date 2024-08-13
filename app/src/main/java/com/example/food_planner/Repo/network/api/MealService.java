@@ -1,4 +1,4 @@
-package com.example.food_planner.Repo.network;
+package com.example.food_planner.Repo.network.api;
 
 import com.example.food_planner.model.dto_repos.ResponseAllIngredients;
 import com.example.food_planner.model.dto_repos.ResponseCategory;

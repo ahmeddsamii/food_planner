@@ -1,4 +1,4 @@
-package com.example.food_planner.Repo.network;
+package com.example.food_planner.Repo.network.firebase;
 
 import android.util.Log;
 

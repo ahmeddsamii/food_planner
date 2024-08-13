@@ -1,28 +1,28 @@
 package com.example.food_planner.homePageScreen.presenter;
 
-import com.example.food_planner.Repo.network.NetworkCallBack;
+import com.example.food_planner.Repo.network.api.callbacks.AllCountriesNetworkCallBack;
+import com.example.food_planner.Repo.network.api.callbacks.CategoriesNetworkCallBack;
 import com.example.food_planner.Repo.Repo;
-import com.example.food_planner.detailsMealScreen.view.IngredientsView;
+import com.example.food_planner.Repo.network.api.callbacks.RandomMealCallBack;
 import com.example.food_planner.homePageScreen.view.AllCategoriesView;
 import com.example.food_planner.homePageScreen.view.RandomMealView;
-import com.example.food_planner.model.dto_repos.ResponseAllIngredients;
+import com.example.food_planner.homePageScreen.view.adapters.AllCountriesView;
 import com.example.food_planner.model.dto_repos.ResponseCategory;
 import com.example.food_planner.model.dto_repos.ResponseCountry;
-import com.example.food_planner.model.dto_repos.ResponseMealByIngredientDto;
-import com.example.food_planner.model.dto_repos.ResponseMealInfoDto;
 import com.example.food_planner.model.dto_repos.ResponseMeals;
-import com.example.food_planner.model.dtos.MealDto;
 
-public class HomePresenter implements NetworkCallBack {
-    RandomMealView view;
+public class HomePresenter implements CategoriesNetworkCallBack, RandomMealCallBack, AllCountriesNetworkCallBack {
+    RandomMealView randomView;
     AllCategoriesView categoriesView;
-    IngredientsView ingredientsView;
+    AllCountriesView allCountriesView;
+
     Repo repo;
 
-    public HomePresenter(RandomMealView view, Repo repo,AllCategoriesView categoriesView){
-        this.view = view;
+    public HomePresenter(RandomMealView view, Repo repo,AllCategoriesView categoriesView, AllCountriesView allCountriesView){
+        this.randomView = view;
         this.categoriesView = categoriesView;
         this.repo = repo;
+        this.allCountriesView = allCountriesView;
     }
 
     public void getRandomMeal(){
@@ -33,16 +33,17 @@ public class HomePresenter implements NetworkCallBack {
     public  void getAllCategories(){
         repo.getAllCategories(this);
     }
+    public void getAllCountries(){repo.getAllCountries(this);}
 
 
     @Override
     public void onRandomMealSuccess(ResponseMeals randomMeal) {
-        view.onRandomMealSuccess(randomMeal);
+        randomView.onRandomMealSuccess(randomMeal);
     }
 
     @Override
     public void onRandomMealFailure(String errMessage) {
-        view.onRandomMealFailure(errMessage);
+        randomView.onRandomMealFailure(errMessage);
     }
 
     @Override
@@ -55,82 +56,16 @@ public class HomePresenter implements NetworkCallBack {
         categoriesView.onAllCategoriesFailure(errMessage);
     }
 
-    @Override
-    public void onIngredientSuccess(ResponseMeals ingredients) {
-
-    }
-
-    @Override
-    public void onIngredientFailure(String errMessage) {
-
-    }
-
-    @Override
-    public void onItemByNameSuccess(MealDto mealDto) {
-
-    }
-
-    @Override
-    public void onItemByNameFailure(String errMessage) {
-
-    }
 
     @Override
     public void onAllCountriesSuccess(ResponseCountry countries) {
-
+        allCountriesView.onAllCountriesSuccess(countries);
     }
 
     @Override
     public void onAllCountriesFailure(String errMessage) {
-
+        allCountriesView.onAllCountriesFailure(errMessage);
     }
 
-    @Override
-    public void onMealsByCategorySuccess(ResponseMeals responseMealInfoDto) {
 
-    }
-
-    @Override
-    public void onMealsByCategoryFailure(String errMessage) {
-
-    }
-
-    @Override
-    public void onMealsByCountrySuccess(ResponseMealInfoDto responseMealInfoDto) {
-
-    }
-
-    @Override
-    public void onMealsByCountryFailure(String errMessage) {
-
-    }
-
-    @Override
-    public void onSearchMealsByNameSuccess(ResponseMeals responseMeals) {
-    }
-
-    @Override
-    public void onSearchMealsByNameFailure(String errMessage) {
-
-    }
-
-    @Override
-    public void onAllIngredientSuccess(ResponseAllIngredients allIngredients) {
-
-    }
-
-    @Override
-    public void onAllIngredientsFailure(String errMessage) {
-
-    }
-
-    @Override
-    public void onAllMealsByIngredientsSuccess(ResponseMealByIngredientDto meals) {
-
-    }
-
-    @Override
-    public void onAllMealsByIngredientsFailure(String errMessage) {
-
-    }
 }

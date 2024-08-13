@@ -1,7 +1,16 @@
-package com.example.food_planner.Repo.network;
+package com.example.food_planner.Repo.network.api;
 
 import android.util.Log;
 
+import com.example.food_planner.Repo.network.api.callbacks.AllCountriesNetworkCallBack;
+import com.example.food_planner.Repo.network.api.callbacks.AllIngredientsNetworkCallBack;
+import com.example.food_planner.Repo.network.api.callbacks.CategoriesNetworkCallBack;
+import com.example.food_planner.Repo.network.api.callbacks.ItemByNameNetworkCallBack;
+import com.example.food_planner.Repo.network.api.callbacks.MealsByCategoriesNetworkCallBack;
+import com.example.food_planner.Repo.network.api.callbacks.MealsByCountryNetworkCallBack;
+import com.example.food_planner.Repo.network.api.callbacks.MealsByIngredientNetworkCallBack;
+import com.example.food_planner.Repo.network.api.callbacks.RandomMealCallBack;
+import com.example.food_planner.Repo.network.api.callbacks.SearchMealsByNameNetworkCallBack;
 import com.example.food_planner.model.dto_repos.ResponseAllIngredients;
 import com.example.food_planner.model.dto_repos.ResponseCategory;
 import com.example.food_planner.model.dto_repos.ResponseCountry;
@@ -38,7 +47,7 @@ public class MealsRemoteDataSource {
     }
 
 
-    public void makeNetworkCallForRandomMeal(NetworkCallBack callBack){
+    public void makeNetworkCallForRandomMeal(RandomMealCallBack callBack){
         mealService.getRandomMeal().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<ResponseMeals>() {
@@ -60,7 +69,7 @@ public class MealsRemoteDataSource {
     }
 
 
-    public void makeNetworkCallForCategories(NetworkCallBack callBack){
+    public void makeNetworkCallForCategories(CategoriesNetworkCallBack callBack){
         mealService.getAllCategories().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<ResponseCategory>() {
@@ -82,7 +91,7 @@ public class MealsRemoteDataSource {
     }
 
 
-    public void makeNetworkCallToGetItemByName(NetworkCallBack callBack, String name) {
+    public void makeNetworkCallToGetItemByName(ItemByNameNetworkCallBack callBack, String name) {
         mealService.getByName(name).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<ResponseMeals>() {
@@ -103,7 +112,7 @@ public class MealsRemoteDataSource {
                 });
     }
 
-    public void makeNetworkCallForAllCountries(NetworkCallBack networkCallBack){
+    public void makeNetworkCallForAllCountries(AllCountriesNetworkCallBack networkCallBack){
         mealService.getAllCountries().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<ResponseCountry>() {
@@ -126,7 +135,7 @@ public class MealsRemoteDataSource {
 
 
 
-    public void makeNetworkCallForMealsByCategory(String category,NetworkCallBack callBack){
+    public void makeNetworkCallForMealsByCategory(String category, MealsByCategoriesNetworkCallBack callBack){
         mealService.getMealsByCategory(category).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<ResponseMeals>() {
@@ -148,7 +157,7 @@ public class MealsRemoteDataSource {
     }
 
 
-    public void makeNetworkCallToGetMealsByCountry(String country, NetworkCallBack callBack){
+    public void makeNetworkCallToGetMealsByCountry(String country, MealsByCountryNetworkCallBack callBack){
         mealService.getMealsByCountry(country).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<ResponseMealInfoDto>() {
@@ -170,7 +179,7 @@ public class MealsRemoteDataSource {
     }
 
 
-    public void makeNetworkCallForMealsByName(String name, NetworkCallBack networkCallBack){
+    public void makeNetworkCallForMealsByName(String name, SearchMealsByNameNetworkCallBack networkCallBack){
         mealService.searchMealsByName(name).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<ResponseMeals>() {
@@ -193,7 +202,7 @@ public class MealsRemoteDataSource {
     }
 
 
-    public void makeCallForAllIngredients(NetworkCallBack callBack){
+    public void makeCallForAllIngredients(AllIngredientsNetworkCallBack callBack){
         mealService.getAllIngredient().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<ResponseAllIngredients>() {
@@ -216,7 +225,7 @@ public class MealsRemoteDataSource {
 
 
 
-    public void makeNetworkCallForMealsByIngredients(String ingredient, NetworkCallBack callBack){
+    public void makeNetworkCallForMealsByIngredients(String ingredient, MealsByIngredientNetworkCallBack callBack){
         mealService.getMealsByIngredients(ingredient).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<ResponseMealByIngredientDto>() {
