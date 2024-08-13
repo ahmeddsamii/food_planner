@@ -9,6 +9,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ public class DetailsMealsByIngredientsFragment extends Fragment implements Detai
 
    RecyclerView mealsByIngredientsRv;
     DetailsMealsByIngredientsPresenter presenter;
+    private static final String TAG = "DetailsMealsByIngredien";
     public DetailsMealsByIngredientsFragment() {
 
     }
@@ -75,7 +77,7 @@ public class DetailsMealsByIngredientsFragment extends Fragment implements Detai
 
     @Override
     public void onItemByNameFailure(String errMessage) {
-
+        Log.e(TAG, "onItemByNameFailure: " + errMessage );
     }
 
     @Override

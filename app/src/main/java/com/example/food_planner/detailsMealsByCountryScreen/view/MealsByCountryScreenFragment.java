@@ -9,6 +9,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ public class MealsByCountryScreenFragment extends Fragment implements onMealsByC
 
     RecyclerView recyclerView;
     MealsByCountryPresenter presenter;
+    private static final String TAG = "MealsByCountryScreenFragment";
 
     public MealsByCountryScreenFragment() {
 
@@ -67,7 +69,7 @@ public class MealsByCountryScreenFragment extends Fragment implements onMealsByC
 
     @Override
     public void onFailure(String errMessage) {
-
+        Log.e(TAG, "onFailure: "+ errMessage );
     }
 
     @Override
