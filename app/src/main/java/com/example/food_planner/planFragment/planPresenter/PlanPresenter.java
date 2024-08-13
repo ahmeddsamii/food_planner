@@ -46,6 +46,10 @@ public class PlanPresenter{
         });
     }
 
+    public void deletePlanFromFirebase(String uid, String planId, int dayOfWeek){
+        repo.deletePlanFromFirebase(uid, planId, dayOfWeek);
+    }
+
     public Completable savePlanToFirestore(String uId, PlanDto planDto) {
         // Convert the Firebase Task to an RxJava Completable
         return Completable.create(emitter -> {

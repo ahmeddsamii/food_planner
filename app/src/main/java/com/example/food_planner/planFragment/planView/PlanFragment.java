@@ -143,6 +143,7 @@ public class PlanFragment extends Fragment implements OnPlansView , OnPlanMealDe
 
     @Override
     public void onDeleteClick(PlanDto planDto) {
+        presenter.deletePlanFromFirebase(user.getUid(), planDto.getId(),tempDay);
         presenter.deletePlanMeal(planDto);
         presenter.getMealsByDay(tempDay);
     }

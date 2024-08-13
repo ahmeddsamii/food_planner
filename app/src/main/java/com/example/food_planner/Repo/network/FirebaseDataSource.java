@@ -55,6 +55,15 @@ public class FirebaseDataSource {
         return batch.commit();
     }
 
+    Task<Void> deleteMealFromFirebase(String uid , MealDto meal){
+        DocumentReference docRef = db.collection("users")
+                .document(uid)
+                .collection("meals")
+                .document(meal.getIdMeal());
+
+        return docRef.delete();
+    }
+
     public Task<Void> saveMealToFirestore(String uid, MealDto meal) {
         // Get a reference to the document where you want to save the meal
         DocumentReference docRef = db.collection("users")
@@ -125,11 +134,25 @@ public class FirebaseDataSource {
                 });
     }
 
-
-
-
-
-
+    public void deletePlanFromFirebase(String uId, String planId, int dayOfWeek){
+        db.collection("plans")
+                .document(uId)
+                .collection("plans")
+                .document(String.valueOf(dayOfWeek))
+                .collection("meals")
+                .document(planId)
+                .delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d(TAG, "Plan deleted Successfully From Firebase ");
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG, "There was an error while deleting Plan from Firebase" + e.getMessage() );
+                    }
+                });
+    }
     public void deleteMeal(String userId, String mealId) {
         db.collection("users")
                 .document(userId)

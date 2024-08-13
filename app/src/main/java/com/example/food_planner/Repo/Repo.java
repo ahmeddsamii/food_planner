@@ -14,6 +14,8 @@ import com.example.food_planner.model.dtos.MealDto;
 import com.example.food_planner.model.dtos.PlanDto;
 import com.example.food_planner.planFragment.planView.OnPlanMealsCallback;
 import com.example.food_planner.settingsScreen.settingsView.OnSignOutListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -166,6 +168,8 @@ public class Repo implements OnSignOutListener{
         firebaseDataSource.saveMealToFirestore(uId, mealDto);
     }
 
+
+
     public Completable deleteAllLocalPlans(){
         return planDao.deleteAllPlans().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
@@ -196,7 +200,9 @@ public class Repo implements OnSignOutListener{
     }
 
 
-
+    public void deletePlanFromFirebase(String uid, String planId, int dayOfWeek){
+        firebaseDataSource.deletePlanFromFirebase(uid, planId , dayOfWeek);
+    }
     public void deleteItemFromFirebase(String uId , String mealId){
         firebaseDataSource.deleteMeal(uId, mealId);
     }
@@ -209,6 +215,22 @@ public class Repo implements OnSignOutListener{
     public interface OnFavoriteMealsCallback {
     void onSuccess(List<MealDto> meals);
     void onFailure(String errorMessage);
+}
+
+public void saveMealsToFirebase(String uid, List<MealDto> mealDtos){
+        firebaseDataSource.saveMealsToFirestore(uid, mealDtos).addOnSuccessListener(
+                new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.i(TAG, "onSuccess: ");
+                    }
+                }
+        ).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@androidx.annotation.NonNull Exception e) {
+                Log.e(TAG, "onFailure: "+ e.getMessage() );
+            }
+        });
 }
 
     @Override

@@ -55,14 +55,8 @@ public class SettingsPresenter {
                         if (currentUser != null) {
                             String uid = currentUser.getUid();
                             Log.i("TAG", "onNext: " + uid);
-                            repo.getFirebaseDataSource().saveMealsToFirestore(uid, mealDtos)
-                                    .addOnSuccessListener(aVoid -> {
-                                        repo.getFirebaseDataSource().getFirebaseAuth().signOut();
-                                        listener.onSignOutSuccess();
-                                    })
-                                    .addOnFailureListener(e -> {
-                                        listener.onSignOutFailure("Failed to save data: " + e.getMessage());
-                                    });
+                            repo.saveMealsToFirebase(uid, mealDtos);
+                            listener.onSignOutSuccess();
                         } else {
                             listener.onSignOutFailure("No user currently signed in");
                         }
