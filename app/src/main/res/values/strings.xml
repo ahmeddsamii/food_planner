@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">food-planner</string>
+    <string name="app_name">Cuisine Quest</string>
     <string name="welcome_to_food_planner">Welcome to Food Planner</string>
     <string name="username">Username:</string>
     <string name="enter_your_email_login">Enter your email</string>

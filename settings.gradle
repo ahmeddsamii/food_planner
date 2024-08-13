@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "food-planner"
+rootProject.name = "Cuisine Quest"
 include ':app'
