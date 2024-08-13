@@ -59,7 +59,7 @@ public class CategoryDetailsAdapter extends RecyclerView.Adapter<CategoryDetails
 
     @Override
     public int getItemCount() {
-        return mealInfoDtos.size();
+        return (mealInfoDtos != null) ? mealInfoDtos.size() : 0;
     }
 
     static class CategoryDetailsViewHolder extends RecyclerView.ViewHolder {

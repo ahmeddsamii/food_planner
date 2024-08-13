@@ -84,7 +84,7 @@ public class SearchPresenter implements CategoriesNetworkCallBack, AllIngredient
 
     @Override
     public void onSearchMealsByNameFailure(String errMessage) {
-        mealsSearchByNameView.onMealSearchByNameFailure(errMessage != null ? errMessage : "Unknown error occurred");
+        mealsSearchByNameView.onMealSearchByNameFailure(errMessage);
     }
 
     @Override

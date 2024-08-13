@@ -166,6 +166,11 @@ public class DetailsFragment extends Fragment  {
         ingredient1.setStrIngredient13(meal.getStrIngredient13());
         ingredient1.setStrIngredient14(meal.getStrIngredient14());
         ingredient1.setStrIngredient15(meal.getStrIngredient15());
+        ingredient1.setStrIngredient16(meal.getStrIngredient16());
+        ingredient1.setStrIngredient17(meal.getStrIngredient17());
+        ingredient1.setStrIngredient18(meal.getStrIngredient18());
+        ingredient1.setStrIngredient19(meal.getStrIngredient19());
+        ingredient1.setStrIngredient20(meal.getStrIngredient20());
         ingredients.add(ingredient1);
         Log.i(TAG, "Ingredient1: " + ingredients.get(0).getStrIngredient1());
         return ingredients;

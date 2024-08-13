@@ -121,7 +121,7 @@ public class CountrySearchAdapter extends RecyclerView.Adapter<CountrySearchAdap
 
     @Override
     public int getItemCount() {
-        return countries.size();
+        return (countries != null) ? countries.size() : 0;
     }
 
 

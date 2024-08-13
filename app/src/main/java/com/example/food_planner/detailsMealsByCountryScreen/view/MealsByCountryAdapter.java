@@ -55,7 +55,7 @@ public class MealsByCountryAdapter extends RecyclerView.Adapter<MealsByCountryAd
 
     @Override
     public int getItemCount() {
-        return mealInfoDtos.size();
+        return (mealInfoDtos != null) ? mealInfoDtos.size() : 0;
     }
 
     class MealHolder extends RecyclerView.ViewHolder{

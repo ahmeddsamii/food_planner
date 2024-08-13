@@ -38,16 +38,24 @@ public class AllIngredientsAdapter extends RecyclerView.Adapter<AllIngredientsAd
     @Override
     public void onBindViewHolder(@NonNull AllIngredientViewHolder holder, int position) {
         AllIngredientDto ingredientDto = allIngredientDtoList.get(position);
-        Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+ingredientDto.getStrIngredient()+".png").into(holder.ingredientImage);
-        holder.ingredientText.setText(ingredientDto.getStrIngredient());
-        holder.ingredientCardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SearchFragmentDirections.ActionSearchFragmentToDetailsMealsByIngredientsFragment action =
-                        SearchFragmentDirections.actionSearchFragmentToDetailsMealsByIngredientsFragment(ingredientDto);
-                Navigation.findNavController(v).navigate(action);
-            }
-        });
+
+        if (ingredientDto != null) {
+            Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+ingredientDto.getStrIngredient()+".png").into(holder.ingredientImage);
+            holder.ingredientText.setText(ingredientDto.getStrIngredient());
+            holder.ingredientCardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SearchFragmentDirections.ActionSearchFragmentToDetailsMealsByIngredientsFragment action =
+                            SearchFragmentDirections.actionSearchFragmentToDetailsMealsByIngredientsFragment(ingredientDto);
+                    Navigation.findNavController(v).navigate(action);
+                }
+            });
+        }else{
+            holder.ingredientText.setVisibility(View.GONE);
+            holder.ingredientImage.setVisibility(View.GONE);
+            holder.ingredientCardView.setVisibility(View.GONE);
+        }
+
 
     }
 
@@ -58,7 +66,7 @@ public class AllIngredientsAdapter extends RecyclerView.Adapter<AllIngredientsAd
 
     @Override
     public int getItemCount() {
-        return allIngredientDtoList.size();
+        return (allIngredientDtoList != null) ? allIngredientDtoList.size() : 0;
     }
 
     class AllIngredientViewHolder extends RecyclerView.ViewHolder{

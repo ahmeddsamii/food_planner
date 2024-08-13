@@ -205,17 +205,72 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         } else {
             holder.cardView_15.setVisibility(View.GONE);
         }
+
+        // Ingredient 16
+        if ( currentMeal.getStrIngredient16() != null && !currentMeal.getStrIngredient16().isEmpty()) {
+            holder.ingredient_details16.setText(currentMeal.getStrIngredient16());
+            Glide.with(context)
+                    .load("https://www.themealdb.com/images/ingredients/" + currentMeal.getStrIngredient16() + "-Small.png")
+                    .into(holder.imageView16);
+            holder.cardView_16.setVisibility(View.VISIBLE);
+        } else {
+            holder.cardView_16.setVisibility(View.GONE);
+        }
+
+        // Ingredient 17
+        if ( currentMeal.getStrIngredient17() != null && !currentMeal.getStrIngredient17().isEmpty()) {
+            holder.ingredient_details17.setText(currentMeal.getStrIngredient17());
+            Glide.with(context)
+                    .load("https://www.themealdb.com/images/ingredients/" + currentMeal.getStrIngredient17() + "-Small.png")
+                    .into(holder.imageView17);
+            holder.cardView_17.setVisibility(View.VISIBLE);
+        } else {
+            holder.cardView_17.setVisibility(View.GONE);
+        }
+
+        // Ingredient 18
+        if ( currentMeal.getStrIngredient18() != null && !currentMeal.getStrIngredient18().isEmpty()) {
+            holder.ingredient_details18.setText(currentMeal.getStrIngredient18());
+            Glide.with(context)
+                    .load("https://www.themealdb.com/images/ingredients/" + currentMeal.getStrIngredient18() + "-Small.png")
+                    .into(holder.imageView18);
+            holder.cardView_18.setVisibility(View.VISIBLE);
+        } else {
+            holder.cardView_18.setVisibility(View.GONE);
+        }
+
+        // Ingredient 19
+        if ( currentMeal.getStrIngredient19() != null && !currentMeal.getStrIngredient19().isEmpty()) {
+            holder.ingredient_details19.setText(currentMeal.getStrIngredient19());
+            Glide.with(context)
+                    .load("https://www.themealdb.com/images/ingredients/" + currentMeal.getStrIngredient19() + "-Small.png")
+                    .into(holder.imageView19);
+            holder.cardView_19.setVisibility(View.VISIBLE);
+        } else {
+            holder.cardView_19.setVisibility(View.GONE);
+        }
+
+        // Ingredient 20
+        if ( currentMeal.getStrIngredient20() != null && !currentMeal.getStrIngredient20().isEmpty()) {
+            holder.ingredient_details20.setText(currentMeal.getStrIngredient20());
+            Glide.with(context)
+                    .load("https://www.themealdb.com/images/ingredients/" + currentMeal.getStrIngredient20() + "-Small.png")
+                    .into(holder.imageView20);
+            holder.cardView_20.setVisibility(View.VISIBLE);
+        } else {
+            holder.cardView_20.setVisibility(View.GONE);
+        }
     }
 
     @Override
     public int getItemCount() {
-        return responseIngredient.size();
+        return (responseIngredient != null) ? responseIngredient.size() : 0;
     }
 
     class IngredientHolder extends RecyclerView.ViewHolder {
-        CardView cardView_1, cardView_2, cardView_3, cardView_4, cardView_5, cardView_6, cardView_7, cardView_8, cardView_9, cardView_10, cardView_11, cardView_12, cardView_13, cardView_14, cardView_15;
-        TextView ingredient_details, ingredient_details2, ingredient_details3, ingredient_details4, ingredient_details5, ingredient_details6, ingredient_details7, ingredient_details8, ingredient_details9, ingredient_details10, ingredient_details11, ingredient_details12, ingredient_details13, ingredient_details14, ingredient_details15;
-        ImageView imageView1, imageView2, imageView3, imageView4, imageView5, imageView6, imageView7, imageView8, imageView9, imageView10, imageView11, imageView12, imageView13, imageView14, imageView15;
+        CardView cardView_1, cardView_2, cardView_3, cardView_4, cardView_5, cardView_6, cardView_7, cardView_8, cardView_9, cardView_10, cardView_11, cardView_12, cardView_13, cardView_14, cardView_15, cardView_16, cardView_17, cardView_18, cardView_19, cardView_20;
+        TextView ingredient_details, ingredient_details2, ingredient_details3, ingredient_details4, ingredient_details5, ingredient_details6, ingredient_details7, ingredient_details8, ingredient_details9, ingredient_details10, ingredient_details11, ingredient_details12, ingredient_details13, ingredient_details14, ingredient_details15,ingredient_details16, ingredient_details17,ingredient_details18,ingredient_details19,ingredient_details20 ;
+        ImageView imageView1, imageView2, imageView3, imageView4, imageView5, imageView6, imageView7, imageView8, imageView9, imageView10, imageView11, imageView12, imageView13, imageView14, imageView15, imageView16, imageView17, imageView18,imageView19,imageView20 ;
 
         public IngredientHolder(@NonNull View itemView) {
             super(itemView);
@@ -234,6 +289,11 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
             ingredient_details13 = itemView.findViewById(R.id.ingredient_details13);
             ingredient_details14 = itemView.findViewById(R.id.ingredient_details14);
             ingredient_details15 = itemView.findViewById(R.id.ingredient_details15);
+            ingredient_details16 = itemView.findViewById(R.id.ingredient_details16);
+            ingredient_details17 = itemView.findViewById(R.id.ingredient_details17);
+            ingredient_details18 = itemView.findViewById(R.id.ingredient_details18);
+            ingredient_details19 = itemView.findViewById(R.id.ingredient_details19);
+            ingredient_details20 = itemView.findViewById(R.id.ingredient_details20);
             imageView1 = itemView.findViewById(R.id.imageView1);
             imageView2 = itemView.findViewById(R.id.imageView2);
             imageView3 = itemView.findViewById(R.id.imageView3);
@@ -249,6 +309,11 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
             imageView13 = itemView.findViewById(R.id.imageView13);
             imageView14 = itemView.findViewById(R.id.imageView14);
             imageView15 = itemView.findViewById(R.id.imageView15);
+            imageView16 = itemView.findViewById(R.id.imageView16);
+            imageView17 = itemView.findViewById(R.id.imageView17);
+            imageView18 = itemView.findViewById(R.id.imageView18);
+            imageView19 = itemView.findViewById(R.id.imageView19);
+            imageView20 = itemView.findViewById(R.id.imageView20);
             cardView_1 = itemView.findViewById(R.id.cardView_1);
             cardView_2 = itemView.findViewById(R.id.cardView_2);
             cardView_3 = itemView.findViewById(R.id.cardView_3);
@@ -264,6 +329,11 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
             cardView_13 = itemView.findViewById(R.id.cardView_13);
             cardView_14 = itemView.findViewById(R.id.cardView_14);
             cardView_15 = itemView.findViewById(R.id.cardView_15);
+            cardView_16 = itemView.findViewById(R.id.cardView_16);
+            cardView_17 = itemView.findViewById(R.id.cardView_17);
+            cardView_18 = itemView.findViewById(R.id.cardView_18);
+            cardView_19 = itemView.findViewById(R.id.cardView_19);
+            cardView_20 = itemView.findViewById(R.id.cardView_20);
         }
     }
 }
