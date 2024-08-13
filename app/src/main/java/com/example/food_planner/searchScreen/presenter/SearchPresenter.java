@@ -1,6 +1,6 @@
 package com.example.food_planner.searchScreen.presenter;
 
-import com.example.food_planner.Repo.NetworkCallBack;
+import com.example.food_planner.Repo.network.NetworkCallBack;
 import com.example.food_planner.Repo.Repo;
 import com.example.food_planner.model.dto_repos.ResponseAllIngredients;
 import com.example.food_planner.model.dto_repos.ResponseMealByIngredientDto;
@@ -10,7 +10,6 @@ import com.example.food_planner.searchScreen.view.CategorySearchView;
 import com.example.food_planner.searchScreen.view.CountrySearchView;
 import com.example.food_planner.model.dto_repos.ResponseCategory;
 import com.example.food_planner.model.dto_repos.ResponseCountry;
-import com.example.food_planner.model.dto_repos.ResponseIngredient;
 import com.example.food_planner.model.dto_repos.ResponseMeals;
 import com.example.food_planner.model.dtos.MealDto;
 import com.example.food_planner.searchScreen.view.MealsSearchByNameView;

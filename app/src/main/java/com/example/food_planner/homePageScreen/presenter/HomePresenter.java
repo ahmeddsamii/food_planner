@@ -1,6 +1,6 @@
 package com.example.food_planner.homePageScreen.presenter;
 
-import com.example.food_planner.Repo.NetworkCallBack;
+import com.example.food_planner.Repo.network.NetworkCallBack;
 import com.example.food_planner.Repo.Repo;
 import com.example.food_planner.detailsMealScreen.view.IngredientsView;
 import com.example.food_planner.homePageScreen.view.AllCategoriesView;
@@ -8,7 +8,6 @@ import com.example.food_planner.homePageScreen.view.RandomMealView;
 import com.example.food_planner.model.dto_repos.ResponseAllIngredients;
 import com.example.food_planner.model.dto_repos.ResponseCategory;
 import com.example.food_planner.model.dto_repos.ResponseCountry;
-import com.example.food_planner.model.dto_repos.ResponseIngredient;
 import com.example.food_planner.model.dto_repos.ResponseMealByIngredientDto;
 import com.example.food_planner.model.dto_repos.ResponseMealInfoDto;
 import com.example.food_planner.model.dto_repos.ResponseMeals;

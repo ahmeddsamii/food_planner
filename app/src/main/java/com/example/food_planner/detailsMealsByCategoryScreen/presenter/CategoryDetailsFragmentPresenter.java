@@ -1,6 +1,6 @@
 package com.example.food_planner.detailsMealsByCategoryScreen.presenter;
 
-import com.example.food_planner.Repo.NetworkCallBack;
+import com.example.food_planner.Repo.network.NetworkCallBack;
 import com.example.food_planner.Repo.Repo;
 import com.example.food_planner.detailsMealsByCategoryScreen.view.CategoryDetailsView;
 import com.example.food_planner.detailsMealsByCategoryScreen.view.onMealByNameView;

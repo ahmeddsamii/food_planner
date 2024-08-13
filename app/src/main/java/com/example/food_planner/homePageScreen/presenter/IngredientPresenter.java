@@ -1,6 +1,6 @@
 //package com.example.food_planner.homePageScreen.presenter;
 //
-//import com.example.food_planner.Repo.NetworkCallBack;
+//import com.example.food_planner.Repo.network.NetworkCallBack;
 //import com.example.food_planner.Repo.Repo;
 //import com.example.food_planner.detailsMealScreen.view.IngredientsView;
 //import com.example.food_planner.model.dto_repos.ResponseAllIngredients;

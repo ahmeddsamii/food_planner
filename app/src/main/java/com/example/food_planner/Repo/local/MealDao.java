@@ -1,4 +1,4 @@
-package com.example.food_planner.Repo;
+package com.example.food_planner.Repo.local;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;

@@ -1,6 +1,6 @@
 package com.example.food_planner.detailsMealsByIngredients.detailsMealsByIngredientsPresenter;
 
-import com.example.food_planner.Repo.NetworkCallBack;
+import com.example.food_planner.Repo.network.NetworkCallBack;
 import com.example.food_planner.Repo.Repo;
 import com.example.food_planner.detailsMealsByIngredients.detailsMealsByIngredientsView.DetailsMealsByIngredientsView;
 import com.example.food_planner.model.dto_repos.ResponseAllIngredients;

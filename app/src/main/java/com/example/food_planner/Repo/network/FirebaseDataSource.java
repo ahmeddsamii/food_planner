@@ -1,17 +1,14 @@
-package com.example.food_planner.Repo;
+package com.example.food_planner.Repo.network;
 
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.food_planner.model.dtos.MealData;
 import com.example.food_planner.model.dtos.MealDto;
 import com.example.food_planner.model.dtos.PlanDto;
-import com.example.food_planner.model.dtos.UserData;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
