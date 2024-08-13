@@ -25,21 +25,15 @@ import com.example.food_planner.favoriteScreen.FavoritePresenter.FavoritePresent
 import com.example.food_planner.favoriteScreen.view.FavoriteView;
 import com.example.food_planner.helpers.networkUtils.NetworkUtils;
 import com.example.food_planner.homePageScreen.presenter.HomePresenter;
-import com.example.food_planner.homePageScreen.view.adapters.AllCountriesView;
 import com.example.food_planner.homePageScreen.view.adapters.CategoriesAdapter;
 import com.example.food_planner.homePageScreen.view.adapters.CountryHomeAdapter;
 import com.example.food_planner.model.dto_repos.ResponseCategory;
 import com.example.food_planner.model.dto_repos.ResponseCountry;
 import com.example.food_planner.model.dto_repos.ResponseMeals;
-import com.example.food_planner.model.dtos.CategoryDto;
 import com.example.food_planner.model.dtos.MealDto;
 import com.example.food_planner.model.dtos.PlanDto;
 import com.example.food_planner.planFragment.planPresenter.PlanPresenter;
 import com.example.food_planner.planFragment.planView.OnPlansView;
-import com.example.food_planner.searchScreen.presenter.SearchPresenter;
-import com.example.food_planner.searchScreen.view.CategorySearchView;
-import com.example.food_planner.searchScreen.view.CountrySearchAdapter;
-import com.example.food_planner.searchScreen.view.CountrySearchView;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Calendar;

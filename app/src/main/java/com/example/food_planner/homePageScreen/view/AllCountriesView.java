@@ -1,4 +1,4 @@
-package com.example.food_planner.homePageScreen.view.adapters;
+package com.example.food_planner.homePageScreen.view;
 
 import com.example.food_planner.model.dto_repos.ResponseCountry;
 

@@ -6,7 +6,7 @@ import com.example.food_planner.Repo.Repo;
 import com.example.food_planner.Repo.network.api.callbacks.RandomMealCallBack;
 import com.example.food_planner.homePageScreen.view.AllCategoriesView;
 import com.example.food_planner.homePageScreen.view.RandomMealView;
-import com.example.food_planner.homePageScreen.view.adapters.AllCountriesView;
+import com.example.food_planner.homePageScreen.view.AllCountriesView;
 import com.example.food_planner.model.dto_repos.ResponseCategory;
 import com.example.food_planner.model.dto_repos.ResponseCountry;
 import com.example.food_planner.model.dto_repos.ResponseMeals;
