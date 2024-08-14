@@ -66,7 +66,6 @@
         android:layout_marginBottom="380dp"
         android:background="@drawable/rounded_edittext_background"
         android:drawableStart="@drawable/password"
-        android:drawableEnd="@drawable/eye_password_show"
         android:drawablePadding="6dp"
         android:filterTouchesWhenObscured="true"
         android:hint="@string/enter_your_password"
@@ -137,24 +136,12 @@
         android:id="@+id/iv_singUp_google"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="68dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4"
         app:srcCompat="@drawable/google_icon_logo" />
-
-    <ImageView
-        android:id="@+id/iv_login_x"
-        android:layout_width="102dp"
-        android:layout_height="112dp"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_singUp_google"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.656"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/iv_singUp_google"
-        app:layout_constraintVertical_bias="0.615"
-        app:srcCompat="@drawable/twitter_x_icon" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

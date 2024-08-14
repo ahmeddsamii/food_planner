@@ -80,7 +80,6 @@
         android:layout_marginBottom="384dp"
         android:background="@drawable/rounded_edittext_background"
         android:drawableStart="@drawable/password"
-        android:drawableEnd="@drawable/eye_password_show"
         android:drawablePadding="6dp"
         android:filterTouchesWhenObscured="true"
         android:hint="@string/enter_your_password"
@@ -122,37 +121,24 @@
         android:id="@+id/iv_login_google"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="44dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.324"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4"
         app:srcCompat="@drawable/google_icon_logo" />
-
-    <ImageView
-        android:id="@+id/iv_login_x"
-        android:layout_width="102dp"
-        android:layout_height="112dp"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_login_google"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.663"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/iv_login_google"
-        app:layout_constraintVertical_bias="0.442"
-        app:srcCompat="@drawable/twitter_x_icon" />
 
     <TextView
         android:id="@+id/tv_guestMode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="60dp"
-        android:text="Guest Mode"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="Skip"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
