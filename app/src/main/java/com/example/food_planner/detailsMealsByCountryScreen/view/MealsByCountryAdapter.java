@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,7 +23,7 @@ public class MealsByCountryAdapter extends RecyclerView.Adapter<MealsByCountryAd
     Context context;
     onMealsByCountryClickListener onMealsByCountryClickListener;
 
-    public MealsByCountryAdapter(List<MealInfoDto> mealInfoDtos , Context context ,onMealsByCountryClickListener onMealsByCountryClickListener){
+    public MealsByCountryAdapter(List<MealInfoDto> mealInfoDtos, Context context, onMealsByCountryClickListener onMealsByCountryClickListener) {
         this.context = context;
         this.mealInfoDtos = mealInfoDtos;
         this.onMealsByCountryClickListener = onMealsByCountryClickListener;
@@ -48,7 +47,7 @@ public class MealsByCountryAdapter extends RecyclerView.Adapter<MealsByCountryAd
             @Override
             public void onClick(View v) {
                 onMealsByCountryClickListener.getNameOfTheMeal(meal.getStrMeal());
-                Log.i("TAG", "onClick: "+meal.getStrMeal());
+                Log.i("TAG", "onClick: " + meal.getStrMeal());
             }
         });
     }
@@ -58,9 +57,10 @@ public class MealsByCountryAdapter extends RecyclerView.Adapter<MealsByCountryAd
         return (mealInfoDtos != null) ? mealInfoDtos.size() : 0;
     }
 
-    class MealHolder extends RecyclerView.ViewHolder{
+    class MealHolder extends RecyclerView.ViewHolder {
         TextView title;
         ImageView imageView;
+
         public MealHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.mealByCountryImageItem);

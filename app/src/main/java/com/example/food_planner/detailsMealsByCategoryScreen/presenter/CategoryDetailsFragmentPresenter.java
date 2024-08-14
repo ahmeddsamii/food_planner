@@ -8,30 +8,27 @@ import com.example.food_planner.detailsMealsByCategoryScreen.view.onMealByNameVi
 import com.example.food_planner.model.dto_repos.ResponseMeals;
 import com.example.food_planner.model.dtos.MealDto;
 
-public class CategoryDetailsFragmentPresenter implements   ItemByNameNetworkCallBack, MealsByCategoriesNetworkCallBack {
+public class CategoryDetailsFragmentPresenter implements ItemByNameNetworkCallBack, MealsByCategoriesNetworkCallBack {
     Repo repo;
     onMealByNameView onMealByNameView;
 
     CategoryDetailsView view;
 
 
-    public CategoryDetailsFragmentPresenter(Repo repo, CategoryDetailsView view , onMealByNameView onMealByNameView){
+    public CategoryDetailsFragmentPresenter(Repo repo, CategoryDetailsView view, onMealByNameView onMealByNameView) {
         this.repo = repo;
         this.view = view;
         this.onMealByNameView = onMealByNameView;
     }
 
-    public void getMealByName(String MealName){
-        repo.getItemByName(this,MealName);
+    public void getMealByName(String MealName) {
+        repo.getItemByName(this, MealName);
     }
 
 
-    public void getAllMealsByCategory(String category){
+    public void getAllMealsByCategory(String category) {
         repo.getMealsByCategory(category, this);
     }
-
-
-
 
 
     @Override
@@ -46,7 +43,6 @@ public class CategoryDetailsFragmentPresenter implements   ItemByNameNetworkCall
     }
 
 
-
     @Override
     public void onMealsByCategorySuccess(ResponseMeals responseMealInfoDto) {
         view.onSuccess(responseMealInfoDto);
@@ -56,12 +52,6 @@ public class CategoryDetailsFragmentPresenter implements   ItemByNameNetworkCall
     public void onMealsByCategoryFailure(String errMessage) {
         view.onFailure(errMessage);
     }
-
-
-
-
-
-
 
 
 }

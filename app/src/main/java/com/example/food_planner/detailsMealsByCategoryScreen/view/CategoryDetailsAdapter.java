@@ -1,7 +1,6 @@
 package com.example.food_planner.detailsMealsByCategoryScreen.view;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.food_planner.R;
-import com.example.food_planner.model.dto_repos.ResponseMeals;
 import com.example.food_planner.model.dtos.MealDto;
-import com.example.food_planner.model.dtos.MealInfoDto;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryDetailsAdapter extends RecyclerView.Adapter<CategoryDetailsAdapter.CategoryDetailsViewHolder> {

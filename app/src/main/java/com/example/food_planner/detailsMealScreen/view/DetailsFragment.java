@@ -23,14 +23,11 @@ import com.bumptech.glide.Glide;
 import com.example.food_planner.R;
 import com.example.food_planner.Repo.Repo;
 import com.example.food_planner.favoriteScreen.FavoritePresenter.FavoritePresenter;
-import com.example.food_planner.favoriteScreen.view.FavoriteView;
 import com.example.food_planner.helpers.converters.ConvertMealDtoToPlanDto;
 import com.example.food_planner.helpers.networkUtils.NetworkUtils;
-import com.example.food_planner.model.dto_repos.ResponseMeals;
 import com.example.food_planner.model.dtos.MealDto;
 import com.example.food_planner.model.dtos.PlanDto;
 import com.example.food_planner.planFragment.planPresenter.PlanPresenter;
-import com.example.food_planner.planFragment.planView.OnPlansView;
 import com.example.food_planner.signupScreen.view.SignUpScreen;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -48,7 +45,6 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class DetailsFragment extends Fragment  {
     private static final String TAG = "DetailsFragment";
 
-    // UI Components
     private RecyclerView ingredientsRecyclerView;
     private TextView titleTextView, stepsTextView;
     private ImageView mealImageView, favoriteButton;
@@ -246,7 +242,6 @@ public class DetailsFragment extends Fragment  {
                         } else {
                             Toast.makeText(getContext(), "User not logged in", Toast.LENGTH_SHORT).show();
                         }
-                        Toast.makeText(getContext(), "Added successfully for day " + dayOfMonth, Toast.LENGTH_SHORT).show();
                     }
                 },
                 year, month, day);

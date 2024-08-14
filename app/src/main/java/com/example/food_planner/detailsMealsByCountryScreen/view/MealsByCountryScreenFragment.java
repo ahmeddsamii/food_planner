@@ -19,12 +19,11 @@ import com.example.food_planner.Repo.Repo;
 import com.example.food_planner.detailsMealsByCountryScreen.presenter.MealsByCountryPresenter;
 import com.example.food_planner.model.dto_repos.ResponseMealInfoDto;
 import com.example.food_planner.model.dtos.MealDto;
-import com.example.food_planner.searchScreen.view.SearchFragmentDirections;
 
 import java.util.ArrayList;
 
 
-public class MealsByCountryScreenFragment extends Fragment implements onMealsByCountryView , onMealsByCountryClickListener{
+public class MealsByCountryScreenFragment extends Fragment implements onMealsByCountryView, onMealsByCountryClickListener {
 
     RecyclerView recyclerView;
     MealsByCountryPresenter presenter;
@@ -58,18 +57,18 @@ public class MealsByCountryScreenFragment extends Fragment implements onMealsByC
         presenter = new MealsByCountryPresenter(Repo.getInstance(getContext()), this);
         presenter.getMealsByCountry(countryName);
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
     }
 
     @Override
     public void onSuccess(ResponseMealInfoDto responseMealInfoDto) {
-        recyclerView.setAdapter(new MealsByCountryAdapter(responseMealInfoDto.getMealInfoList(),getContext() , this));
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
+        recyclerView.setAdapter(new MealsByCountryAdapter(responseMealInfoDto.getMealInfoList(), getContext(), this));
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
     }
 
     @Override
     public void onFailure(String errMessage) {
-        Log.e(TAG, "onFailure: "+ errMessage );
+        Log.e(TAG, "onFailure: " + errMessage);
     }
 
     @Override

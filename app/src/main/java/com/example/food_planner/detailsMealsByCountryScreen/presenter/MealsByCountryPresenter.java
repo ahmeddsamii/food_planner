@@ -7,24 +7,23 @@ import com.example.food_planner.detailsMealsByCountryScreen.view.onMealsByCountr
 import com.example.food_planner.model.dto_repos.ResponseMealInfoDto;
 import com.example.food_planner.model.dtos.MealDto;
 
-public class MealsByCountryPresenter implements  ItemByNameNetworkCallBack, MealsByCountryNetworkCallBack {
+public class MealsByCountryPresenter implements ItemByNameNetworkCallBack, MealsByCountryNetworkCallBack {
 
     Repo repo;
     onMealsByCountryView view;
 
-    public MealsByCountryPresenter(Repo repo, onMealsByCountryView view){
+    public MealsByCountryPresenter(Repo repo, onMealsByCountryView view) {
         this.repo = repo;
         this.view = view;
     }
 
-    public void getMealByName(String mealName){
-        repo.getItemByName(this,mealName);
+    public void getMealByName(String mealName) {
+        repo.getItemByName(this, mealName);
     }
 
-    public void getMealsByCountry(String country){
+    public void getMealsByCountry(String country) {
         repo.getMealsByCountry(country, this);
     }
-
 
 
     @Override
@@ -46,10 +45,6 @@ public class MealsByCountryPresenter implements  ItemByNameNetworkCallBack, Meal
     public void onMealsByCountryFailure(String errMessage) {
         view.onFailure(errMessage);
     }
-
-
-
-
 
 
 }
