@@ -106,6 +106,10 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
 
+    //facebook
+    implementation 'com.facebook.android:facebook-login:latest.release'
+
+
 
 
 

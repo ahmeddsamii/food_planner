@@ -68,37 +68,24 @@
             AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
             FirebaseAuth auth = repo.getFirebaseDataSource().getFirebaseAuth();
 
-            auth.fetchSignInMethodsForEmail(credential.toString())
+            auth.signInWithCredential(credential)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
-                            boolean isNewUser = task.getResult().getSignInMethods().isEmpty();
-                            if (isNewUser) {
-                                createUserWithGoogle(credential);
-
+                            FirebaseUser user = auth.getCurrentUser();
+                            if (task.getResult().getAdditionalUserInfo().isNewUser()) {
+                                // This is a new user
+                                view.signUpSuccess(user);
                             } else {
+                                // This is an existing user
                                 view.signUpFailure("An account already exists with this email. Please sign in instead.");
                             }
                         } else {
-                            view.signUpFailure("Error checking existing account: " + task.getException().getMessage());
+                            view.signUpFailure("Authentication failed: " + task.getException().getMessage());
                         }
                     });
         }
 
-        private void createUserWithGoogle(AuthCredential credential) {
-            FirebaseAuth auth = repo.getFirebaseDataSource().getFirebaseAuth();
-            auth.signInWithCredential(credential)
-                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                FirebaseUser user = auth.getCurrentUser();
-                                view.signUpSuccess(user);
-                            } else {
-                                view.signUpFailure("Authentication failed: " + task.getException().getMessage());
-                            }
-                        }
-                    });
-        }
+        
 
         public void singUp(String email, String password, String username) {
             if (email.isEmpty() || password.isEmpty() || username.isEmpty()) {

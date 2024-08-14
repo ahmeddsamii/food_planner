@@ -49,9 +49,9 @@ public class LoginScreen extends AppCompatActivity implements LoginView {
         email = findViewById(R.id.et_mail_login_username);
         password = findViewById(R.id.et_login_password);
         guestMode = findViewById(R.id.tv_guestMode);
-        signInWithGoogle = findViewById(R.id.iv_login_google);
         presenter = LoginPresenter.getInstance(this, Repo.getInstance(LoginScreen.this));
         presenter.setupGoogleSignIn(this);
+        signInWithGoogle = findViewById(R.id.iv_login_google);
 
         goToSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,10 +64,9 @@ public class LoginScreen extends AppCompatActivity implements LoginView {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (NetworkUtils.isInternetAvailable(LoginScreen.this)) {
+                if (NetworkUtils.isInternetAvailable(getApplicationContext())) {
                     String emailText = email.getText().toString().trim();
                     String passwordText = password.getText().toString().trim();
-
                     if (!emailText.isEmpty() && !passwordText.isEmpty()) {
                         if (isValidEmail(emailText)) {
                             if (isValidPassword(passwordText)) {
@@ -98,7 +97,7 @@ public class LoginScreen extends AppCompatActivity implements LoginView {
         guestMode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(NetworkUtils.isInternetAvailable(LoginScreen.this)){
+                if(NetworkUtils.isInternetAvailable(getApplicationContext())){
                 Intent signInAsGuest = new Intent(LoginScreen.this, HomePageScreen.class);
                 signInAsGuest.putExtra("guest", "guest");
                 startActivity(signInAsGuest);
@@ -111,7 +110,7 @@ public class LoginScreen extends AppCompatActivity implements LoginView {
         signInWithGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(NetworkUtils.isInternetAvailable(LoginScreen.this)){
+                if(NetworkUtils.isInternetAvailable(getApplicationContext())){
                 presenter.signInWithGoogle(LoginScreen.this);
                 }else {
                     Toast.makeText(LoginScreen.this, "No Internet, please check your connection", Toast.LENGTH_SHORT).show();

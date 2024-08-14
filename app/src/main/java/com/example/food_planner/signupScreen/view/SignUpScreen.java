@@ -145,7 +145,7 @@ public class SignUpScreen extends AppCompatActivity implements SignUpView {
 
     @Override
     public void signUpFailure(String errMessage) {
-        runOnUiThread(() -> showToast(errMessage));
+        runOnUiThread(() -> Toast.makeText(this, errMessage, Toast.LENGTH_LONG).show());
     }
 
     @Override
@@ -177,6 +177,6 @@ public class SignUpScreen extends AppCompatActivity implements SignUpView {
     }
 
     private void showToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        runOnUiThread(() ->Toast.makeText(this, message, Toast.LENGTH_SHORT).show());
     }
 }
