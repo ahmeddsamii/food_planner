@@ -82,6 +82,7 @@ public class HomeFragment extends Fragment implements RandomMealView , AllCatego
          tv_categories = view.findViewById(R.id.tv_categories);
         tv_country = view.findViewById(R.id.tv_country);
         country_recyclerview = view.findViewById(R.id.home_country_rv);
+
         if(!NetworkUtils.isInternetAvailable(getContext())){
             Toast.makeText(getContext(), "No internet, please check your connection", Toast.LENGTH_SHORT).show();
             imageView.setVisibility(View.GONE);
@@ -101,9 +102,25 @@ public class HomeFragment extends Fragment implements RandomMealView , AllCatego
         homePresenter.getAllCategories();
         homePresenter.getAllCountries();
         planPresenter = new PlanPresenter(Repo.getInstance(getContext()), this);
-        planPresenter.fetchDataForPlanMealsFromFirebase(FirebaseAuth.getInstance().getUid(), day);
         favoritePresenter = new FavoritePresenter(Repo.getInstance(getContext()), this);
-        favoritePresenter.fetchUserFavoriteMeals(FirebaseAuth.getInstance().getUid());
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+
+        if (auth.getCurrentUser() != null) {
+            String uid = auth.getCurrentUser().getUid();
+            if (uid != null && !uid.isEmpty()) {
+                try {
+                    planPresenter.fetchDataForPlanMealsFromFirebase(uid, day);
+                    favoritePresenter.fetchUserFavoriteMeals(uid);
+                } catch (Exception e) {
+                    Log.e(TAG, "Error fetching data from Firebase", e);
+                    Toast.makeText(getContext(), "Error fetching data. Please try again later.", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Log.e(TAG, "User UID is null or empty");
+            }
+        } else {
+            Log.i(TAG, "User is not authenticated");
+        }
 
 
     }

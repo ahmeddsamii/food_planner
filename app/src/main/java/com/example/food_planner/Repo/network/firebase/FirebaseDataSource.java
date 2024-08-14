@@ -9,6 +9,7 @@ import com.example.food_planner.model.dtos.PlanDto;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -102,6 +103,13 @@ public class FirebaseDataSource {
     }
 
     public Task<List<PlanDto>> getUserPlanMeals(String uid, int dayOfWeek) {
+        if (uid == null || uid.isEmpty()) {
+            Log.e(TAG, "getUserPlanMeals: UID is null or empty");
+            return Tasks.forException(new IllegalArgumentException("UID cannot be null or empty"));
+        }
+
+        Log.d(TAG, "getUserPlanMeals: Fetching plans for UID: " + uid + ", Day: " + dayOfWeek);
+
         return db.collection("plans")
                 .document(uid)
                 .collection("plans")
@@ -117,8 +125,10 @@ public class FirebaseDataSource {
                                 plans.add(plan);
                             }
                         }
+                        Log.d(TAG, "getUserPlanMeals: Successfully fetched " + plans.size() + " plans");
                         return plans;
                     } else {
+                        Log.e(TAG, "getUserPlanMeals: Error fetching plans", task.getException());
                         throw task.getException();
                     }
                 });
