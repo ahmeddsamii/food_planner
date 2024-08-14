@@ -117,9 +117,17 @@ public class FavoriteFragment extends Fragment implements FavoriteView, onFavCli
 
     @Override
     public void onFavItemDelete(MealDto mealDto) {
-        presenter.delete(mealDto);
-        presenter.deleteTheMealFromFirebase(mealDto.getIdMeal());
-        presenter.fetchUserFavoriteMeals(user.getUid());
+        if(isAdded() && getContext() != null){
+            if (NetworkUtils.isInternetAvailable(getContext())){
+                presenter.delete(mealDto);
+                presenter.deleteTheMealFromFirebase(mealDto.getIdMeal());
+                presenter.fetchUserFavoriteMeals(user.getUid());
+            }
+            else {
+                Toast.makeText(getContext(), "You have to be connected to delete", Toast.LENGTH_SHORT).show();
+            }
+        }
+
 
     }
 }

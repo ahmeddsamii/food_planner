@@ -44,13 +44,13 @@ public class LoginScreen extends AppCompatActivity implements LoginView {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login_screen);
+        presenter = LoginPresenter.getInstance(this, Repo.getInstance(LoginScreen.this));
+
         goToSignUp = findViewById(R.id.tv_signup);
         btn_login = findViewById(R.id.btn_login);
         email = findViewById(R.id.et_mail_login_username);
         password = findViewById(R.id.et_login_password);
         guestMode = findViewById(R.id.tv_guestMode);
-        presenter = LoginPresenter.getInstance(this, Repo.getInstance(LoginScreen.this));
-        presenter.setupGoogleSignIn(this);
         signInWithGoogle = findViewById(R.id.iv_login_google);
 
         goToSignUp.setOnClickListener(new View.OnClickListener() {
@@ -111,7 +111,8 @@ public class LoginScreen extends AppCompatActivity implements LoginView {
             @Override
             public void onClick(View v) {
                 if(NetworkUtils.isInternetAvailable(getApplicationContext())){
-                presenter.signInWithGoogle(LoginScreen.this);
+                    presenter.setupGoogleSignIn(LoginScreen.this);
+                    presenter.signInWithGoogle(LoginScreen.this);
                 }else {
                     Toast.makeText(LoginScreen.this, "No Internet, please check your connection", Toast.LENGTH_SHORT).show();
                 }
@@ -137,7 +138,7 @@ public class LoginScreen extends AppCompatActivity implements LoginView {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("LoggedIn", user.getUid());
         editor.apply();
-        Intent intent = new Intent(LoginScreen.this, HomePageScreen.class);
+        Intent intent = new Intent(getApplicationContext(), HomePageScreen.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
@@ -155,6 +156,7 @@ public class LoginScreen extends AppCompatActivity implements LoginView {
         if (requestCode == 9001) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             presenter.handleGoogleSignInResult(task);
+
         }
     }
 }

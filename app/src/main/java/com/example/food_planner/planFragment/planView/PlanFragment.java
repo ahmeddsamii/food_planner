@@ -139,12 +139,16 @@ public class PlanFragment extends Fragment implements OnPlansView , OnPlanMealDe
         Log.i(TAG, "onPlansFailureFromFirebase: " + errMessage);
     }
 
-
-
     @Override
     public void onDeleteClick(PlanDto planDto) {
-        presenter.deletePlanFromFirebase(user.getUid(), planDto.getId(),tempDay);
-        presenter.deletePlanMeal(planDto);
-        presenter.getMealsByDay(tempDay);
+        if(isAdded() && getContext() != null) {
+            if (NetworkUtils.isInternetAvailable(getContext()) && getContext() != null) {
+                presenter.deletePlanFromFirebase(user.getUid(), planDto.getId(),tempDay);
+                presenter.deletePlanMeal(planDto);
+                presenter.getMealsByDay(tempDay);
+            }else{
+                Toast.makeText(getContext(), "You have to be connected to delete", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }
