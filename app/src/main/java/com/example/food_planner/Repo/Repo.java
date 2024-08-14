@@ -123,12 +123,23 @@ public class Repo implements OnSignOutListener{
     }
 
     public void delete(MealDto mealDto){
-        new Thread(){
-            @Override
-            public void run() {
-                mealDao.delete(mealDto);
-            }
-        }.start();
+         mealDao.delete(mealDto).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(new CompletableObserver() {
+                     @Override
+                     public void onSubscribe(@NonNull Disposable d) {
+
+                     }
+
+                     @Override
+                     public void onComplete() {
+                         Log.i(TAG, "onComplete: deleted successfully");
+                     }
+
+                     @Override
+                     public void onError(@NonNull Throwable e) {
+
+                     }
+                 });
 
     }
 
@@ -185,7 +196,6 @@ public class Repo implements OnSignOutListener{
 
 
     public Task<Void> savePlanToFirebase(String uId, PlanDto plan) {
-        // Return the Task directly for better error handling
             return firebaseDataSource.savePlanToFirestore(uId, plan);
     }
 

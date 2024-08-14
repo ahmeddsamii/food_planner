@@ -21,10 +21,10 @@ public interface MealDao {
     Completable insert(MealDto meal);
 
     @Update
-    public void Update(MealDto meal);
+    void Update(MealDto meal);
 
     @Delete
-    public void delete(MealDto meal);
+    Completable delete(MealDto meal);
 
 
     @Query("SELECT * FROM meal")
