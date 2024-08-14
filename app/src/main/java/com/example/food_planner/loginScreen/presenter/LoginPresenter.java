@@ -35,7 +35,7 @@ public class LoginPresenter {
     Repo repo;
 
     private GoogleSignInClient mGoogleSignInClient;
-    private  static final int RC_SIGN_IN = 9001;
+    public  static final int RC_SIGN_IN = 9001;
 
 
     private static LoginPresenter instance = null;
@@ -143,7 +143,7 @@ public class LoginPresenter {
 
 
 
-   
+
 
 
 

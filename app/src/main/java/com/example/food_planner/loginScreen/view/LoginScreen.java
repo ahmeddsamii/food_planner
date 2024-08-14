@@ -153,7 +153,7 @@ public class LoginScreen extends AppCompatActivity implements LoginView {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 9001) {
+        if (requestCode == LoginPresenter.RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             presenter.handleGoogleSignInResult(task);
 
