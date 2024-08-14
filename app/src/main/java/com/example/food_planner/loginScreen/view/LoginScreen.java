@@ -134,7 +134,6 @@ public class LoginScreen extends AppCompatActivity implements LoginView {
 
     @Override
     public void LoginSuccess(FirebaseUser user) {
-        runOnUiThread(() -> Toast.makeText(this, "Logged in successfully", Toast.LENGTH_SHORT).show());
         SharedPreferences sharedPreferences = getSharedPreferences(UID_KEY , MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("LoggedIn", user.getUid());
