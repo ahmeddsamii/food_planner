@@ -28,42 +28,10 @@
         app:lottie_rawRes="@raw/login_animationjson" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/et_signup_username"
-        android:layout_width="340dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="500dp"
-        android:background="@drawable/rounded_edittext_background"
-        android:drawableStart="@drawable/person"
-        android:drawablePadding="6dp"
-        android:hint="enter your username"
-        android:padding="12dp"
-        app:circularflow_radiusInDP="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.521"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/et_signUp_email"
-        android:layout_width="340dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="440dp"
-        android:background="@drawable/rounded_edittext_background"
-        android:drawableStart="@drawable/mail"
-        android:drawablePadding="6dp"
-        android:hint="@string/enter_your_email"
-        android:padding="12dp"
-        app:circularflow_radiusInDP="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.535"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/et_signup_password"
         android:layout_width="342dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="380dp"
+        android:layout_marginBottom="304dp"
         android:background="@drawable/rounded_edittext_background"
         android:drawableStart="@drawable/password"
         android:drawablePadding="6dp"
@@ -76,6 +44,38 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/et_signup_username"
         app:layout_constraintStart_toStartOf="@+id/et_signup_username" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/et_signUp_email"
+        android:layout_width="340dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="364dp"
+        android:background="@drawable/rounded_edittext_background"
+        android:drawableStart="@drawable/mail"
+        android:drawablePadding="6dp"
+        android:hint="@string/enter_your_email"
+        android:padding="12dp"
+        app:circularflow_radiusInDP="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/et_signup_username"
+        android:layout_width="340dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="424dp"
+        android:background="@drawable/rounded_edittext_background"
+        android:drawableStart="@drawable/person"
+        android:drawablePadding="6dp"
+        android:hint="enter your username"
+        android:padding="12dp"
+        app:circularflow_radiusInDP="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView3"
