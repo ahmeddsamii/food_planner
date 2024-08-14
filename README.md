@@ -35,4 +35,4 @@ Special thanks to Eng. Heba Ismail, Eng. Hager Samir, and Eng. Mohamed Galal for
 
 ## Installation
 
-To use the Food Planner Android App, you can download the APK file from the [releases page](https://drive.google.com/file/d/1caXf3m5bABEZUjg7cMAKSOnj1PDy96qA/view?usp=sharing) and install it on your Android device.
+To use the Food Planner Android App, you can download the APK file from the [releases page](https://drive.google.com/file/d/1jowLScXIYVHeRgiNdIyStF3HnlmY53OF/view?usp=sharing) and install it on your Android device.
