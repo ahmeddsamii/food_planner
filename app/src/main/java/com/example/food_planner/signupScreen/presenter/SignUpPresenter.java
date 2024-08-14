@@ -45,6 +45,14 @@
             view.startGoogleSignInActivity(signInIntent, RC_SIGN_IN);
         }
 
+        public void initializeGoogleSignInClient(Context context) {
+            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestIdToken(context.getString(R.string.default_web_client_id))
+                    .requestEmail()
+                    .build();
+            mGoogleSignInClient = GoogleSignIn.getClient(context, gso);
+        }
+
         public void handleGoogleSignInResult(Task<GoogleSignInAccount> completedTask) {
             try {
                 GoogleSignInAccount account = completedTask.getResult(ApiException.class);
@@ -66,6 +74,7 @@
                             boolean isNewUser = task.getResult().getSignInMethods().isEmpty();
                             if (isNewUser) {
                                 createUserWithGoogle(credential);
+
                             } else {
                                 view.signUpFailure("An account already exists with this email. Please sign in instead.");
                             }

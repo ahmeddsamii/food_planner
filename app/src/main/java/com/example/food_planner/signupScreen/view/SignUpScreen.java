@@ -48,6 +48,7 @@ public class SignUpScreen extends AppCompatActivity implements SignUpView {
 
         initializeViews();
         setupListeners();
+        presenter.initializeGoogleSignInClient(this);
     }
 
     private void initializeViews() {

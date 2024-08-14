@@ -18,6 +18,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInStatusCodes;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -76,7 +77,22 @@ public class LoginPresenter {
             Log.e("LoginPresenter", "Google sign in failed", e);
             Log.e("LoginPresenter", "Error code: " + e.getStatusCode());
             Log.e("LoginPresenter", "Error message: " + e.getMessage());
-            view.LoginFailure("Google sign in failed: " + e.getStatusCode() + " - " + e.getMessage());
+
+            String errorMessage;
+            switch (e.getStatusCode()) {
+                case GoogleSignInStatusCodes.SIGN_IN_CANCELLED:
+                    errorMessage = "Google Sign-In was cancelled";
+                    break;
+                case GoogleSignInStatusCodes.NETWORK_ERROR:
+                    errorMessage = "Network error occurred. Please check your internet connection";
+                    break;
+                case 10: // This is the error code you're encountering
+                    errorMessage = "Invalid configuration. Please check your Google Sign-In setup";
+                    break;
+                default:
+                    errorMessage = "Google sign in failed: " + e.getStatusCode() + " - " + e.getMessage();
+            }
+            view.LoginFailure(errorMessage);
         }
     }
 

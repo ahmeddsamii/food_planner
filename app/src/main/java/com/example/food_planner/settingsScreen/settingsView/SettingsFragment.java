@@ -81,7 +81,6 @@ public class SettingsFragment extends Fragment implements SettingsView , OnSignO
             editor.putString("LoggedIn", "error");
             editor.apply();
 
-            Toast.makeText(context, "logged out successfully", Toast.LENGTH_SHORT).show();
             presenter.deleteAllLocalData();
         }
     }
