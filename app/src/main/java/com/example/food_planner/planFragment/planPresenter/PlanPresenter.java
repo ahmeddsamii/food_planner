@@ -20,6 +20,7 @@ import io.reactivex.rxjava3.disposables.Disposable;
 public class PlanPresenter{
     Repo repo;
     OnPlansView onPlansView;
+    private static final String TAG = "PlanPresenter";
 
     public PlanPresenter(Repo repo , OnPlansView onPlansView){
         this.repo = repo;
@@ -90,7 +91,22 @@ public class PlanPresenter{
     }
 
     public void insertIntoPlans(PlanDto planDto){
-        repo.insertIntoPlans(planDto);
+        repo.insertIntoPlans(planDto).subscribe(new CompletableObserver() {
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onComplete() {
+                Log.i(TAG, "onComplete: insterted successfully");
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+
+            }
+        });
     }
 
     public void getMealsByDay(int day){

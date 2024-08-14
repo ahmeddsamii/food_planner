@@ -6,6 +6,8 @@ import com.example.food_planner.Repo.Repo;
 import com.example.food_planner.model.dtos.MealDto;
 import com.example.food_planner.settingsScreen.settingsView.OnSignOutListener;
 import com.example.food_planner.settingsScreen.settingsView.SettingsView;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseUser;
 
 import org.reactivestreams.Subscription;
@@ -21,6 +23,7 @@ public class SettingsPresenter {
     private Repo repo;
     private SettingsView view;
     OnSignOutListener listener;
+    private static final String TAG = "SettingsPresenter";
 
     public SettingsPresenter(Repo repo, OnSignOutListener listener) {
         this.repo = repo;
@@ -55,8 +58,21 @@ public class SettingsPresenter {
                         if (currentUser != null) {
                             String uid = currentUser.getUid();
                             Log.i("TAG", "onNext: " + uid);
-                            repo.saveMealsToFirebase(uid, mealDtos);
-                            listener.onSignOutSuccess();
+                            repo.saveMealsToFirebase(uid, mealDtos).addOnSuccessListener(
+                                    new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void unused) {
+                                            Log.i(TAG, "onSuccess: ");
+                                            listener.onSignOutSuccess();
+                                        }
+                                    }
+                            ).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@androidx.annotation.NonNull Exception e) {
+                                    Log.e(TAG, "onFailure: "+ e.getMessage() );
+                                }
+                            });
+
                         } else {
                             listener.onSignOutFailure("No user currently signed in");
                         }

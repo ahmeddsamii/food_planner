@@ -83,63 +83,23 @@ public class Repo implements OnSignOutListener{
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public void insert(MealDto mealDto){
-        mealDao.insert(mealDto).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new CompletableObserver() {
-                    @Override
-                    public void onSubscribe(@NonNull Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        Log.i(TAG, "Inserted Successfully: ");
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-
-                    }
-                });
+    public Completable insert(MealDto mealDto){
+      return mealDao.insert(mealDto).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public void insertIntoPlans(PlanDto planDto){
-        planDao.insert(planDto).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        new CompletableObserver() {
-                            @Override
-                            public void onSubscribe(@NonNull Disposable d) {}
-                            @Override
-                            public void onComplete() {Log.i(TAG, "onComplete: inserted successfully into plan");}
-                            @Override
-                            public void onError(@NonNull Throwable e) {}
-                        });
+    public Completable insertIntoPlans(PlanDto planDto){
+        return planDao.insert(planDto).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     public void getItemByName(ItemByNameNetworkCallBack callBack, String name){
         mealsRemoteDataSource.makeNetworkCallToGetItemByName(callBack, name);
     }
 
-    public void delete(MealDto mealDto){
-         mealDao.delete(mealDto).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).subscribe(new CompletableObserver() {
-                     @Override
-                     public void onSubscribe(@NonNull Disposable d) {
-
-                     }
-
-                     @Override
-                     public void onComplete() {
-                         Log.i(TAG, "onComplete: deleted successfully");
-                     }
-
-                     @Override
-                     public void onError(@NonNull Throwable e) {
-
-                     }
-                 });
+    public Completable delete(MealDto mealDto){
+        return mealDao.delete(mealDto).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
 
     }
 
@@ -235,20 +195,8 @@ public class Repo implements OnSignOutListener{
     void onFailure(String errorMessage);
 }
 
-public void saveMealsToFirebase(String uid, List<MealDto> mealDtos){
-        firebaseDataSource.saveMealsToFirestore(uid, mealDtos).addOnSuccessListener(
-                new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Log.i(TAG, "onSuccess: ");
-                    }
-                }
-        ).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@androidx.annotation.NonNull Exception e) {
-                Log.e(TAG, "onFailure: "+ e.getMessage() );
-            }
-        });
+public Task<Void> saveMealsToFirebase(String uid, List<MealDto> mealDtos){
+        return firebaseDataSource.saveMealsToFirestore(uid, mealDtos);
 }
 
     @Override

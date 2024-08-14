@@ -55,23 +55,13 @@ public class FirebaseDataSource {
         return batch.commit();
     }
 
-    Task<Void> deleteMealFromFirebase(String uid , MealDto meal){
-        DocumentReference docRef = db.collection("users")
-                .document(uid)
-                .collection("meals")
-                .document(meal.getIdMeal());
-
-        return docRef.delete();
-    }
 
     public Task<Void> saveMealToFirestore(String uid, MealDto meal) {
-        // Get a reference to the document where you want to save the meal
         DocumentReference docRef = db.collection("users")
                 .document(uid)
                 .collection("meals")
                 .document(meal.getIdMeal());
 
-        // Set the meal data in Firestore
         return docRef.set(meal);
     }
 

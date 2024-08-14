@@ -1,5 +1,7 @@
 package com.example.food_planner.favoriteScreen.FavoritePresenter;
 
+import android.util.Log;
+
 import com.example.food_planner.Repo.Repo;
 import com.example.food_planner.favoriteScreen.view.FavoriteView;
 import com.example.food_planner.favoriteScreen.view.onFavClickListener;
@@ -8,12 +10,16 @@ import com.example.food_planner.model.dtos.MealDto;
 import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.CompletableObserver;
 import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class FavoritePresenter implements onFavClickListener , FavoriteView {
     Repo repo;
     FavoriteView view;
+    private static final String TAG = "FavoritePresenter";
 
 
     public FavoritePresenter(Repo repo, FavoriteView view){
@@ -35,11 +41,41 @@ public class FavoritePresenter implements onFavClickListener , FavoriteView {
 
 
     public void insert(MealDto mealDto){
-        repo.insert(mealDto);
+        repo.insert(mealDto).subscribe(new CompletableObserver() {
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onComplete() {
+                Log.i(TAG, "onComplete: inserted successfully");
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+
+            }
+        });
     }
 
     public void delete(MealDto mealDto){
-        repo.delete(mealDto);
+        repo.delete(mealDto).subscribe(new CompletableObserver() {
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onComplete() {
+                Log.i(TAG, "onComplete: deleted successfully");
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+
+            }
+        });
     }
 
     @Override
@@ -54,7 +90,22 @@ public class FavoritePresenter implements onFavClickListener , FavoriteView {
 
     @Override
     public void onFavItemDelete(MealDto mealDto) {
-        repo.delete(mealDto);
+        repo.delete(mealDto).subscribe(new CompletableObserver() {
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onComplete() {
+                Log.i(TAG, "onComplete: deleted successfully");
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+
+            }
+        });
         repo.getLocalData();
     }
 
