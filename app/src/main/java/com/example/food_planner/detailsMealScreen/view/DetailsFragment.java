@@ -25,6 +25,7 @@ import com.example.food_planner.Repo.Repo;
 import com.example.food_planner.favoriteScreen.FavoritePresenter.FavoritePresenter;
 import com.example.food_planner.favoriteScreen.view.FavoriteView;
 import com.example.food_planner.helpers.converters.ConvertMealDtoToPlanDto;
+import com.example.food_planner.helpers.networkUtils.NetworkUtils;
 import com.example.food_planner.model.dto_repos.ResponseMeals;
 import com.example.food_planner.model.dtos.MealDto;
 import com.example.food_planner.model.dtos.PlanDto;
@@ -77,16 +78,20 @@ public class DetailsFragment extends Fragment  {
         favoriteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences sharedPreferences = getContext().getSharedPreferences(SignUpScreen.UID_KEY, Context.MODE_PRIVATE);
-                String uId = sharedPreferences.getString("LoggedIn", "error");
-                if("error".equals(uId)){
-                    Toast.makeText(getContext(), "You have to login to get this feature", Toast.LENGTH_SHORT).show();
-                }else{
-                    favoritePresenter.insert(currentMeal);
-                    FirebaseUser user = Repo.getInstance(getContext()).getFirebaseDataSource().getFirebaseAuth().getCurrentUser();
-                    favoritePresenter.insertMealIntoFirebase(user.getUid(), currentMeal);
-                    favoritePresenter.insert(currentMeal);
-                    Toast.makeText(getContext(), "Added to your favorites successfully", Toast.LENGTH_SHORT).show();
+                if(NetworkUtils.isInternetAvailable(getContext())){
+                    SharedPreferences sharedPreferences = getContext().getSharedPreferences(SignUpScreen.UID_KEY, Context.MODE_PRIVATE);
+                    String uId = sharedPreferences.getString("LoggedIn", "error");
+                    if("error".equals(uId)){
+                        Toast.makeText(getContext(), "You have to login to get this feature", Toast.LENGTH_SHORT).show();
+                    }else{
+                        favoritePresenter.insert(currentMeal);
+                        FirebaseUser user = Repo.getInstance(getContext()).getFirebaseDataSource().getFirebaseAuth().getCurrentUser();
+                        favoritePresenter.insertMealIntoFirebase(user.getUid(), currentMeal);
+                        favoritePresenter.insert(currentMeal);
+                        Toast.makeText(getContext(), "Added to your favorites successfully", Toast.LENGTH_SHORT).show();
+                    }
+                }else {
+                    Toast.makeText(getContext(), "No internet!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -94,13 +99,19 @@ public class DetailsFragment extends Fragment  {
         btnAddToCalender.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences sharedPreferences = getContext().getSharedPreferences(SignUpScreen.UID_KEY, Context.MODE_PRIVATE);
-                String uId = sharedPreferences.getString("LoggedIn", "error");
-                if("error".equals(uId)){
-                    Toast.makeText(getContext(), "You have to login to get this feature", Toast.LENGTH_SHORT).show();
+                if(NetworkUtils.isInternetAvailable(getContext()))
+                {
+                    SharedPreferences sharedPreferences = getContext().getSharedPreferences(SignUpScreen.UID_KEY, Context.MODE_PRIVATE);
+                    String uId = sharedPreferences.getString("LoggedIn", "error");
+                    if("error".equals(uId)){
+                        Toast.makeText(getContext(), "You have to login to get this feature", Toast.LENGTH_SHORT).show();
+                    }else{
+                        showDatePicker();
+                    }
                 }else{
-                    showDatePicker();
+                    Toast.makeText(getContext(), "No internet!", Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
     }
