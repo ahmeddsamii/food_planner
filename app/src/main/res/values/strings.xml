@@ -26,4 +26,18 @@
     <string name="plans">Plans</string>
     <string name="delete_from_plan_btn_text">Delete</string>
     <string name="default_web_client_id">109697999853-r204auhj03ft0ba030qsnlhl16ofi673.apps.googleusercontent.com</string>
+    <string name="signup_textview">SignUp</string>
+    <string name="login_btn_text">Login</string>
+    <string name="don_t_have_an_account_">Don\'t have an account?</string>
+    <string name="skip">Skip</string>
+    <string name="enter_your_username">Enter your username</string>
+    <string name="delete">Delete</string>
+    <string name="ingredients">Ingredients:</string>
+    <string name="steps">Steps:</string>
+    <string name="meal_of_the_day">Meal of the day:</string>
+    <string name="categories">Categories</string>
+    <string name="countries_chip">Countries</string>
+    <string name="categories_chip">Categories</string>
+    <string name="meals_chip">Meals</string>
+    <string name="ingredient_chip">Ingredient</string>
 </resources>

@@ -36,7 +36,7 @@
 
         <com.google.android.material.chip.Chip
             android:id="@+id/country_chip"
-            android:text="Countries"
+            android:text="@string/countries_chip"
             android:checkable="true"
 
             android:layout_width="wrap_content"
@@ -45,7 +45,7 @@
         <com.google.android.material.chip.Chip
             android:id="@+id/category_chip"
             android:checkable="true"
-            android:text="Categories"
+            android:text="@string/categories_chip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -53,14 +53,14 @@
             android:id="@+id/meals_chip"
             android:checkable="true"
 
-            android:text="Meals"
+            android:text="@string/meals_chip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/ingredient_chip"
             android:checkable="true"
-            android:text="Ingredient"
+            android:text="@string/ingredient_chip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </com.google.android.material.chip.ChipGroup>

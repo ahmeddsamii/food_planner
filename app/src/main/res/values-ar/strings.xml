@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">الطبق القومي</string>
+    <string name="welcome_to_food_planner">اهلا وسهلا</string>
+    <string name="username">اسم المستخدم</string>
+    <string name="enter_your_email_login">ادخل البريد الالكتروني</string>
+    <string name="enter_your_password">ادخل كلمه المرور</string>
+    <string name="food_planner">منظم الاكلات</string>
+    <string name="signup">سجل الان</string>
+    <string name="don_t_have_an_account">ليس لديك حساب؟</string>
+    <string name="login">تسجيل الدخول</string>
+    <string name="already_have_an_account">هل لديك حساب بالفعل؟</string>
+    <string name="enter_your_email">ادخل البريد الالكتروني</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home">الشاشه الرئيسيه</string>
+    <string name="search">البحث</string>
+    <string name="favorite">المفضله</string>
+    <string name="settings">الاعدادات</string>
+    <string name="scroll_view">Scroll View</string>
+    <string name="detail_fragment">fragment detail</string>
+    <string name="home_fragment">home Fragment</string>
+    <string name="tv_countries">البلاد</string>
+    <string name="web_id">AIzaSyAyBeZbkglQ1jBdTmhGC0wkD0IpjjqzcHA</string>
+    <string name="btn_signOutText">تسجيل الخروج</string>
+    <string name="tv_favorite_loading">انتظر...</string>
+    <string name="plans">الخطط</string>
+    <string name="delete_from_plan_btn_text">حذف</string>
+    <string name="default_web_client_id">109697999853-r204auhj03ft0ba030qsnlhl16ofi673.apps.googleusercontent.com</string>
+    <string name="signup_textview">تسجيل الخروج</string>
+    <string name="login_btn_text">تسجيل الدخول</string>
+    <string name="don_t_have_an_account_">ليس لديك حساب؟</string>
+    <string name="skip">المتابعه</string>
+    <string name="enter_your_username">ادخل اسم المستخدم</string>
+    <string name="delete">حذف</string>
+    <string name="ingredients">المكونات:</string>
+    <string name="steps">الخطوات:</string>
+    <string name="meal_of_the_day">وجبه اليوم:</string>
+    <string name="categories">الاصناف</string>
+    <string name="countries_chip">البلاد</string>
+    <string name="categories_chip">الاصناف</string>
+    <string name="meals_chip">الوجبات</string>
+    <string name="ingredient_chip">المكونات</string>
+</resources>

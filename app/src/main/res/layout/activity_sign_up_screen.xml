@@ -69,7 +69,7 @@
         android:background="@drawable/rounded_edittext_background"
         android:drawableStart="@drawable/person"
         android:drawablePadding="6dp"
-        android:hint="enter your username"
+        android:hint="@string/enter_your_username"
         android:padding="12dp"
         app:circularflow_radiusInDP="12dp"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -74,7 +74,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/ubuntu_bolditalic"
-                android:text="Ingredients:"
+                android:text="@string/ingredients"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
 
@@ -95,7 +95,7 @@
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="16dp"
                 android:fontFamily="@font/ubuntu_bolditalic"
-                android:text="Steps:"
+                android:text="@string/steps"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
 

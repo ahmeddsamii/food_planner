@@ -27,7 +27,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/ubuntu_bolditalic"
-                android:text="Meal of the day:"
+                android:text="@string/meal_of_the_day"
                 android:textColor="@color/white"
                 android:textSize="24sp" />
 
@@ -81,7 +81,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="28dp"
                 android:fontFamily="@font/ubuntu_bolditalic"
-                android:text="Categories"
+                android:text="@string/categories"
                 android:textColor="@color/white"
                 android:textSize="24sp" />
 
