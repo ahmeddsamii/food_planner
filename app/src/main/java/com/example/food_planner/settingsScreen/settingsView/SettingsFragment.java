@@ -74,7 +74,6 @@ public class SettingsFragment extends Fragment implements SettingsView , OnSignO
             Intent intent = new Intent(getActivity(), LoginScreen.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
-
             Context context = getActivity().getApplicationContext();
             SharedPreferences sharedPreferences = context.getSharedPreferences(SignUpScreen.UID_KEY, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();

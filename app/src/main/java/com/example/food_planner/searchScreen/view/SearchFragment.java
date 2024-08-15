@@ -85,14 +85,18 @@ public class SearchFragment extends Fragment implements CategorySearchView, Coun
         categoryChip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    mainRecyclerView.setVisibility(View.VISIBLE);
-                    if (categoriesAdapter == null) {
-                        categoriesAdapter = new CategoriesSearchAdapter(new ArrayList<>(), getContext());
-                        presenter.getAllCategoriesSearchItems();
+                if(NetworkUtils.isInternetAvailable(getContext())){
+                    if (isChecked) {
+                        mainRecyclerView.setVisibility(View.VISIBLE);
+                        if (categoriesAdapter == null) {
+                            categoriesAdapter = new CategoriesSearchAdapter(new ArrayList<>(), getContext());
+                            presenter.getAllCategoriesSearchItems();
+                        }
+                        mainRecyclerView.setAdapter(categoriesAdapter);
+                        mainRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                    }else{
+                        Toast.makeText(getContext(), "Check your internet", Toast.LENGTH_SHORT).show();
                     }
-                    mainRecyclerView.setAdapter(categoriesAdapter);
-                    mainRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 }
             }
         });
@@ -100,50 +104,65 @@ public class SearchFragment extends Fragment implements CategorySearchView, Coun
         countriesChip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    mainRecyclerView.setVisibility(View.VISIBLE);
-                    if (countrySearchAdapter == null) {
-                        countrySearchAdapter = new CountrySearchAdapter(new ArrayList<>(), getContext());
-                        presenter.getAllCountriesSearchItems();
+                if(NetworkUtils.isInternetAvailable(getContext())){
+                    if (isChecked) {
+                        mainRecyclerView.setVisibility(View.VISIBLE);
+                        if (countrySearchAdapter == null) {
+                            countrySearchAdapter = new CountrySearchAdapter(new ArrayList<>(), getContext());
+                            presenter.getAllCountriesSearchItems();
+                        }
+                        mainRecyclerView.setAdapter(countrySearchAdapter);
+                        mainRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                     }
-                    mainRecyclerView.setAdapter(countrySearchAdapter);
-                    mainRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                }else{
+                    Toast.makeText(getContext(), "Check your internet", Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
 
         mealsChip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    if (mealsSearchAdapter == null) {
-                        mealsSearchAdapter = new MealsSearchAdapter(new ArrayList<>(), getContext());
-                        
+                if(NetworkUtils.isInternetAvailable(getContext())){
+                    if (isChecked) {
+                        if (mealsSearchAdapter == null) {
+                            mealsSearchAdapter = new MealsSearchAdapter(new ArrayList<>(), getContext());
+
+                        }
+                        mainRecyclerView.setAdapter(mealsSearchAdapter);
+                        mainRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                        // Clear the adapter data when the chip is checked
+                        mealsSearchAdapter.setData(new ArrayList<>());
+                        // Only perform search if there's text in the SearchView
+                        if (!searchView.getQuery().toString().isEmpty()) {
+                            presenter.getMealSearchByName(searchView.getQuery().toString());
+                        }
                     }
-                    mainRecyclerView.setAdapter(mealsSearchAdapter);
-                    mainRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                    // Clear the adapter data when the chip is checked
-                    mealsSearchAdapter.setData(new ArrayList<>());
-                    // Only perform search if there's text in the SearchView
-                    if (!searchView.getQuery().toString().isEmpty()) {
-                        presenter.getMealSearchByName(searchView.getQuery().toString());
-                    }
+                }else{
+                    Toast.makeText(getContext(), "Check your internet", Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
 
         ingredientsChip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    mainRecyclerView.setVisibility(View.VISIBLE);
-                    if (allIngredientsAdapter == null) {
-                        allIngredientsAdapter = new AllIngredientsAdapter(new ArrayList<>(), getContext());
-                        presenter.getAllIngredients();
+                if(NetworkUtils.isInternetAvailable(getContext())){
+                    if (isChecked) {
+                        mainRecyclerView.setVisibility(View.VISIBLE);
+                        if (allIngredientsAdapter == null) {
+                            allIngredientsAdapter = new AllIngredientsAdapter(new ArrayList<>(), getContext());
+                            presenter.getAllIngredients();
+                        }
+                        mainRecyclerView.setAdapter(allIngredientsAdapter);
+                        mainRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
                     }
-                    mainRecyclerView.setAdapter(allIngredientsAdapter);
-                    mainRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+                }else{
+                    Toast.makeText(getContext(), "Check your internet", Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
 
@@ -155,29 +174,34 @@ public class SearchFragment extends Fragment implements CategorySearchView, Coun
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if (categoriesAdapter != null && categoryChip.isChecked()) {
-                    filterCategories(newText);
-                }
-                if (countrySearchAdapter != null && countriesChip.isChecked()) {
-                    filterCountries(newText);
-                }
-                if (mealsChip.isChecked())
-                {
-                    if (!newText.isEmpty()) {
-                        presenter.getMealSearchByName(newText);
+                if(NetworkUtils.isInternetAvailable(getContext())){
+                    if (categoriesAdapter != null && categoryChip.isChecked()) {
+                        filterCategories(newText);
+                    }
+                    if (countrySearchAdapter != null && countriesChip.isChecked()) {
+                        filterCountries(newText);
+                    }
+                    if (mealsChip.isChecked())
+                    {
+                        if (!newText.isEmpty()) {
+                            presenter.getMealSearchByName(newText);
 
 
-                    } else {
-                        // Clear the adapter data when the search text is empty
-                        if (mealsSearchAdapter != null) {
-                            mealsSearchAdapter.setData(new ArrayList<>());
+                        } else {
+                            // Clear the adapter data when the search text is empty
+                            if (mealsSearchAdapter != null) {
+                                mealsSearchAdapter.setData(new ArrayList<>());
+                            }
                         }
                     }
+
+                    if(allIngredientsAdapter != null && ingredientsChip.isChecked()){
+                        filterIngredients(newText);
+                    }
+                }else {
+                    Toast.makeText(getContext(), "There is no internet", Toast.LENGTH_SHORT).show();
                 }
 
-                if(allIngredientsAdapter != null && ingredientsChip.isChecked()){
-                    filterIngredients(newText);
-                }
                 return true;
             }
         });
