@@ -34,7 +34,7 @@
         android:fontFamily="@font/ubuntu_bolditalic"
         android:text="@string/food_planner"
         android:textColor="@color/secondaryColor"
-        android:textSize="40dp"
+        android:textSize="40sp"
         app:layout_constraintBottom_toTopOf="@+id/animationView_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.512"
