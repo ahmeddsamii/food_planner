@@ -8,7 +8,13 @@ import com.example.food_planner.detailsMealsByCategoryScreen.view.onMealByNameVi
 import com.example.food_planner.model.dto_repos.ResponseMeals;
 import com.example.food_planner.model.dtos.MealDto;
 
-public class CategoryDetailsFragmentPresenter implements ItemByNameNetworkCallBack, MealsByCategoriesNetworkCallBack {
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.SingleObserver;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
+public class CategoryDetailsFragmentPresenter {
     Repo repo;
     onMealByNameView onMealByNameView;
 
@@ -22,35 +28,46 @@ public class CategoryDetailsFragmentPresenter implements ItemByNameNetworkCallBa
     }
 
     public void getMealByName(String MealName) {
-        repo.getItemByName(this, MealName);
+        repo.getItemByName(MealName).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<ResponseMeals>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull ResponseMeals responseMeals) {
+                        onMealByNameView.onMealByNameSuccess(responseMeals.getMeals().get(0));
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        onMealByNameView.onMealByNameFailure(e.getMessage());
+                    }
+                });
     }
 
 
     public void getAllMealsByCategory(String category) {
-        repo.getMealsByCategory(category, this);
-    }
+        repo.getMealsByCategory(category).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<ResponseMeals>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
 
+                    }
 
-    @Override
-    public void onItemByNameSuccess(MealDto mealDto) {
-        onMealByNameView.onMealByNameSuccess(mealDto);
+                    @Override
+                    public void onSuccess(@NonNull ResponseMeals responseMeals) {
+                        view.onSuccess(responseMeals);
+                    }
 
-    }
-
-    @Override
-    public void onItemByNameFailure(String errMessage) {
-        onMealByNameView.onMealByNameFailure(errMessage);
-    }
-
-
-    @Override
-    public void onMealsByCategorySuccess(ResponseMeals responseMealInfoDto) {
-        view.onSuccess(responseMealInfoDto);
-    }
-
-    @Override
-    public void onMealsByCategoryFailure(String errMessage) {
-        view.onFailure(errMessage);
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        view.onFailure(e.getMessage());
+                    }
+                });
     }
 
 

@@ -41,7 +41,8 @@ public class FavoritePresenter implements onFavClickListener , FavoriteView {
 
 
     public void insert(MealDto mealDto){
-        repo.insert(mealDto).subscribe(new CompletableObserver() {
+        repo.insert(mealDto).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(new CompletableObserver() {
             @Override
             public void onSubscribe(@NonNull Disposable d) {
 
@@ -60,7 +61,8 @@ public class FavoritePresenter implements onFavClickListener , FavoriteView {
     }
 
     public void delete(MealDto mealDto){
-        repo.delete(mealDto).subscribe(new CompletableObserver() {
+        repo.delete(mealDto).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(new CompletableObserver() {
             @Override
             public void onSubscribe(@NonNull Disposable d) {
 

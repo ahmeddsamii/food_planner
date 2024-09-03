@@ -11,11 +11,14 @@ import org.reactivestreams.Subscription;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.CompletableObserver;
+import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.FlowableSubscriber;
 import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class PlanPresenter{
     Repo repo;
@@ -29,7 +32,8 @@ public class PlanPresenter{
 
 
     public void deletePlanMeal(PlanDto planDto){
-        repo.deletePlanMeal(planDto).subscribe(new CompletableObserver() {
+        repo.deletePlanMeal(planDto).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(new CompletableObserver() {
             @Override
             public void onSubscribe(@NonNull Disposable d) {
 
@@ -91,7 +95,8 @@ public class PlanPresenter{
     }
 
     public void insertIntoPlans(PlanDto planDto){
-        repo.insertIntoPlans(planDto).subscribe(new CompletableObserver() {
+        repo.insertIntoPlans(planDto).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(new CompletableObserver() {
             @Override
             public void onSubscribe(@NonNull Disposable d) {
 
@@ -110,7 +115,8 @@ public class PlanPresenter{
     }
 
     public void getMealsByDay(int day){
-        repo.getPlansByDay(day).subscribe(new FlowableSubscriber<List<PlanDto>>() {
+         repo.getPlansByDay(day).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(new FlowableSubscriber<List<PlanDto>>() {
             @Override
             public void onSubscribe(@NonNull Subscription s) {
                 s.request(Long.MAX_VALUE);

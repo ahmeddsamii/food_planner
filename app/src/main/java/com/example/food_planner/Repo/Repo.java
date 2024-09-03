@@ -18,6 +18,12 @@ import com.example.food_planner.Repo.network.api.callbacks.MealsByCountryNetwork
 import com.example.food_planner.Repo.network.api.callbacks.MealsByIngredientNetworkCallBack;
 import com.example.food_planner.Repo.network.api.callbacks.RandomMealCallBack;
 import com.example.food_planner.Repo.network.api.callbacks.SearchMealsByNameNetworkCallBack;
+import com.example.food_planner.model.dto_repos.ResponseAllIngredients;
+import com.example.food_planner.model.dto_repos.ResponseCategory;
+import com.example.food_planner.model.dto_repos.ResponseCountry;
+import com.example.food_planner.model.dto_repos.ResponseMealByIngredientDto;
+import com.example.food_planner.model.dto_repos.ResponseMealInfoDto;
+import com.example.food_planner.model.dto_repos.ResponseMeals;
 import com.example.food_planner.model.dtos.MealDto;
 import com.example.food_planner.model.dtos.PlanDto;
 import com.example.food_planner.planFragment.planView.OnPlanMealsCallback;
@@ -34,6 +40,8 @@ import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.CompletableObserver;
 import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.core.SingleObserver;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
@@ -68,79 +76,72 @@ public class Repo implements OnSignOutListener{
         return firebaseDataSource;
     }
 
-    public void getRandomMeal(RandomMealCallBack callBack){
-        mealsRemoteDataSource.makeNetworkCallForRandomMeal(callBack);
+    public Single<ResponseMeals> getRandomMeal(){
+        return mealsRemoteDataSource.makeNetworkCallForRandomMeal();
     }
 
-    public void getAllCategories(CategoriesNetworkCallBack callBack){
-        mealsRemoteDataSource.makeNetworkCallForCategories(callBack);
+    public Single<ResponseCategory> getAllCategories(){
+        return mealsRemoteDataSource.makeNetworkCallForCategories();
     }
 
 
     public Flowable<List<PlanDto>> getPlansByDay(int day) {
-        return planDao.getPlanByDay(day)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+        return planDao.getPlanByDay(day);
     }
 
     public Completable insert(MealDto mealDto){
-      return mealDao.insert(mealDto).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+      return mealDao.insert(mealDto);
     }
 
     public Completable insertIntoPlans(PlanDto planDto){
-        return planDao.insert(planDto).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+        return planDao.insert(planDto);
     }
 
-    public void getItemByName(ItemByNameNetworkCallBack callBack, String name){
-        mealsRemoteDataSource.makeNetworkCallToGetItemByName(callBack, name);
+    public Single<ResponseMeals> getItemByName(String name){
+        return mealsRemoteDataSource.makeNetworkCallToGetItemByName(name);
     }
 
     public Completable delete(MealDto mealDto){
-        return mealDao.delete(mealDto).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+        return mealDao.delete(mealDto);
 
     }
 
     public Completable deletePlanMeal(PlanDto planDto){
-        return planDao.deletePlanMeal(planDto).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+        return planDao.deletePlanMeal(planDto);
     }
     public Flowable<List<MealDto>> getLocalData(){
        return mealDao.getAllMeals();
     }
 
 
-    public void getAllCountries(AllCountriesNetworkCallBack callBack){
-        mealsRemoteDataSource.makeNetworkCallForAllCountries( callBack);
+    public Single<ResponseCountry> getAllCountries(){
+        return mealsRemoteDataSource.makeNetworkCallForAllCountries();
     }
 
-    public void getMealsByCategory(String category, MealsByCategoriesNetworkCallBack callBack){
-        mealsRemoteDataSource.makeNetworkCallForMealsByCategory(category, callBack);
+    public Single<ResponseMeals> getMealsByCategory(String category){
+        return mealsRemoteDataSource.makeNetworkCallForMealsByCategory(category);
     }
 
-    public void getMealsByCountry(String country, MealsByCountryNetworkCallBack callBack){
-        mealsRemoteDataSource.makeNetworkCallToGetMealsByCountry(country,callBack);
+    public Single<ResponseMealInfoDto> getMealsByCountry(String country){
+        return mealsRemoteDataSource.makeNetworkCallToGetMealsByCountry(country);
     }
 
-    public void getSearchMealsByName(String name , SearchMealsByNameNetworkCallBack networkCallBack){
-        mealsRemoteDataSource.makeNetworkCallForMealsByName(name,networkCallBack);
+    public Single<ResponseMeals> getSearchMealsByName(String name){
+        return mealsRemoteDataSource.makeNetworkCallForMealsByName(name);
     }
 
-    public void getAllIngredients(AllIngredientsNetworkCallBack callBack){
-        mealsRemoteDataSource.makeCallForAllIngredients(callBack);
+    public Single<ResponseAllIngredients> getAllIngredients(){
+        return mealsRemoteDataSource.makeCallForAllIngredients();
     }
 
-    public void getAllMealsByIngredients(String ingredient , MealsByIngredientNetworkCallBack callBack){
-        mealsRemoteDataSource.makeNetworkCallForMealsByIngredients(ingredient, callBack);
+    public Single<ResponseMealByIngredientDto> getAllMealsByIngredients(String ingredient){
+        return mealsRemoteDataSource.makeNetworkCallForMealsByIngredients(ingredient);
     }
 
 
 
     public Completable deleteAllMeals(){
-        return mealDao.deleteAllMeals().subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+        return mealDao.deleteAllMeals();
     }
 
     public void saveMealToFireStore(String uId , MealDto mealDto){
@@ -150,8 +151,7 @@ public class Repo implements OnSignOutListener{
 
 
     public Completable deleteAllLocalPlans(){
-        return planDao.deleteAllPlans().subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+        return planDao.deleteAllPlans();
     }
 
 

@@ -2,12 +2,14 @@ package com.example.food_planner.detailsMealScreen.view;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -245,6 +248,18 @@ public class DetailsFragment extends Fragment  {
                     }
                 },
                 year, month, day);
+        datePickerDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                Button positiveButton = datePickerDialog.getButton(DialogInterface.BUTTON_POSITIVE);
+                Button negativeButton = datePickerDialog.getButton(DialogInterface.BUTTON_NEGATIVE);
+
+                positiveButton.setTextColor(ContextCompat.getColor(getContext(), R.color.secondaryColor));
+                negativeButton.setTextColor(ContextCompat.getColor(getContext(), R.color.secondaryColor));
+            }
+        });
+
+        datePickerDialog.getDatePicker().setMinDate(c.getTimeInMillis());
         datePickerDialog.show();
     }
 }

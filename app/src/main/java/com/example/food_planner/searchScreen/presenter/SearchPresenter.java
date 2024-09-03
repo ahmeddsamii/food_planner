@@ -1,5 +1,7 @@
 package com.example.food_planner.searchScreen.presenter;
 
+import android.util.Log;
+
 import com.example.food_planner.Repo.network.api.callbacks.AllCountriesNetworkCallBack;
 import com.example.food_planner.Repo.network.api.callbacks.AllIngredientsNetworkCallBack;
 import com.example.food_planner.Repo.network.api.callbacks.CategoriesNetworkCallBack;
@@ -14,14 +16,21 @@ import com.example.food_planner.model.dto_repos.ResponseCountry;
 import com.example.food_planner.model.dto_repos.ResponseMeals;
 import com.example.food_planner.searchScreen.view.MealsSearchByNameView;
 
-public class SearchPresenter implements CategoriesNetworkCallBack, AllIngredientsNetworkCallBack, AllCountriesNetworkCallBack,SearchMealsByNameNetworkCallBack {
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.SingleObserver;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
+public class SearchPresenter {
     Repo repo;
     CategorySearchView categorySearchView;
     CountrySearchView countrySearchView;
     MealsSearchByNameView mealsSearchByNameView;
     AllIngredientsSearchView allIngredientsSearchView;
+    private static final String TAG = "SearchPresenter";
 
-    public SearchPresenter(Repo repo, CategorySearchView categorySearchView, CountrySearchView countrySearchView, MealsSearchByNameView mealsSearchByNameView , AllIngredientsSearchView allIngredientsSearchView){
+    public SearchPresenter(Repo repo, CategorySearchView categorySearchView, CountrySearchView countrySearchView, MealsSearchByNameView mealsSearchByNameView, AllIngredientsSearchView allIngredientsSearchView) {
         this.repo = repo;
         this.categorySearchView = categorySearchView;
         this.countrySearchView = countrySearchView;
@@ -30,71 +39,89 @@ public class SearchPresenter implements CategoriesNetworkCallBack, AllIngredient
     }
 
 
-    public void getAllCategoriesSearchItems(){
-         repo.getAllCategories(this);
+    public void getAllCategoriesSearchItems() {
+        repo.getAllCategories().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<ResponseCategory>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                        Log.i(TAG, "onSubscribe: " + d);
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull ResponseCategory responseCategory) {
+                        categorySearchView.onCategorySearchViewSuccess(responseCategory.getCategories());
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        categorySearchView.onCategorySearchViewFailure(e.getMessage());
+                    }
+                });
     }
 
-    public void getAllCountriesSearchItems(){
-        repo.getAllCountries(this);
+    public void getAllCountriesSearchItems() {
+        repo.getAllCountries().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<ResponseCountry>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull ResponseCountry country) {
+                        countrySearchView.onCountrySearchViewSuccess(country);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        countrySearchView.onCountrySearchViewFailure(e.getMessage());
+                    }
+                });
     }
 
-    public void getMealSearchByName(String name){
-        repo.getSearchMealsByName(name,this);
+    public void getMealSearchByName(String name) {
+        repo.getSearchMealsByName(name).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<ResponseMeals>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull ResponseMeals responseMeals) {
+                        mealsSearchByNameView.onMealSearchByNameSuccess(responseMeals.getMeals());
+
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        mealsSearchByNameView.onMealSearchByNameFailure(e.getMessage());
+                    }
+                });
     }
 
+    public void getAllIngredients() {
+        repo.getAllIngredients().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<ResponseAllIngredients>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
 
-    @Override
-    public void onAllCategoriesSuccess(ResponseCategory responseCategory) {
-        categorySearchView.onCategorySearchViewSuccess(responseCategory.getCategories());
-    }
+                    }
 
-    @Override
-    public void onAllCategoriesFailure(String errMessage) {
-        categorySearchView.onCategorySearchViewFailure(errMessage);
-    }
+                    @Override
+                    public void onSuccess(@NonNull ResponseAllIngredients allIngredients) {
+                        allIngredientsSearchView.onAllIngredientsSuccess(allIngredients);
+                    }
 
-
-
-
-
-    @Override
-    public void onAllCountriesSuccess(ResponseCountry countries) {
-        countrySearchView.onCountrySearchViewSuccess(countries);
-    }
-
-    @Override
-    public void onAllCountriesFailure(String errMessage) {
-        countrySearchView.onCountrySearchViewFailure(errMessage);
-    }
-
-
-
-    @Override
-    public void onSearchMealsByNameSuccess(ResponseMeals responseMeals) {
-        if (responseMeals != null && responseMeals.getMeals() != null) {
-            mealsSearchByNameView.onMealSearchByNameSuccess(responseMeals.getMeals());
-        } else {
-            mealsSearchByNameView.onMealSearchByNameFailure("No meals found");
-        }
-    }
-
-    public void getAllIngredients(){
-        repo.getAllIngredients(this);
-    }
-
-    @Override
-    public void onSearchMealsByNameFailure(String errMessage) {
-        mealsSearchByNameView.onMealSearchByNameFailure(errMessage);
-    }
-
-    @Override
-    public void onAllIngredientSuccess(ResponseAllIngredients allIngredients) {
-        allIngredientsSearchView.onAllIngredientsSuccess(allIngredients);
-    }
-
-    @Override
-    public void onAllIngredientsFailure(String errMessage) {
-        allIngredientsSearchView.onAllIngredientsFailure(errMessage);
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        allIngredientsSearchView.onAllIngredientsFailure(e.getMessage());
+                    }
+                });
     }
 
 
