@@ -2,11 +2,8 @@ package com.example.food_planner.searchScreen.presenter;
 
 import android.util.Log;
 
-import com.example.food_planner.Repo.network.api.callbacks.AllCountriesNetworkCallBack;
-import com.example.food_planner.Repo.network.api.callbacks.AllIngredientsNetworkCallBack;
-import com.example.food_planner.Repo.network.api.callbacks.CategoriesNetworkCallBack;
+
 import com.example.food_planner.Repo.Repo;
-import com.example.food_planner.Repo.network.api.callbacks.SearchMealsByNameNetworkCallBack;
 import com.example.food_planner.model.dto_repos.ResponseAllIngredients;
 import com.example.food_planner.searchScreen.view.AllIngredientsSearchView;
 import com.example.food_planner.searchScreen.view.CategorySearchView;
@@ -15,7 +12,6 @@ import com.example.food_planner.model.dto_repos.ResponseCategory;
 import com.example.food_planner.model.dto_repos.ResponseCountry;
 import com.example.food_planner.model.dto_repos.ResponseMeals;
 import com.example.food_planner.searchScreen.view.MealsSearchByNameView;
-
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.SingleObserver;

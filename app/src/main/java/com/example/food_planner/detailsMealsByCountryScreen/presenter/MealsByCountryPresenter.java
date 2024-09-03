@@ -1,13 +1,10 @@
 package com.example.food_planner.detailsMealsByCountryScreen.presenter;
 
-import com.example.food_planner.Repo.network.api.callbacks.ItemByNameNetworkCallBack;
-import com.example.food_planner.Repo.network.api.callbacks.MealsByCountryNetworkCallBack;
+
 import com.example.food_planner.Repo.Repo;
 import com.example.food_planner.detailsMealsByCountryScreen.view.onMealsByCountryView;
 import com.example.food_planner.model.dto_repos.ResponseMealInfoDto;
 import com.example.food_planner.model.dto_repos.ResponseMeals;
-import com.example.food_planner.model.dtos.MealDto;
-
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.SingleObserver;

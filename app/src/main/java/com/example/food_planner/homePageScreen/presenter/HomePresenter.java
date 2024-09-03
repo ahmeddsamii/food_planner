@@ -2,17 +2,14 @@ package com.example.food_planner.homePageScreen.presenter;
 
 import android.util.Log;
 
-import com.example.food_planner.Repo.network.api.callbacks.AllCountriesNetworkCallBack;
-import com.example.food_planner.Repo.network.api.callbacks.CategoriesNetworkCallBack;
+
 import com.example.food_planner.Repo.Repo;
-import com.example.food_planner.Repo.network.api.callbacks.RandomMealCallBack;
 import com.example.food_planner.homePageScreen.view.AllCategoriesView;
 import com.example.food_planner.homePageScreen.view.RandomMealView;
 import com.example.food_planner.homePageScreen.view.AllCountriesView;
 import com.example.food_planner.model.dto_repos.ResponseCategory;
 import com.example.food_planner.model.dto_repos.ResponseCountry;
 import com.example.food_planner.model.dto_repos.ResponseMeals;
-
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.SingleObserver;

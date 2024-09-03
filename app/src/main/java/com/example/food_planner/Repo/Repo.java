@@ -9,15 +9,6 @@ import com.example.food_planner.Repo.local.MealsLocalDataSource;
 import com.example.food_planner.Repo.local.PlanDao;
 import com.example.food_planner.Repo.local.PlanLocalDataSource;
 import com.example.food_planner.Repo.network.api.MealsRemoteDataSource;
-import com.example.food_planner.Repo.network.api.callbacks.AllCountriesNetworkCallBack;
-import com.example.food_planner.Repo.network.api.callbacks.AllIngredientsNetworkCallBack;
-import com.example.food_planner.Repo.network.api.callbacks.CategoriesNetworkCallBack;
-import com.example.food_planner.Repo.network.api.callbacks.ItemByNameNetworkCallBack;
-import com.example.food_planner.Repo.network.api.callbacks.MealsByCategoriesNetworkCallBack;
-import com.example.food_planner.Repo.network.api.callbacks.MealsByCountryNetworkCallBack;
-import com.example.food_planner.Repo.network.api.callbacks.MealsByIngredientNetworkCallBack;
-import com.example.food_planner.Repo.network.api.callbacks.RandomMealCallBack;
-import com.example.food_planner.Repo.network.api.callbacks.SearchMealsByNameNetworkCallBack;
 import com.example.food_planner.model.dto_repos.ResponseAllIngredients;
 import com.example.food_planner.model.dto_repos.ResponseCategory;
 import com.example.food_planner.model.dto_repos.ResponseCountry;
@@ -28,23 +19,12 @@ import com.example.food_planner.model.dtos.MealDto;
 import com.example.food_planner.model.dtos.PlanDto;
 import com.example.food_planner.planFragment.planView.OnPlanMealsCallback;
 import com.example.food_planner.settingsScreen.settingsView.OnSignOutListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
-
 import java.util.List;
-
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.core.CompletableObserver;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Single;
-import io.reactivex.rxjava3.core.SingleObserver;
-import io.reactivex.rxjava3.disposables.Disposable;
-import io.reactivex.rxjava3.schedulers.Schedulers;
-
 public class Repo implements OnSignOutListener{
     FirebaseDataSource firebaseDataSource;
     MealsRemoteDataSource mealsRemoteDataSource;
