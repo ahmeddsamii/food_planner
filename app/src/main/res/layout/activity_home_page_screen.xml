@@ -14,7 +14,6 @@
         android:id="@+id/bottomNavBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/secondaryColor"
         app:itemIconTint="@color/secondaryColor"
         app:itemTextColor="@color/secondaryColor"
         app:layout_constraintBottom_toBottomOf="parent"
