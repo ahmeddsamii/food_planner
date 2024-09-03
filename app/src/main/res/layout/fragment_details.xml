@@ -38,16 +38,16 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="end"
-                    android:backgroundTint="@color/primaryColor"
-                    android:background="@color/primaryColor"
+                    android:backgroundTint="@color/secondaryColor"
+                    android:background="@color/secondaryColor"
                     android:src="@drawable/favorite_white" />
 
                 <ImageView
                     android:id="@+id/btn_addToCalender"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/primaryColor"
-                    android:background="@color/primaryColor"
+                    android:backgroundTint="@color/secondaryColor"
+                    android:background="@color/secondaryColor"
                     android:layout_gravity="end"
                     android:layout_marginEnd="60dp"
                     android:src="@drawable/calender_white_color_small" />
@@ -75,7 +75,7 @@
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/ubuntu_bolditalic"
                 android:text="@string/ingredients"
-                android:textColor="@color/white"
+                android:textColor="@color/secondaryColor"
                 android:textSize="20sp" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -96,7 +96,7 @@
                 android:layout_marginEnd="16dp"
                 android:fontFamily="@font/ubuntu_bolditalic"
                 android:text="@string/steps"
-                android:textColor="@color/white"
+                android:textColor="@color/secondaryColor"
                 android:textSize="20sp" />
 
             <TextView
@@ -108,7 +108,7 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="16dp"
                 android:fontFamily="@font/ubuntu_bolditalic"
-                android:textColor="@color/white"
+                android:textColor="@color/secondaryColor"
                 android:textSize="20sp" />
 
             <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView

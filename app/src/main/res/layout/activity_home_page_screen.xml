@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primaryColor"
+    android:background="@color/colorPrimary"
     android:fitsSystemWindows="false"
     tools:context=".homePageScreen.view.HomePageScreen">
 
@@ -14,8 +14,9 @@
         android:id="@+id/bottomNavBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/white"
-        app:itemIconTint="@color/primaryColor"
+        android:backgroundTint="@color/secondaryColor"
+        app:itemIconTint="@color/secondaryColor"
+        app:itemTextColor="@color/secondaryColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

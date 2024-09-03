@@ -28,7 +28,7 @@
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/ubuntu_bolditalic"
                 android:text="@string/meal_of_the_day"
-                android:textColor="@color/white"
+                android:textColor="@color/secondaryColor"
                 android:textSize="24sp" />
 
             <androidx.cardview.widget.CardView
@@ -82,7 +82,7 @@
                 android:layout_marginTop="28dp"
                 android:fontFamily="@font/ubuntu_bolditalic"
                 android:text="@string/categories"
-                android:textColor="@color/white"
+                android:textColor="@color/secondaryColor"
                 android:textSize="24sp" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -102,7 +102,7 @@
                 android:layout_marginBottom="16dp"
                 android:fontFamily="@font/ubuntu_bolditalic"
                 android:text="@string/tv_countries"
-                android:textColor="@color/white"
+                android:textColor="@color/secondaryColor"
                 android:textSize="20dp" />
 
             <androidx.recyclerview.widget.RecyclerView

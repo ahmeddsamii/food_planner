@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="340dp"
-        android:textColor="@color/white"
+        android:textColor="@color/secondaryColor"
         android:textSize="24sp"
         android:fontFamily="@font/ubuntu_bolditalic"
         app:layout_constraintBottom_toTopOf="@+id/btn_signOut"
@@ -36,13 +36,15 @@
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/cry_animation" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_signOut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="36dp"
         android:background="@drawable/rounded_edittext_background"
         android:text="@string/btn_signOutText"
+        android:backgroundTint="@color/secondaryColor"
+        android:textColor="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

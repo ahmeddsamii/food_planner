@@ -18,13 +18,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+
         <ImageView
             android:id="@+id/favorite_imageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
             android:src="@drawable/food" />
-
 
         <TextView
             android:id="@+id/tv_favorite_title"
@@ -40,13 +40,15 @@
             android:textSize="20sp"
             tools:ignore="RtlCompat" />
 
-        <Button
+        <ImageButton
             android:id="@+id/btn_delete"
-            android:layout_marginTop="12dp"
-            android:layout_marginStart="12dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/rounded_edittext_background"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:background="@color/secondaryColor"
+            android:backgroundTint="@color/secondaryColor"
+            android:src="@drawable/delete_icon"
             android:text="@string/delete"
             android:textAlignment="viewEnd" />
     </androidx.cardview.widget.CardView>
