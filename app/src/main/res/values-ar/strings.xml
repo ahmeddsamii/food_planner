@@ -41,4 +41,7 @@
     <string name="categories_chip">الاصناف</string>
     <string name="meals_chip">الوجبات</string>
     <string name="ingredient_chip">المكونات</string>
+    <string name="there_are_no_favorite_meals">لا يوجد اي وجبات مضافه</string>
+    <string name="there_are_no_plans_added">لا يوجد خطط مضافه</string>
+
 </resources>

@@ -40,4 +40,6 @@
     <string name="categories_chip">Categories</string>
     <string name="meals_chip">Meals</string>
     <string name="ingredient_chip">Ingredient</string>
+    <string name="there_are_no_favorite_meals">There are no Favorite meals</string>
+    <string name="there_are_no_plans_added">There are no Plans added</string>
 </resources>

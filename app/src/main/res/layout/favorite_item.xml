@@ -40,16 +40,22 @@
             android:textSize="20sp"
             tools:ignore="RtlCompat" />
 
-        <ImageButton
-            android:id="@+id/btn_delete"
+
+        <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="12dp"
-            android:background="@color/secondaryColor"
-            android:backgroundTint="@color/secondaryColor"
-            android:src="@drawable/delete_icon"
-            android:text="@string/delete"
-            android:textAlignment="viewEnd" />
+            app:cardCornerRadius="50dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp">
+            <ImageButton
+                android:id="@+id/btn_delete"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/secondaryColor"
+                android:backgroundTint="@color/secondaryColor"
+                android:src="@drawable/delete_icon"
+                android:text="@string/delete"
+                android:textAlignment="viewEnd" />
+        </androidx.cardview.widget.CardView>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

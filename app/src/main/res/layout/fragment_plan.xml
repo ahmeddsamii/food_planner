@@ -60,4 +60,32 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cv_date_format" />
+
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/empty_plan_icon"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/rv_date_format"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cv_date_format"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        android:visibility="gone"
+        app:lottie_rawRes="@raw/empty_plan" />
+
+    <TextView
+        android:id="@+id/empty_plan_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="84dp"
+        android:fontFamily="@font/ubuntu_bolditalic"
+        android:text="@string/there_are_no_plans_added"
+        android:textColor="@color/secondaryColor"
+        android:textSize="26sp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/empty_plan_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

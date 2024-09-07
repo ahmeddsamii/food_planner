@@ -30,17 +30,25 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageButton
-            android:id="@+id/delete_from_plans"
+        <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
-            android:background="@color/secondaryColor"
-            android:backgroundTint="@color/secondaryColor"
-            android:src="@drawable/delete_icon"
-            android:text="@string/delete"
-            android:textAlignment="viewEnd" />
+            app:cardCornerRadius="50dp">
+
+            <ImageButton
+                android:id="@+id/delete_from_plans"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/secondaryColor"
+                android:backgroundTint="@color/secondaryColor"
+                android:src="@drawable/delete_icon"
+                android:text="@string/delete"
+                android:textAlignment="viewEnd" />
+        </androidx.cardview.widget.CardView>
+
+
 
         <TextView
             android:id="@+id/tv_planMealItem"

@@ -13,8 +13,8 @@
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/animationView_login"
-        android:layout_width="700dp"
-        android:layout_height="700dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/login_animation" />
+        app:lottie_rawRes="@raw/cooking" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

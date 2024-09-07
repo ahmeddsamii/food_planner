@@ -21,6 +21,7 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.food_planner.R;
 import com.example.food_planner.Repo.Repo;
 import com.example.food_planner.helpers.networkUtils.NetworkUtils;
@@ -43,6 +44,8 @@ public class PlanFragment extends Fragment implements OnPlansView , OnPlanMealDe
     FirebaseAuth user;
     PlanPresenter presenter;
     List<PlanDto> plans;
+    LottieAnimationView lottieAnimationView;
+    TextView empty_plan_text;
     private static final String TAG = "PlanFragment";
 
 
@@ -69,6 +72,8 @@ public class PlanFragment extends Fragment implements OnPlansView , OnPlanMealDe
         tv_dateFormat = view.findViewById(R.id.tv_date_format);
         cv_dateFormat = view.findViewById(R.id.cv_date_format);
         planMealsRecyclerView = view.findViewById(R.id.rv_date_format);
+        lottieAnimationView = view.findViewById(R.id.empty_plan_icon);
+        empty_plan_text = view.findViewById(R.id.empty_plan_text);
         plansAdapter = new PlansAdapter(new ArrayList<>(), getContext(), this);
         planMealsRecyclerView.setAdapter(plansAdapter);
         planMealsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -130,11 +135,20 @@ public class PlanFragment extends Fragment implements OnPlansView , OnPlanMealDe
 
     @Override
     public void onPlansSuccess(List<PlanDto> planDtos) {
+        if(planDtos == null || planDtos.isEmpty()){
+            empty_plan_text.setVisibility(View.VISIBLE);
+            lottieAnimationView.setVisibility(View.VISIBLE);
+            planMealsRecyclerView.setVisibility(View.GONE);
+        }else{
+            empty_plan_text.setVisibility(View.GONE);
+            lottieAnimationView.setVisibility(View.GONE);
+            planMealsRecyclerView.setVisibility(View.VISIBLE);
+            plansAdapter.setUpdateList(planDtos);
+            plansAdapter.notifyDataSetChanged();
+            planMealsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            Log.i(TAG, "onPlansSuccess: " + planDtos.size());
+        }
 
-        plansAdapter.setUpdateList(planDtos);
-        plansAdapter.notifyDataSetChanged();
-        planMealsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        Log.i(TAG, "onPlansSuccess: " + planDtos.size());
     }
 
     @Override
@@ -144,10 +158,20 @@ public class PlanFragment extends Fragment implements OnPlansView , OnPlanMealDe
 
     @Override
     public void onPlansSuccessFromFirebaseByDay(List<PlanDto> planDtos) {
-        plansAdapter.setUpdateList(planDtos);
-        plansAdapter.notifyDataSetChanged();
-        planMealsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        Log.i(TAG, "onPlansSuccess: " + planDtos.size());
+        if(planDtos == null || planDtos.isEmpty()){
+            empty_plan_text.setVisibility(View.VISIBLE);
+            lottieAnimationView.setVisibility(View.VISIBLE);
+            planMealsRecyclerView.setVisibility(View.GONE);
+        }else{
+            empty_plan_text.setVisibility(View.GONE);
+            lottieAnimationView.setVisibility(View.GONE);
+            planMealsRecyclerView.setVisibility(View.VISIBLE);
+            plansAdapter.setUpdateList(planDtos);
+            plansAdapter.notifyDataSetChanged();
+            planMealsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            Log.i(TAG, "onPlansSuccess: " + planDtos.size());
+        }
+
     }
 
     @Override

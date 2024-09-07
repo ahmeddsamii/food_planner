@@ -20,17 +20,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tv_favorite_loading"
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/empty_box"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="center"
-        android:text="@string/tv_favorite_loading"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        android:fontFamily="@font/ubuntu_bolditalic"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/favorite_recyclerview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        android:visibility="gone"
+        app:lottie_rawRes="@raw/empty_box"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/emptyText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/empty_box"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/there_are_no_favorite_meals"
+        android:fontFamily="@font/ubuntu_bolditalic"
+        android:textSize="24sp"
+        android:visibility="gone"
+        android:textColor="@color/secondaryColor"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
